@@ -7,16 +7,20 @@ public class PickupController : MonoBehaviour
 {
     [Header("References")]
     public Camera main_cam;
-    public Transform hold_point;           // Normal hold position in front of camera
-    public Transform inspect_point;        // Closer position for inspection
+    public Transform hold_point;
+    public Transform inspect_point;
 
     [Header("Settings")]
     public float pickup_range = 3f;
     public float move_force = 250f;
     public float inspect_zoom_speed = 4f;
     public float rotation_speed = 100f;
-    public float post_inspect_lift = 0.3f; // How much the object moves back after inspection
-    public float lift_duration = 0.2f;     // Time to move object back smoothly
+    public float post_inspect_lift = 0.3f;
+    public float lift_duration = 0.2f;
+    public float inspect_distance_offset = 0.25f; // How far back from inspect_point to keep object
+
+    [Header("Throw Settings")]
+    public float throw_force = 10f;
 
     [Header("UI Elements")]
     public TextMeshProUGUI interaction_text;
@@ -25,13 +29,17 @@ public class PickupController : MonoBehaviour
     public Color highlight_color = Color.cyan;
 
     [Header("Vignette")]
-    public Image vignette_image;            // Fullscreen UI Image for darkening
+    public Image vignette_image;
     public float vignette_max_alpha = 0.25f;
     public float vignette_speed = 3f;
 
     [Header("Hold Bob Settings")]
-    public float bob_amplitude = 0.05f;    // Vertical bob amount
-    public float bob_speed = 2f;           // Bob oscillation speed
+    public float bob_amplitude = 0.05f;
+    public float bob_speed = 2f;
+
+    [Header("Player Movement")]
+    public MonoBehaviour player_movement_script;
+    public MonoBehaviour player_camera_script;
 
     // Runtime variables
     private GameObject held_object;
@@ -41,20 +49,16 @@ public class PickupController : MonoBehaviour
     private float original_fov;
     public float zoomed_fov = 40f;
 
-    private Vector3 hold_start_position;    // Original local position for bob
     private float bob_timer = 0f;
 
     void Start()
     {
-        // Hide interaction text at start
         if (interaction_text != null)
             interaction_text.gameObject.SetActive(false);
 
-        // Store the original camera FOV so we can restore it later
         if (main_cam != null)
             original_fov = main_cam.fieldOfView;
 
-        // Make sure vignette starts invisible
         if (vignette_image != null)
         {
             var col = vignette_image.color;
@@ -65,20 +69,19 @@ public class PickupController : MonoBehaviour
 
     void Update()
     {
-        HandleLook();       // Highlight pickups & show UI
-        HandlePickup();     // Pickup, inspect, drop logic
-        HandleInspect();    // Rotate object while inspecting
-        MoveHeldObject();   // Smooth movement toward hold or inspect point + bob
-        UpdateVignette();   // Fade vignette in/out
+        HandleLook();
+        HandleInput();
+        HandleInspectRotation();
+        MoveHeldObject();
+        UpdateVignette();
     }
 
     /// <summary>
-    /// Highlights pickupable objects and shows interaction prompt.
-    /// Prevents showing the prompt for the currently held object.
+    /// Handles crosshair highlighting and pickup prompt.
     /// </summary>
     void HandleLook()
     {
-        if (is_inspecting) return; // Skip while inspecting
+        if (held_object != null) return;
 
         Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
         RaycastHit hit;
@@ -86,11 +89,14 @@ public class PickupController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, pickup_range))
         {
-            if (hit.collider.CompareTag("Pickup") && hit.collider.gameObject != held_object)
+            if (hit.collider.CompareTag("Pickup"))
             {
                 looking_at_pickup = true;
                 if (interaction_text != null)
+                {
+                    interaction_text.text = "Press [E] to Pick Up";
                     interaction_text.gameObject.SetActive(true);
+                }
             }
         }
 
@@ -102,9 +108,9 @@ public class PickupController : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles pickup, inspect, and drop via E key.
+    /// Handles pickup, drop, inspect, and throw input.
     /// </summary>
-    void HandlePickup()
+    void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -115,17 +121,32 @@ public class PickupController : MonoBehaviour
             else
             {
                 if (is_inspecting)
+                {
                     ExitInspectMode();
+                    UpdateUIText("Press [E] to Inspect | [Q] to Drop | [Right Click] to Throw");
+                }
                 else
-                    DropObject();
+                {
+                    EnterInspectMode();
+                    UpdateUIText("Press [E] to Stop Inspecting | [Q] to Drop");
+                }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q) && held_object != null)
+        {
+            DropObject();
+        }
+
+        // Throw with right mouse button
+        if (Input.GetMouseButtonDown(1) && held_object != null && !is_inspecting)
+        {
+            ThrowObject();
         }
     }
 
     /// <summary>
-    /// Attempts to pick up an object in front of the player.
-    /// Applies kinematic fix to prevent flying.
-    /// Initializes bob effect.
+    /// Attempts to pick up an object.
     /// </summary>
     void TryPickup()
     {
@@ -134,36 +155,27 @@ public class PickupController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, pickup_range))
         {
-            if (hit.collider != null && hit.collider.CompareTag("Pickup"))
+            if (hit.collider.CompareTag("Pickup"))
             {
                 held_object = hit.collider.gameObject;
                 held_object_rb = held_object.GetComponent<Rigidbody>();
 
                 if (held_object_rb != null)
                 {
-                    // Disable gravity and physics while holding
                     held_object_rb.useGravity = false;
                     held_object_rb.isKinematic = true;
-                    held_object_rb.linearDamping = 10f;
-                    held_object_rb.transform.parent = hold_point;
                 }
 
-                if (interaction_text != null)
-                    interaction_text.gameObject.SetActive(false);
+                held_object.transform.rotation = Quaternion.LookRotation(main_cam.transform.forward);
 
-                // Initialize bob effect
-                hold_start_position = held_object.transform.localPosition;
-                bob_timer = 0f;
-
-                EnterInspectMode();
+                UpdateUIText("Press [E] to Inspect | [Q] to Drop | [Right Click] to Throw");
             }
         }
     }
 
     /// <summary>
-    /// Moves held object smoothly to hold or inspect point.
-    /// Applies bob when holding normally.
-    /// Zooms camera if inspecting.
+    /// Moves held object either in front of camera or at inspect position.
+    /// Includes bobbing and anti-clipping for inspect mode.
     /// </summary>
     void MoveHeldObject()
     {
@@ -171,26 +183,39 @@ public class PickupController : MonoBehaviour
 
         if (!is_inspecting)
         {
-            // Normal hold: move object toward hold point
-            Vector3 move_direction = hold_point.position - held_object.transform.position;
-            held_object_rb.AddForce(move_direction * move_force * Time.deltaTime);
-
-            // Apply subtle vertical bob
+            // Normal hold: follow hold point smoothly with bob
             bob_timer += Time.deltaTime * bob_speed;
             float bob_offset = Mathf.Sin(bob_timer) * bob_amplitude;
-            Vector3 bob_position = hold_start_position + new Vector3(0, bob_offset, 0);
-            held_object.transform.localPosition = bob_position;
+            Vector3 target_position = hold_point.position + new Vector3(0, bob_offset, 0);
+
+            held_object.transform.position = Vector3.Lerp(
+                held_object.transform.position,
+                target_position,
+                Time.deltaTime * move_force * 0.01f
+            );
         }
         else
         {
-            // Inspect mode: smoothly move object to inspect point
+            // Inspect mode: prevent clipping by raycasting between camera and inspect point
+            Vector3 desired_position = inspect_point.position - main_cam.transform.forward * inspect_distance_offset;
+            Vector3 cam_to_desired = desired_position - main_cam.transform.position;
+
+            RaycastHit hit;
+            float max_distance = cam_to_desired.magnitude;
+
+            if (Physics.Raycast(main_cam.transform.position, cam_to_desired.normalized, out hit, max_distance, ~0, QueryTriggerInteraction.Ignore))
+            {
+                // Place slightly before surface to avoid clipping
+                desired_position = hit.point - cam_to_desired.normalized * 0.05f;
+            }
+
             held_object.transform.position = Vector3.Lerp(
                 held_object.transform.position,
-                inspect_point.position,
+                desired_position,
                 Time.deltaTime * inspect_zoom_speed
             );
 
-            // Smooth camera zoom
+            // Smooth camera zoom while inspecting
             main_cam.fieldOfView = Mathf.Lerp(
                 main_cam.fieldOfView,
                 zoomed_fov,
@@ -200,9 +225,9 @@ public class PickupController : MonoBehaviour
     }
 
     /// <summary>
-    /// Rotates held object based on mouse input while inspecting.
+    /// Rotates object based on mouse input while inspecting.
     /// </summary>
-    void HandleInspect()
+    void HandleInspectRotation()
     {
         if (held_object == null || !is_inspecting) return;
 
@@ -214,19 +239,23 @@ public class PickupController : MonoBehaviour
     }
 
     /// <summary>
-    /// Enables inspect mode, unlocks cursor, allows rotation.
+    /// Enter inspect mode: disable player controls, unlock cursor.
     /// </summary>
     void EnterInspectMode()
     {
         is_inspecting = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        if (player_movement_script != null)
+            player_movement_script.enabled = false;
+
+        if (player_camera_script != null)
+            player_camera_script.enabled = false;
     }
 
     /// <summary>
-    /// Exits inspect mode.
-    /// Smoothly moves object slightly back to avoid flying.
-    /// Keeps Rigidbody kinematic while held.
+    /// Exit inspect mode: re-enable movement, restore FOV.
     /// </summary>
     void ExitInspectMode()
     {
@@ -234,24 +263,26 @@ public class PickupController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Restore camera FOV
         if (main_cam != null)
             main_cam.fieldOfView = original_fov;
 
-        // Smooth post-inspect lift/back
+        if (player_movement_script != null)
+            player_movement_script.enabled = true;
+
+        if (player_camera_script != null)
+            player_camera_script.enabled = true;
+
         if (held_object != null)
         {
-            held_object_rb.isKinematic = true; // Keep physics disabled while holding
-            Vector3 target_position = hold_point.position + main_cam.transform.forward * -post_inspect_lift;
-            StartCoroutine(MoveObjectSmoothly(held_object.transform, target_position, lift_duration));
+            StartCoroutine(MoveObjectSmoothly(
+                held_object.transform,
+                hold_point.position + Vector3.up * post_inspect_lift,
+                lift_duration
+            ));
         }
     }
 
-    /// <summary>
-    /// Coroutine to smoothly move object to a target position over time.
-    /// Prevents sudden physics forces that can launch the object.
-    /// </summary>
-    private IEnumerator MoveObjectSmoothly(Transform obj, Vector3 target, float duration)
+    IEnumerator MoveObjectSmoothly(Transform obj, Vector3 target, float duration)
     {
         Vector3 start = obj.position;
         float elapsed = 0f;
@@ -263,35 +294,80 @@ public class PickupController : MonoBehaviour
             yield return null;
         }
 
-        obj.position = target; // Ensure final position is exact
+        obj.position = target;
     }
 
     /// <summary>
-    /// Drops the currently held object and re-enables physics.
+    /// Drops currently held object, re-enables physics.
     /// </summary>
     void DropObject()
     {
-        if (held_object == null) return;
+        if (held_object_rb != null)
+        {
+            held_object_rb.isKinematic = false;
+            held_object_rb.useGravity = true;
+        }
 
-        // Re-enable physics
-        held_object_rb.isKinematic = false;
-        held_object_rb.useGravity = true;
-        held_object_rb.linearDamping = 1f;
-
-        held_object.transform.parent = null;
         held_object = null;
         held_object_rb = null;
         is_inspecting = false;
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         if (main_cam != null)
             main_cam.fieldOfView = original_fov;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (player_movement_script != null)
+            player_movement_script.enabled = true;
+
+        if (player_camera_script != null)
+            player_camera_script.enabled = true;
+
+        if (interaction_text != null)
+        {
+            interaction_text.text = "";
+            interaction_text.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
-    /// Updates the vignette overlay alpha smoothly based on inspect state.
+    /// Throws the currently held object forward with force.
+    /// </summary>
+    void ThrowObject()
+    {
+        if (held_object_rb == null) return;
+
+        held_object_rb.isKinematic = false;
+        held_object_rb.useGravity = true;
+        held_object_rb.AddForce(main_cam.transform.forward * throw_force, ForceMode.VelocityChange);
+
+        held_object = null;
+        held_object_rb = null;
+
+        is_inspecting = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (main_cam != null)
+            main_cam.fieldOfView = original_fov;
+
+        if (player_movement_script != null)
+            player_movement_script.enabled = true;
+
+        if (player_camera_script != null)
+            player_camera_script.enabled = true;
+
+        if (interaction_text != null)
+        {
+            interaction_text.text = "";
+            interaction_text.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Smoothly updates vignette alpha when inspecting.
     /// </summary>
     void UpdateVignette()
     {
@@ -301,5 +377,14 @@ public class PickupController : MonoBehaviour
         Color col = vignette_image.color;
         col.a = Mathf.Lerp(col.a, target_alpha, Time.deltaTime * vignette_speed);
         vignette_image.color = col;
+    }
+
+    void UpdateUIText(string message)
+    {
+        if (interaction_text != null)
+        {
+            interaction_text.text = message;
+            interaction_text.gameObject.SetActive(true);
+        }
     }
 }
