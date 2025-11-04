@@ -80,3 +80,5 @@ public class FirstPersonController : MonoBehaviour
         transform.Rotate(Vector3.up * mouse_x);
     }
 }
+
+

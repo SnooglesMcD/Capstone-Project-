@@ -41,6 +41,7 @@ public class PickupController : MonoBehaviour
     public MonoBehaviour player_movement_script;
     public MonoBehaviour player_camera_script;
 
+
     // Runtime variables
     private GameObject held_object;
     private Rigidbody held_object_rb;
@@ -89,7 +90,7 @@ public class PickupController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, pickup_range))
         {
-            if (hit.collider.CompareTag("Pickup"))
+            if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
             {
                 looking_at_pickup = true;
                 if (interaction_text != null)
@@ -130,9 +131,20 @@ public class PickupController : MonoBehaviour
                     EnterInspectMode();
                     UpdateUIText("Press [E] to Stop Inspecting | [Q] to Drop");
                 }
-            }
-        }
 
+                // BOOK FEATURE: check if currently inspecting a Book via raycast
+                Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, pickup_range))
+                {
+                    if (hit.collider.CompareTag("Book"))
+                    {
+                        UpdateUIText("Press [X] to Read | Press [E] to Stop Inspecting | [Q] to Drop");
+                    }
+                }
+            }
+        
         if (Input.GetKeyDown(KeyCode.Q) && held_object != null)
         {
             DropObject();
@@ -143,6 +155,7 @@ public class PickupController : MonoBehaviour
         {
             ThrowObject();
         }
+    }
     }
 
     /// <summary>
@@ -155,7 +168,7 @@ public class PickupController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, pickup_range))
         {
-            if (hit.collider.CompareTag("Pickup"))
+            if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
             {
                 held_object = hit.collider.gameObject;
                 held_object_rb = held_object.GetComponent<Rigidbody>();
@@ -388,3 +401,4 @@ public class PickupController : MonoBehaviour
         }
     }
 }
+
