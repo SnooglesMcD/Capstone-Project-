@@ -45,6 +45,9 @@ public class PickupController : MonoBehaviour
     public bool IsInspecting => is_inspecting;
     public GameObject HeldObject => held_object;
 
+    private Collider player_colliders;  // reference to player collider
+
+
 
     // Runtime variables
     private GameObject held_object;
@@ -70,6 +73,16 @@ public class PickupController : MonoBehaviour
             col.a = 0f;
             vignette_image.color = col;
         }
+
+    
+
+    if (interaction_text != null) interaction_text.gameObject.SetActive(false);
+
+    // cache player collider (assuming this script is on the player)
+    player_colliders = GetComponent<Collider>();
+
+
+
     }
 
     void Update()
@@ -136,16 +149,7 @@ public class PickupController : MonoBehaviour
                     UpdateUIText("Press [E] to Stop Inspecting | [Q] to Drop");
                 }
 
-                if (is_inspecting && CompareTag("Book"))
-                {
-                    ExitInspectMode();
-                    UpdateUIText("Press [E] to Inspect | [Q] to Drop | [Right Click] to Throw");
-                }
-                else
-                {
-                    EnterInspectMode();
-                    UpdateUIText("Press [X] to Read | Press [E] to Stop Inspecting | [Q] to Drop");
-                }
+            
             }
         }
 
@@ -185,6 +189,19 @@ public class PickupController : MonoBehaviour
                 held_object.transform.rotation = Quaternion.LookRotation(main_cam.transform.forward);
 
                 UpdateUIText("Press [E] to Inspect | [Q] to Drop | [Right Click] to Throw");
+
+                
+                // Disable collisions between all player colliders and held object colliders
+            Collider[] player_colliders = GetComponentsInChildren<Collider>();
+            Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
+
+        foreach (var pc in player_colliders)
+    {
+        foreach (var oc in object_colliders)
+            Physics.IgnoreCollision(pc, oc, true);
+    }
+
+
             }
         }
     }
@@ -345,6 +362,19 @@ public class PickupController : MonoBehaviour
             interaction_text.text = "";
             interaction_text.gameObject.SetActive(false);
         }
+
+        // Re-enable collisions between player and dropped object
+        Collider[] player_colliders = GetComponentsInChildren<Collider>();
+        Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
+
+    foreach (var pc in player_colliders)
+    {
+        foreach (var oc in object_colliders)
+            Physics.IgnoreCollision(pc, oc, false);
+    }
+
+
+
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 
+
 public class BookReader : MonoBehaviour
 {
     [Header("References")]
@@ -24,7 +25,7 @@ public class BookReader : MonoBehaviour
             return;
 
         // Only allow reading while inspecting a held book
-        if (pickup_controller.IsInspecting && IsHoldingBook())
+        if (pickup_controller_is_inspecting() && IsHoldingBook())
         {
             if (Input.GetKeyDown(read_key))
             {
@@ -37,16 +38,28 @@ public class BookReader : MonoBehaviour
         }
 
         // If you drop or stop inspecting, ensure UI closes
-        if (is_reading && (!pickup_controller.IsInspecting || !IsHoldingBook()))
+        if (is_reading && (!pickup_controller_is_inspecting() || !IsHoldingBook()))
         {
             CloseBook();
         }
     }
 
+    bool pickup_controller_is_inspecting()
+    {
+        // Access the is_inspecting flag from your PickupController
+        // (it’s private, so we can check public state indirectly)
+        // We’ll use reflection safely once on start or just wrap it:
+        return (bool)pickup_controller.GetType().GetField("is_inspecting", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            ?.GetValue(pickup_controller);
+    }
+
     bool IsHoldingBook()
     {
-       
-        GameObject held_object = pickup_controller.HeldObject;
+        var held_field = pickup_controller.GetType().GetField("held_object", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        GameObject held_object = (GameObject)held_field?.GetValue(pickup_controller);
+
         return held_object != null && held_object.CompareTag(book_tag);
     }
 
@@ -57,7 +70,11 @@ public class BookReader : MonoBehaviour
         if (book_panel != null)
             book_panel.SetActive(true);
 
-        GameObject held_object = pickup_controller.HeldObject;
+        // Get current book and its text
+        var held_field = pickup_controller.GetType().GetField("held_object",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        GameObject held_object = (GameObject)held_field?.GetValue(pickup_controller);
+
         if (held_object != null)
         {
             BookContent content = held_object.GetComponent<BookContent>();
