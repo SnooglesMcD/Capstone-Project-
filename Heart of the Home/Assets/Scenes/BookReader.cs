@@ -1,14 +1,13 @@
 using UnityEngine;
 using TMPro;
 
-
 public class BookReader : MonoBehaviour
 {
     [Header("References")]
-    public PickupController pickup_controller;  // Assign your player’s PickupController
+    public PickupController pickup_controller;  
     public GameObject book_panel;               // UI panel that displays book content
     public TextMeshProUGUI book_text;           // Text UI element inside panel
-    public KeyCode read_key = KeyCode.E;        // Key used to toggle reading (same as inspect)
+    public KeyCode read_key = KeyCode.X;        // Key used to toggle reading (same as inspect)
     public string book_tag = "Book";            // Tag for book objects
 
     private bool is_reading = false;
@@ -25,7 +24,7 @@ public class BookReader : MonoBehaviour
             return;
 
         // Only allow reading while inspecting a held book
-        if (pickup_controller_is_inspecting() && IsHoldingBook())
+        if (pickup_controller.IsInspecting && IsHoldingBook())
         {
             if (Input.GetKeyDown(read_key))
             {
@@ -38,28 +37,16 @@ public class BookReader : MonoBehaviour
         }
 
         // If you drop or stop inspecting, ensure UI closes
-        if (is_reading && (!pickup_controller_is_inspecting() || !IsHoldingBook()))
+        if (is_reading && (!pickup_controller.IsInspecting || !IsHoldingBook()))
         {
             CloseBook();
         }
     }
 
-    bool pickup_controller_is_inspecting()
-    {
-        // Access the is_inspecting flag from your PickupController
-        // (it’s private, so we can check public state indirectly)
-        // We’ll use reflection safely once on start or just wrap it:
-        return (bool)pickup_controller.GetType().GetField("is_inspecting", 
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-            ?.GetValue(pickup_controller);
-    }
-
     bool IsHoldingBook()
     {
-        var held_field = pickup_controller.GetType().GetField("held_object", 
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        GameObject held_object = (GameObject)held_field?.GetValue(pickup_controller);
-
+       
+        GameObject held_object = pickup_controller.HeldObject;
         return held_object != null && held_object.CompareTag(book_tag);
     }
 
@@ -70,11 +57,7 @@ public class BookReader : MonoBehaviour
         if (book_panel != null)
             book_panel.SetActive(true);
 
-        // Get current book and its text
-        var held_field = pickup_controller.GetType().GetField("held_object",
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        GameObject held_object = (GameObject)held_field?.GetValue(pickup_controller);
-
+        GameObject held_object = pickup_controller.HeldObject;
         if (held_object != null)
         {
             BookContent content = held_object.GetComponent<BookContent>();

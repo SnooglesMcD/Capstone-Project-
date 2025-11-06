@@ -41,6 +41,10 @@ public class PickupController : MonoBehaviour
     public MonoBehaviour player_movement_script;
     public MonoBehaviour player_camera_script;
 
+    [Header("Public Variables")]
+    public bool IsInspecting => is_inspecting;
+    public GameObject HeldObject => held_object;
+
 
     // Runtime variables
     private GameObject held_object;
@@ -132,19 +136,19 @@ public class PickupController : MonoBehaviour
                     UpdateUIText("Press [E] to Stop Inspecting | [Q] to Drop");
                 }
 
-                // BOOK FEATURE: check if currently inspecting a Book via raycast
-                Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, pickup_range))
+                if (is_inspecting && CompareTag("Book"))
                 {
-                    if (hit.collider.CompareTag("Book"))
-                    {
-                        UpdateUIText("Press [X] to Read | Press [E] to Stop Inspecting | [Q] to Drop");
-                    }
+                    ExitInspectMode();
+                    UpdateUIText("Press [E] to Inspect | [Q] to Drop | [Right Click] to Throw");
+                }
+                else
+                {
+                    EnterInspectMode();
+                    UpdateUIText("Press [X] to Read | Press [E] to Stop Inspecting | [Q] to Drop");
                 }
             }
-        
+        }
+
         if (Input.GetKeyDown(KeyCode.Q) && held_object != null)
         {
             DropObject();
@@ -155,7 +159,6 @@ public class PickupController : MonoBehaviour
         {
             ThrowObject();
         }
-    }
     }
 
     /// <summary>
@@ -401,4 +404,3 @@ public class PickupController : MonoBehaviour
         }
     }
 }
-
