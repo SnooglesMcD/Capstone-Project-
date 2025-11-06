@@ -647,6 +647,42 @@ namespace Unity.VisualScripting.Generated.Aot
 	// Readme.op_Implicit
 	// Readme.op_Equality
 	// Readme.op_Inequality
+	// Seagull.Interior_04E.Inspector.AnInspector.op_Implicit
+	// Seagull.Interior_04E.Inspector.AnInspector.op_Equality
+	// Seagull.Interior_04E.Inspector.AnInspector.op_Inequality
+	// Seagull.Interior_04E.Inspector.MaterialHider.op_Implicit
+	// Seagull.Interior_04E.Inspector.MaterialHider.op_Equality
+	// Seagull.Interior_04E.Inspector.MaterialHider.op_Inequality
+	// Seagull.Interior_04E.SceneProps.ArrayArrangement.op_Implicit
+	// Seagull.Interior_04E.SceneProps.ArrayArrangement.op_Equality
+	// Seagull.Interior_04E.SceneProps.ArrayArrangement.op_Inequality
+	// Seagull.Interior_04E.SceneProps.FenceData.op_Implicit
+	// Seagull.Interior_04E.SceneProps.FenceData.op_Equality
+	// Seagull.Interior_04E.SceneProps.FenceData.op_Inequality
+	// Seagull.Interior_04E.SceneProps.FencePlacement.op_Implicit
+	// Seagull.Interior_04E.SceneProps.FencePlacement.op_Equality
+	// Seagull.Interior_04E.SceneProps.FencePlacement.op_Inequality
+	// Seagull.Interior_04E.SceneProps.GlowLight.op_Implicit
+	// Seagull.Interior_04E.SceneProps.GlowLight.op_Equality
+	// Seagull.Interior_04E.SceneProps.GlowLight.op_Inequality
+	// Seagull.Interior_04E.SceneProps.LightSourceObject.op_Implicit
+	// Seagull.Interior_04E.SceneProps.LightSourceObject.op_Equality
+	// Seagull.Interior_04E.SceneProps.LightSourceObject.op_Inequality
+	// Seagull.Interior_04E.SceneProps.LightSourceObjectInspector.op_Implicit
+	// Seagull.Interior_04E.SceneProps.LightSourceObjectInspector.op_Equality
+	// Seagull.Interior_04E.SceneProps.LightSourceObjectInspector.op_Inequality
+	// Seagull.Interior_04E.SceneProps.PrefabGroup.op_Implicit
+	// Seagull.Interior_04E.SceneProps.PrefabGroup.op_Equality
+	// Seagull.Interior_04E.SceneProps.PrefabGroup.op_Inequality
+	// Seagull.Interior_04E.SceneProps.Rotatable.op_Implicit
+	// Seagull.Interior_04E.SceneProps.Rotatable.op_Equality
+	// Seagull.Interior_04E.SceneProps.Rotatable.op_Inequality
+	// Seagull.Interior_04E.SceneProps.RotatableEditor.op_Implicit
+	// Seagull.Interior_04E.SceneProps.RotatableEditor.op_Equality
+	// Seagull.Interior_04E.SceneProps.RotatableEditor.op_Inequality
+	// Seagull.Interior_04E.SceneProps.RotatableObject.op_Implicit
+	// Seagull.Interior_04E.SceneProps.RotatableObject.op_Equality
+	// Seagull.Interior_04E.SceneProps.RotatableObject.op_Inequality
 	// UnityEngine.InputSystem.InputActionAsset.op_Implicit
 	// UnityEngine.InputSystem.InputActionAsset.op_Equality
 	// UnityEngine.InputSystem.InputActionAsset.op_Inequality
@@ -8350,6 +8386,426 @@ namespace Unity.VisualScripting.Generated.Aot
 		// Readme.op_Inequality
 		[global::UnityEngine.Scripting.PreserveAttribute()]
 		public static void Readme_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.Inspector.AnInspector.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_Inspector_AnInspector_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.Inspector.AnInspector.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_Inspector_AnInspector_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.Inspector.AnInspector.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_Inspector_AnInspector_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.Inspector.MaterialHider.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_Inspector_MaterialHider_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.Inspector.MaterialHider.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_Inspector_MaterialHider_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.Inspector.MaterialHider.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_Inspector_MaterialHider_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.ArrayArrangement.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_ArrayArrangement_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.ArrayArrangement.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_ArrayArrangement_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.ArrayArrangement.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_ArrayArrangement_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.FenceData.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_FenceData_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.FenceData.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_FenceData_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.FenceData.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_FenceData_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.FencePlacement.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_FencePlacement_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.FencePlacement.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_FencePlacement_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.FencePlacement.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_FencePlacement_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.GlowLight.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_GlowLight_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.GlowLight.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_GlowLight_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.GlowLight.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_GlowLight_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.LightSourceObject.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_LightSourceObject_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.LightSourceObject.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_LightSourceObject_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.LightSourceObject.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_LightSourceObject_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.LightSourceObjectInspector.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_LightSourceObjectInspector_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.LightSourceObjectInspector.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_LightSourceObjectInspector_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.LightSourceObjectInspector.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_LightSourceObjectInspector_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.PrefabGroup.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_PrefabGroup_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.PrefabGroup.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_PrefabGroup_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.PrefabGroup.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_PrefabGroup_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.Rotatable.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_Rotatable_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.Rotatable.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_Rotatable_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.Rotatable.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_Rotatable_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.RotatableEditor.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_RotatableEditor_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.RotatableEditor.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_RotatableEditor_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.RotatableEditor.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_RotatableEditor_op_Inequality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 != arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.RotatableObject.op_Implicit
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_RotatableObject_op_Implicit()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			bool conversion = ((bool)(arg0));
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.RotatableObject.op_Equality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_RotatableObject_op_Equality()
+		{
+			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
+			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
+			bool @operator = (arg0 == arg1);
+			global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool> optimized = new global::Unity.VisualScripting.StaticFunctionInvoker<UnityEngine.Object, UnityEngine.Object, bool>(default(global::System.Reflection.MethodInfo));
+			optimized.Invoke(null, arg0, arg1);
+			optimized.Invoke(default(object[]));
+		}
+		
+		// Seagull.Interior_04E.SceneProps.RotatableObject.op_Inequality
+		[global::UnityEngine.Scripting.PreserveAttribute()]
+		public static void Seagull_Interior_04E_SceneProps_RotatableObject_op_Inequality()
 		{
 			global::UnityEngine.Object arg0 = default(global::UnityEngine.Object);
 			global::UnityEngine.Object arg1 = default(global::UnityEngine.Object);
