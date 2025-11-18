@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Pickup
   - Book
+  - Pedestal
+  - Interact
   layers:
   - Default
   - TransparentFX

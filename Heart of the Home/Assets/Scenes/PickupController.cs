@@ -121,6 +121,21 @@ public class PickupController : MonoBehaviour
         if (!looking_at_pickup && interaction_text != null)
             interaction_text.gameObject.SetActive(false);
 
+        // --- PUZZLE OBJECT INTERACTION HIGHLIGHT ---
+        if (held_object == null && Physics.Raycast(ray, out hit, pickup_range))
+        {
+            if (hit.collider.CompareTag("Interact") || hit.collider.CompareTag("Pedestal"))
+            {
+                looking_at_pickup = true;
+
+            if (interaction_text != null)
+            {
+                interaction_text.text = "Press [E] to Interact";
+                interaction_text.gameObject.SetActive(true);
+            }
+            }
+        }
+
         if (reticle != null)
             reticle.color = looking_at_pickup ? highlight_color : normal_color;
     }
@@ -130,6 +145,40 @@ public class PickupController : MonoBehaviour
     /// </summary>
     void HandleInput()
     {
+        // Try interacting with puzzle objects
+        if (Input.GetKeyDown(KeyCode.E) && held_object == null)
+        {
+            Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+            RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, pickup_range))
+        {
+            // 1. Floor board interaction
+            var fb = hit.collider.GetComponent<floor_board_controller>();
+            if (fb != null)
+            {
+                fb.OnInteract();
+                return;
+            }
+
+            // 2. Door interaction
+            var door = hit.collider.GetComponent<door_lock_controller>();
+            if (door != null)
+            {
+                door.OnInteract();
+                return;
+            }
+
+            // 3. Pedestal interaction (place held item)
+            var ped = hit.collider.GetComponent<pedestal_controller>();
+            if (ped != null)
+            {
+                ped.OnInteract();
+                return;
+            }
+        }
+}
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (held_object == null)
@@ -411,6 +460,22 @@ public class PickupController : MonoBehaviour
             interaction_text.gameObject.SetActive(false);
         }
     }
+
+    public void ForceDrop()
+    {
+        if (held_object_rb != null)
+        {
+            held_object_rb.isKinematic = false;
+            held_object_rb.useGravity = true;
+        }
+
+        held_object = null;
+        held_object_rb = null;
+    }
+
+
+
+
 
     /// <summary>
     /// Smoothly updates vignette alpha when inspecting.
