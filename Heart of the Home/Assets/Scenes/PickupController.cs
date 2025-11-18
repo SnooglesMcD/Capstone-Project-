@@ -146,7 +146,7 @@ public class PickupController : MonoBehaviour
     void HandleInput()
     {
         // Try interacting with puzzle objects
-        if (Input.GetKeyDown(KeyCode.E) && held_object == null)
+        if (Input.GetKeyDown(KeyCode.V) && held_object == null)
         {
             Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
             RaycastHit hit;
