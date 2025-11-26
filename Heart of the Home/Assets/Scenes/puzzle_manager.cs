@@ -28,14 +28,8 @@ public class puzzle_manager : MonoBehaviour
             solved = true;
 
             if (prism_light != null)
-                prism_light.enabled = true;
+                prism_light.gameObject.SetActive(true);
 
-            if (heart_statue != null)
-            {
-                var anim = heart_statue.GetComponent<Animator>();
-                if (anim != null)
-                    anim.SetTrigger("react");
-            }
 
             floor_board.GetComponent<Collider>().enabled = true;
         }

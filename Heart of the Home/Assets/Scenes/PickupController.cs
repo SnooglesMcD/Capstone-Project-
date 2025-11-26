@@ -17,7 +17,7 @@ public class PickupController : MonoBehaviour
     public float rotation_speed = 100f;
     public float post_inspect_lift = 0.3f;
     public float lift_duration = 0.2f;
-    public float inspect_distance_offset = 0.25f; // How far back from inspect_point to keep object
+    public float inspect_distance_offset = 0.25f;
 
     [Header("Throw Settings")]
     public float throw_force = 10f;
@@ -45,11 +45,8 @@ public class PickupController : MonoBehaviour
     public bool IsInspecting => is_inspecting;
     public GameObject HeldObject => held_object;
 
-    private Collider player_colliders;  // reference to player collider
+    private Collider player_colliders;
 
-
-
-    // Runtime variables
     private GameObject held_object;
     private Rigidbody held_object_rb;
     private bool is_inspecting = false;
@@ -74,15 +71,9 @@ public class PickupController : MonoBehaviour
             vignette_image.color = col;
         }
 
-    
+        if (interaction_text != null) interaction_text.gameObject.SetActive(false);
 
-    if (interaction_text != null) interaction_text.gameObject.SetActive(false);
-
-    // cache player collider (assuming this script is on the player)
-    player_colliders = GetComponent<Collider>();
-
-
-
+        player_colliders = GetComponent<Collider>();
     }
 
     void Update()
@@ -94,129 +85,172 @@ public class PickupController : MonoBehaviour
         UpdateVignette();
     }
 
-    /// <summary>
-    /// Handles crosshair highlighting and pickup prompt.
-    /// </summary>
     void HandleLook()
+{
+    
+    // show context-sensitive prompts both when holding and not holding.
+    Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+    RaycastHit hit;
+    bool looking_at_pickup = false;
+
+    // First check for pickups/books (when not holding an item these should be highlighted)
+    if (Physics.Raycast(ray, out hit, pickup_range))
     {
-        if (held_object != null) return;
-
-        Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
-        RaycastHit hit;
-        bool looking_at_pickup = false;
-
-        if (Physics.Raycast(ray, out hit, pickup_range))
+        if (held_object == null && (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book")))
         {
-            if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
+            looking_at_pickup = true;
+            if (interaction_text != null)
             {
-                looking_at_pickup = true;
-                if (interaction_text != null)
-                {
-                    interaction_text.text = "Press [E] to Pick Up";
-                    interaction_text.gameObject.SetActive(true);
-                }
+                interaction_text.text = "Press [E] to Pick Up";
+                interaction_text.gameObject.SetActive(true);
             }
         }
+    }
 
-        if (!looking_at_pickup && interaction_text != null)
-            interaction_text.gameObject.SetActive(false);
-
-        // --- PUZZLE OBJECT INTERACTION HIGHLIGHT ---
-        if (held_object == null && Physics.Raycast(ray, out hit, pickup_range))
+    // If player is holding an item, check if they're looking at a pedestal to place it
+    if (Physics.Raycast(ray, out hit, pickup_range))
+    {
+        // If holding an item and looking at a pedestal, show "Place" prompt
+        if (held_object != null && hit.collider.CompareTag("Pedestal"))
         {
-            if (hit.collider.CompareTag("Interact") || hit.collider.CompareTag("Pedestal"))
+            looking_at_pickup = true;
+            if (interaction_text != null)
             {
-                looking_at_pickup = true;
-
+                interaction_text.text = "Press [E] to Place";
+                interaction_text.gameObject.SetActive(true);
+            }
+        }
+        // If not holding and looking at generic interactable (door/floorboard), show interact prompt
+        else if (held_object == null && (hit.collider.CompareTag("Interact")))
+        {
+            looking_at_pickup = true;
             if (interaction_text != null)
             {
                 interaction_text.text = "Press [E] to Interact";
                 interaction_text.gameObject.SetActive(true);
             }
+        }
+        // If holding and looking at door (to use key), show "Use" prompt
+        else if (held_object != null && hit.collider.CompareTag("Interact"))
+        {
+            // Show a "Use" prompt (e.g., use key on door)
+            looking_at_pickup = true;
+            if (interaction_text != null)
+            {
+                interaction_text.text = "Press [E] to Use";
+                interaction_text.gameObject.SetActive(true);
             }
         }
-
-        if (reticle != null)
-            reticle.color = looking_at_pickup ? highlight_color : normal_color;
     }
 
-    /// <summary>
-    /// Handles pickup, drop, inspect, and throw input.
-    /// </summary>
+    // If nothing relevant was found, hide the interaction text
+    if (!looking_at_pickup && interaction_text != null)
+        interaction_text.gameObject.SetActive(false);
+
+    // keep reticle coloring behavior
+    if (reticle != null)
+        reticle.color = looking_at_pickup ? highlight_color : normal_color;
+}
+
+
     void HandleInput()
+{
+    // Unified E-key behavior:
+    // - If holding an item and looking at a Pedestal -> place item
+    // - If holding an item and looking at Interact -> use item (e.g., key on door)
+    // - If not holding and looking at Pickup/Book -> pick up
+    // - If not holding and looking at Interact -> interact (floorboard/door)
+    if (Input.GetKeyDown(KeyCode.E))
     {
-        // Try interacting with puzzle objects
-        if (Input.GetKeyDown(KeyCode.V) && held_object == null)
-        {
-            Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
-            RaycastHit hit;
+        Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+        RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, pickup_range))
         {
-            // 1. Floor board interaction
-            var fb = hit.collider.GetComponent<floor_board_controller>();
-            if (fb != null)
+            // If holding an item and looking at a pedestal -> place it
+            if (held_object != null)
             {
-                fb.OnInteract();
-                return;
-            }
-
-            // 2. Door interaction
-            var door = hit.collider.GetComponent<door_lock_controller>();
-            if (door != null)
-            {
-                door.OnInteract();
-                return;
-            }
-
-            // 3. Pedestal interaction (place held item)
-            var ped = hit.collider.GetComponent<pedestal_controller>();
-            if (ped != null)
-            {
-                ped.OnInteract();
-                return;
-            }
-        }
-}
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (held_object == null)
-            {
-                TryPickup();
-            }
-            else
-            {
-                if (is_inspecting)
+                var ped = hit.collider.GetComponent<pedestal_controller>();
+                if (ped != null)
                 {
-                    ExitInspectMode();
-                    UpdateUIText("Press [E] to Inspect | [Q] to Drop | [Right Click] to Throw");
-                }
-                else
-                {
-                    EnterInspectMode();
-                    UpdateUIText("Press [E] to Stop Inspecting | [Q] to Drop");
+                    ped.OnInteract();
+                    return; // done
                 }
 
-            
+                // If holding and looking at an interactable (door) -> use held item
+                var door = hit.collider.GetComponent<door_lock_controller>();
+                if (door != null)
+                {
+                    door.OnInteract();
+                    return;
+                }
+
+                // If holding and looking at floorboard (unlikely) -> attempt interact too
+                var fb = hit.collider.GetComponent<floor_board_controller>();
+                if (fb != null)
+                {
+                    fb.OnInteract();
+                    return;
+                }
+            }
+            else // not holding an item
+            {
+                // Try pick up first (original behavior)
+                if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
+                {
+                    TryPickup();
+                    return;
+                }
+
+                // Not holding and looking at interactable object (floorboard/door)
+                var fb2 = hit.collider.GetComponent<floor_board_controller>();
+                if (fb2 != null)
+                {
+                    fb2.OnInteract();
+                    return;
+                }
+
+                var door2 = hit.collider.GetComponent<door_lock_controller>();
+                if (door2 != null)
+                {
+                    door2.OnInteract();
+                    return;
+                }
+
+                var ped2 = hit.collider.GetComponent<pedestal_controller>();
+                if (ped2 != null)
+                {
+                    // If player is not holding anything and tries to interact with pedestal,
+                    // it's probably intended to inspect or nothing should happen. 
+                    return;
+                }
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && held_object != null)
+        // If nothing was hit, if the player is not holding an item, fallback to TryPickup() (attempts to pick directly in front).
+        if (held_object == null)
         {
-            DropObject();
-        }
-
-        // Throw with right mouse button
-        if (Input.GetMouseButtonDown(1) && held_object != null && !is_inspecting)
-        {
-            ThrowObject();
+            TryPickup();
+            return;
         }
     }
 
-    /// <summary>
-    /// Attempts to pick up an object.
-    /// </summary>
+    // Drop with Q
+    if (Input.GetKeyDown(KeyCode.Q) && held_object != null)
+    {
+        DropObject();
+    }
+
+    // Throw with right mouse button
+    if (Input.GetMouseButtonDown(1) && held_object != null && !is_inspecting)
+    {
+        ThrowObject();
+    }
+
+    
+}
+
+
     void TryPickup()
     {
         Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
@@ -239,33 +273,24 @@ public class PickupController : MonoBehaviour
 
                 UpdateUIText("Press [E] to Inspect | [Q] to Drop | [Right Click] to Throw");
 
-                
-                // Disable collisions between all player colliders and held object colliders
-            Collider[] player_colliders = GetComponentsInChildren<Collider>();
-            Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
+                Collider[] player_colliders = GetComponentsInChildren<Collider>();
+                Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
 
-        foreach (var pc in player_colliders)
-    {
-        foreach (var oc in object_colliders)
-            Physics.IgnoreCollision(pc, oc, true);
-    }
-
-
+                foreach (var pc in player_colliders)
+                {
+                    foreach (var oc in object_colliders)
+                        Physics.IgnoreCollision(pc, oc, true);
+                }
             }
         }
     }
 
-    /// <summary>
-    /// Moves held object either in front of camera or at inspect position.
-    /// Includes bobbing and anti-clipping for inspect mode.
-    /// </summary>
     void MoveHeldObject()
     {
         if (held_object == null) return;
 
         if (!is_inspecting)
         {
-            // Normal hold: follow hold point smoothly with bob
             bob_timer += Time.deltaTime * bob_speed;
             float bob_offset = Mathf.Sin(bob_timer) * bob_amplitude;
             Vector3 target_position = hold_point.position + new Vector3(0, bob_offset, 0);
@@ -278,7 +303,6 @@ public class PickupController : MonoBehaviour
         }
         else
         {
-            // Inspect mode: prevent clipping by raycasting between camera and inspect point
             Vector3 desired_position = inspect_point.position - main_cam.transform.forward * inspect_distance_offset;
             Vector3 cam_to_desired = desired_position - main_cam.transform.position;
 
@@ -287,7 +311,6 @@ public class PickupController : MonoBehaviour
 
             if (Physics.Raycast(main_cam.transform.position, cam_to_desired.normalized, out hit, max_distance, ~0, QueryTriggerInteraction.Ignore))
             {
-                // Place slightly before surface to avoid clipping
                 desired_position = hit.point - cam_to_desired.normalized * 0.05f;
             }
 
@@ -297,7 +320,6 @@ public class PickupController : MonoBehaviour
                 Time.deltaTime * inspect_zoom_speed
             );
 
-            // Smooth camera zoom while inspecting
             main_cam.fieldOfView = Mathf.Lerp(
                 main_cam.fieldOfView,
                 zoomed_fov,
@@ -306,9 +328,6 @@ public class PickupController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Rotates object based on mouse input while inspecting.
-    /// </summary>
     void HandleInspectRotation()
     {
         if (held_object == null || !is_inspecting) return;
@@ -320,9 +339,6 @@ public class PickupController : MonoBehaviour
         held_object.transform.Rotate(main_cam.transform.right, mouse_y, Space.World);
     }
 
-    /// <summary>
-    /// Enter inspect mode: disable player controls, unlock cursor.
-    /// </summary>
     void EnterInspectMode()
     {
         is_inspecting = true;
@@ -336,9 +352,6 @@ public class PickupController : MonoBehaviour
             player_camera_script.enabled = false;
     }
 
-    /// <summary>
-    /// Exit inspect mode: re-enable movement, restore FOV.
-    /// </summary>
     void ExitInspectMode()
     {
         is_inspecting = false;
@@ -379,16 +392,24 @@ public class PickupController : MonoBehaviour
         obj.position = target;
     }
 
-    /// <summary>
-    /// Drops currently held object, re-enables physics.
-    /// </summary>
+    
     void DropObject()
     {
+        
+        if (held_object == null)
+        {
+            held_object_rb = null;
+            is_inspecting = false;
+            return;
+        }
+
         if (held_object_rb != null)
         {
             held_object_rb.isKinematic = false;
             held_object_rb.useGravity = true;
         }
+
+        GameObject dropped_object = held_object; 
 
         held_object = null;
         held_object_rb = null;
@@ -412,26 +433,28 @@ public class PickupController : MonoBehaviour
             interaction_text.gameObject.SetActive(false);
         }
 
-        // Re-enable collisions between player and dropped object
-        Collider[] player_colliders = GetComponentsInChildren<Collider>();
-        Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
+        
+        if (dropped_object != null)
+        {
+            Collider[] player_colliders = GetComponentsInChildren<Collider>();
+            Collider[] object_colliders = dropped_object.GetComponentsInChildren<Collider>();
 
-    foreach (var pc in player_colliders)
-    {
-        foreach (var oc in object_colliders)
-            Physics.IgnoreCollision(pc, oc, false);
+            if (object_colliders != null)
+            {
+                foreach (var pc in player_colliders)
+                {
+                    foreach (var oc in object_colliders)
+                        Physics.IgnoreCollision(pc, oc, false);
+                }
+            }
+        }
     }
 
-
-
-    }
-
-    /// <summary>
-    /// Throws the currently held object forward with force.
-    /// </summary>
+    
     void ThrowObject()
     {
-        if (held_object_rb == null) return;
+        
+        if (held_object == null || held_object_rb == null) return;
 
         held_object_rb.isKinematic = false;
         held_object_rb.useGravity = true;
@@ -461,8 +484,16 @@ public class PickupController : MonoBehaviour
         }
     }
 
+    
     public void ForceDrop()
     {
+       
+        if (held_object == null)
+        {
+            held_object_rb = null;
+            return;
+        }
+
         if (held_object_rb != null)
         {
             held_object_rb.isKinematic = false;
@@ -473,13 +504,6 @@ public class PickupController : MonoBehaviour
         held_object_rb = null;
     }
 
-
-
-
-
-    /// <summary>
-    /// Smoothly updates vignette alpha when inspecting.
-    /// </summary>
     void UpdateVignette()
     {
         if (vignette_image == null) return;

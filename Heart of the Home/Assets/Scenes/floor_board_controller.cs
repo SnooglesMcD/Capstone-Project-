@@ -10,9 +10,6 @@ public class floor_board_controller : MonoBehaviour
         if (opened) return;
         opened = true;
 
-        Instantiate(key_prefab, transform.position + Vector3.up * 0.3f, Quaternion.identity);
-
-        var anim = GetComponent<Animator>();
-        if (anim != null) anim.SetTrigger("open");
+        key_prefab.gameObject.SetActive(true);
     }
 }
