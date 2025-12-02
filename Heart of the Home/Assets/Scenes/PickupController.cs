@@ -546,12 +546,7 @@ void ClearInspectionDialogue()
                 DialogueManager.Instance.ForceEndDialogue();
             }
             
-            // Also hide UI elements directly as backup
-            if (DialogueManager.Instance.dialoguePanel != null)
-                DialogueManager.Instance.dialoguePanel.SetActive(false);
-                
-            if (DialogueManager.Instance.continuePrompt != null)
-                DialogueManager.Instance.continuePrompt.SetActive(false);
+            
         }
     }
 

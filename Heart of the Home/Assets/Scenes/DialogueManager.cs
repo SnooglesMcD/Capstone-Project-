@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,10 +14,9 @@ public class DialogueLine
     public string speakerName;
     public Sprite speakerPortrait;
     public AudioClip voiceClip;
-    public float displayTime = 3f; // Auto-advance time (0 = manual)
+    public float displayTime = 3f;
     public bool requirePlayerInput = true;
     
-    // Event triggers
     public UnityEvent onLineStart;
     public UnityEvent onLineEnd;
 }
@@ -32,12 +31,10 @@ public class Dialogue
     public bool showSpeakerName = true;
     public bool showPortrait = true;
     
-    // Dialogue flow
-    public string nextDialogueID; // For chaining dialogues
-    public bool requiresItem; // Does this dialogue require an item to trigger?
-    public string requiredItemID; // If requiresItem is true
+    public string nextDialogueID;
+    public bool requiresItem;
+    public string requiredItemID;
     
-    // Events
     public UnityEvent onDialogueStart;
     public UnityEvent onDialogueEnd;
 }
@@ -54,9 +51,30 @@ public class DialogueManager : MonoBehaviour
     public GameObject continuePrompt;
     public Image backgroundPanel;
     
-    [Header("Settings")]
-    public float textSpeed = 0.05f; // Seconds per character
-    public float autoAdvanceDelay = 0.5f; // Delay before auto-advancing
+    [Header("UI Styling - Background")]
+    public Sprite backgroundSprite;
+    public Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.95f);
+    public Vector2 backgroundPadding = new Vector2(50, 30);
+    
+    [Header("UI Styling - Text")]
+    public Color dialogueTextColor = Color.white;
+    public Color speakerTextColor = new Color(1f, 0.8f, 0.3f, 1f);
+    public Color continueTextColor = new Color(1f, 1f, 1f, 0.7f);
+    public int dialogueFontSize = 24;
+    public int speakerFontSize = 28;
+    
+    [Header("UI Styling - Portrait")]
+    public Sprite portraitFrameSprite;
+    public Color portraitFrameColor = Color.white;
+    public float portraitSize = 150f;
+    
+    [Header("Animation Settings")]
+    public float fadeInTime = 0.3f;
+    public float fadeOutTime = 0.2f;
+    public bool useFadeAnimations = true;
+    
+    [Header("Typewriter Settings")]
+    public float textSpeed = 0.05f;
     public bool skipOnClick = true;
     public bool typewriterEffect = true;
     
@@ -78,10 +96,9 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueActive = false;
     private bool isTyping = false;
     private Coroutine typingCoroutine;
+    private CanvasGroup canvasGroup;
     
     private PickupController playerPickupController;
-    private MonoBehaviour playerMovementScript;
-    private MonoBehaviour playerCameraScript;
     
     // Callbacks
     public event Action<Dialogue> OnDialogueStart;
@@ -110,9 +127,36 @@ public class DialogueManager : MonoBehaviour
         playerPickupController = FindObjectOfType<PickupController>();
         
         // Initialize UI
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (continuePrompt != null) continuePrompt.SetActive(false);
+        InitializeUI();
+        
+        if (dialoguePanel != null) 
+        {
+            canvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+                canvasGroup = dialoguePanel.AddComponent<CanvasGroup>();
+        }
+        
+        
+        // Apply UI styling
+
     }
+    
+    void InitializeUI()
+    {
+        // If UI elements aren't assigned, try to find them
+        if (dialoguePanel == null)
+        {
+            dialoguePanel = GameObject.Find("DialoguePanel");
+        }
+        
+        if (dialogueText == null && dialoguePanel != null)
+        {
+            dialogueText = dialoguePanel.GetComponentInChildren<TextMeshProUGUI>();
+        }
+        
+    }
+    
+    
     
     void Update()
     {
@@ -178,13 +222,20 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         
         // Lock player controls if specified
-        if (dialogue.lockPlayerMovement)
+        if (dialogue.lockPlayerMovement && playerPickupController != null)
         {
             LockPlayerControls(true);
         }
         
-        // Show UI
-        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+        // Show UI with animation
+        if (useFadeAnimations && canvasGroup != null)
+        {
+            StartCoroutine(FadeInUI());
+        }
+        else if (dialoguePanel != null)
+        {
+            dialoguePanel.SetActive(true);
+        }
         
         // Trigger start events
         dialogue.onDialogueStart?.Invoke();
@@ -192,6 +243,38 @@ public class DialogueManager : MonoBehaviour
         
         // Display first line
         DisplayCurrentLine();
+    }
+    
+    IEnumerator FadeInUI()
+    {
+        dialoguePanel.SetActive(true);
+        canvasGroup.alpha = 0;
+        
+        float elapsed = 0f;
+        while (elapsed < fadeInTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(0, 1, elapsed / fadeInTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        canvasGroup.alpha = 1;
+    }
+    
+    IEnumerator FadeOutUI()
+    {
+        if (canvasGroup == null) yield break;
+        
+        float elapsed = 0f;
+        while (elapsed < fadeOutTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(1, 0, elapsed / fadeOutTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        canvasGroup.alpha = 0;
+        
     }
     
     void DisplayCurrentLine()
@@ -367,9 +450,12 @@ public class DialogueManager : MonoBehaviour
             }
         }
         
-        // Hide UI
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (continuePrompt != null) continuePrompt.SetActive(false);
+        // Hide UI with animation
+        if (useFadeAnimations && canvasGroup != null)
+        {
+            StartCoroutine(FadeOutUI());
+        }
+        
         
         // Unlock player controls
         LockPlayerControls(false);
@@ -431,7 +517,12 @@ public class DialogueManager : MonoBehaviour
         return isDialogueActive;
     }
     
-    // Quick dialogue methods for common use cases
+    public void ForceEndDialogue()
+    {
+        EndDialogue();
+    }
+    
+    // Quick dialogue methods
     public void ShowSimpleMessage(string message, float displayTime = 3f)
     {
         Dialogue quickDialogue = new Dialogue
@@ -475,47 +566,52 @@ public class DialogueManager : MonoBehaviour
         
         StartDialogue(itemDialogue);
     }
-
-    public void ForceEndDialogue()
-    {
-    if (!isDialogueActive) return;
     
-    // Stop any typing coroutines
-    if (typingCoroutine != null)
+    // UI customization methods
+    public void SetBackgroundColor(Color color)
     {
-        StopCoroutine(typingCoroutine);
-        typingCoroutine = null;
+        backgroundColor = color;
+        if (backgroundPanel != null)
+            backgroundPanel.color = backgroundColor;
     }
     
-    // Hide UI immediately
-    if (dialoguePanel != null) dialoguePanel.SetActive(false);
-    if (continuePrompt != null) continuePrompt.SetActive(false);
-    
-    // Stop audio
-    if (voiceSource != null) voiceSource.Stop();
-    
-    // Unlock player controls
-    if (playerPickupController != null)
+    public void SetTextColor(Color color)
     {
-        if (playerPickupController.player_movement_script != null)
-            playerPickupController.player_movement_script.enabled = true;
-        if (playerPickupController.player_camera_script != null)
-            playerPickupController.player_camera_script.enabled = true;
+        dialogueTextColor = color;
+        if (dialogueText != null)
+            dialogueText.color = dialogueTextColor;
     }
     
-    // Reset state
-    currentDialogue = null;
-    currentLineIndex = 0;
-    isDialogueActive = false;
-    isTyping = false;
+    public void SetSpeakerColor(Color color)
+    {
+        speakerTextColor = color;
+        if (speakerNameText != null)
+            speakerNameText.color = speakerTextColor;
+    }
     
-    Debug.Log("Dialogue force-ended");
-}
-    
-    // Editor helper method
     [ContextMenu("Test Simple Dialogue")]
     void TestSimpleDialogue()
     {
-        ShowSimpleMessage("This is a test message from the Dialogue Manager!", 3f);
+        ShowSimpleMessage("This is a test message with the new UI styling!", 3f);
+    }
+    
+    [ContextMenu("Apply Dark Theme")]
+    void ApplyDarkTheme()
+    {
+        backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.95f);
+        dialogueTextColor = Color.white;
+        speakerTextColor = new Color(1f, 0.8f, 0.3f, 1f);
+        continueTextColor = new Color(1f, 1f, 1f, 0.7f);
+
+    }
+    
+    [ContextMenu("Apply Parchment Theme")]
+    void ApplyParchmentTheme()
+    {
+        backgroundColor = new Color(0.98f, 0.96f, 0.9f, 0.98f);
+        dialogueTextColor = new Color(0.2f, 0.15f, 0.1f, 1f);
+        speakerTextColor = new Color(0.5f, 0.2f, 0.1f, 1f);
+        continueTextColor = new Color(0.3f, 0.2f, 0.1f, 0.8f);
+
     }
 }
