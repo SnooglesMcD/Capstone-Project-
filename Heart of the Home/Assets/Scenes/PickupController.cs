@@ -46,12 +46,18 @@ public class PickupController : MonoBehaviour
     public bool IsInspecting => is_inspecting;
     public GameObject HeldObject => held_object;
 
+    [Header("Inspection Integration")]
+    public bool showInspectionDialogue = true;
+    public float inspectionDelay = 0.5f;    
+
     private Collider[] player_colliders;
     private LayerMask collision_mask;
 
     private GameObject held_object;
     private Rigidbody held_object_rb;
     private bool is_inspecting = false;
+    private Coroutine inspectionCoroutine;
+    private bool isInspectionDialogueActive = false; 
 
     private float original_fov;
     public float zoomed_fov = 40f;
@@ -408,51 +414,145 @@ public class PickupController : MonoBehaviour
         held_object.transform.Rotate(main_cam.transform.right, mouse_y, Space.World);
     }
 
-    void EnterInspectMode()
+
+// Update EnterInspectMode():
+void EnterInspectMode()
+{
+    if (held_object == null) return;
+
+    is_inspecting = true;
+    Cursor.lockState = CursorLockMode.None;
+    Cursor.visible = true;
+
+    if (player_movement_script != null)
+        player_movement_script.enabled = false;
+
+    if (player_camera_script != null)
+        player_camera_script.enabled = false;
+
+    if (object_radius <= 0f)
     {
-        if (held_object == null) return;
-
-        is_inspecting = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        if (player_movement_script != null)
-            player_movement_script.enabled = false;
-
-        if (player_camera_script != null)
-            player_camera_script.enabled = false;
-
-        if (object_radius <= 0f)
-        {
-            Collider obj_collider = held_object.GetComponent<Collider>();
-            object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
-        }
-
-        // Immediate positioning
-        Vector3 desired_position = CalculateDesiredInspectPosition();
-        Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
-        held_object.transform.position = collision_adjusted_position;
+        Collider obj_collider = held_object.GetComponent<Collider>();
+        object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
     }
 
-    void ExitInspectMode()
+    // Immediate positioning
+    Vector3 desired_position = CalculateDesiredInspectPosition();
+    Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
+    held_object.transform.position = collision_adjusted_position;
+    
+    // Show inspection dialogue after delay
+        if (showInspectionDialogue && DialogueManager.Instance != null)
+        {
+            if (inspectionCoroutine != null)
+            {
+                StopCoroutine(inspectionCoroutine);
+                inspectionCoroutine = null;
+            }
+            
+            // Reset dialogue flag
+            isInspectionDialogueActive = false;
+            
+            inspectionCoroutine = StartCoroutine(ShowInspectionDialogue());
+    }
+}
+
+IEnumerator ShowInspectionDialogue()
+{
+    yield return new WaitForSeconds(inspectionDelay);
+    
+    // Get the item_component to retrieve the item_id
+    item_component itemComp = held_object.GetComponent<item_component>();
+    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
     {
-        if (held_object == null) return;
+        // Try to show inspection dialogue using the item_id
+        string dialogueID = itemComp.item_id;
+        isInspectionDialogueActive = true;
+        DialogueManager.Instance.StartDialogue(dialogueID);
+    }
+    else
+    {
+        // Fallback to name-based dialogue ID
+        string dialogueID = GetInspectionDialogueID(held_object);
+        isInspectionDialogueActive = true;
+        DialogueManager.Instance.StartDialogue(dialogueID);
+    }
+}
 
-        is_inspecting = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+string GetInspectionDialogueID(GameObject obj)
+{
+    // First try to get item_component
+    item_component itemComp = obj.GetComponent<item_component>();
+    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+    {
+        return itemComp.item_id;
+    }
+    
+    // Fallback to name-based detection
+    string itemName = obj.name.ToLower();
+    
+    if (itemName.Contains("vulture")) return "vulture";
+    if (itemName.Contains("bust")) return "bust";
+    if (itemName.Contains("evil_eye")) return "evil_eye";
+    if (itemName.Contains("book")) return "book";
+    if (itemName.Contains("key")) return "key";
+    
+    else return "N/A";
+    
+}
 
-        if (main_cam != null)
-            main_cam.fieldOfView = original_fov;
+// Update ExitInspectMode() to stop coroutine:
+public void ExitInspectMode()
+{
+    if (held_object == null) return;
 
-        if (player_movement_script != null)
-            player_movement_script.enabled = true;
+    is_inspecting = false;
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
 
-        if (player_camera_script != null)
-            player_camera_script.enabled = true;
+    if (main_cam != null)
+        main_cam.fieldOfView = original_fov;
 
-        // Use a quick coroutine to smoothly return to hold position without breaking pedestal placement
-        StartCoroutine(ReturnToHoldPosition());
+    if (player_movement_script != null)
+        player_movement_script.enabled = true;
+
+    if (player_camera_script != null)
+        player_camera_script.enabled = true;
+
+    // Clear any active inspection dialogue
+        ClearInspectionDialogue();
+
+        // Stop any ongoing inspection coroutine
+        if (inspectionCoroutine != null)
+        {
+            StopCoroutine(inspectionCoroutine);
+            inspectionCoroutine = null;
+        }
+        
+    // Reset the flag
+    isInspectionDialogueActive = false;
+    
+    // Use a quick coroutine to smoothly return to hold position
+    StartCoroutine(ReturnToHoldPosition());
+}
+
+void ClearInspectionDialogue()
+    {
+        if (isInspectionDialogueActive && DialogueManager.Instance != null)
+        {
+            // Check if dialogue is actually active
+            if (DialogueManager.Instance.IsDialogueActive())
+            {
+                DialogueManager.Instance.ForceEndDialogue();
+            }
+            
+            // Also hide UI elements directly as backup
+            if (DialogueManager.Instance.dialoguePanel != null)
+                DialogueManager.Instance.dialoguePanel.SetActive(false);
+                
+            if (DialogueManager.Instance.continuePrompt != null)
+                DialogueManager.Instance.continuePrompt.SetActive(false);
+        }
     }
 
     IEnumerator ReturnToHoldPosition()
