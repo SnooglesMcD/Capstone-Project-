@@ -349,6 +349,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::floor_board_controller
   key_prefab: {fileID: 1923481917}
+  locked_dialogue_id: floorboard_locked
+  locked_message_duration: 2
 --- !u!1001 &190362608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1019,7 +1021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0c05b937f3b43be4389ad34173708823, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.79
+      value: -6.914
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0c05b937f3b43be4389ad34173708823, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1574,6 +1576,8 @@ MonoBehaviour:
   expected_item_id: '"vulture"'
   place_socket: {fileID: 1076303842}
   pedestal_light: {fileID: 227928491}
+  correct_color: {r: 0, g: 1, b: 0, a: 1}
+  incorrect_color: {r: 1, g: 0, b: 0, a: 1}
   is_correct: 0
 --- !u!4 &465669580 stripped
 Transform:
@@ -1863,6 +1867,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1066874229}
   m_LocalEulerAnglesHint: {x: 1.986, y: 94.292, z: -24.786}
+--- !u!1 &531044270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+  m_PrefabInstance: {fileID: 1946939517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &531044271
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531044270}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &531044272
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531044270}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.029047, y: 1.8863329, z: 2.8014576}
+  m_Center: {x: 0.033654768, y: -0.10171397, z: 0.90073156}
+--- !u!114 &531044274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531044270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40fad399709c94981b218b3a7516c43e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Toybox_controller
+  dialogueId: '"toybox_interact"'
+  interactionSound: {fileID: 0}
 --- !u!1 &535247485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1888,7 +1959,7 @@ Transform:
   m_GameObject: {fileID: 535247485}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.216, y: -0.041, z: 1.266}
+  m_LocalPosition: {x: 0.02, y: 0.02, z: 0.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2403,6 +2474,225 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1923481918}
   m_SourcePrefab: {fileID: 100100000, guid: 0669f3d8f4b119f418a4bbe061cc198f, type: 3}
+--- !u!1 &710420447 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+  m_PrefabInstance: {fileID: 1524960592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &710420450 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+  m_PrefabInstance: {fileID: 1524960592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &710420451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710420447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58b49e4622794818a5c8709faebf06a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BookContent
+  text: "The Tell-Tale Heart Text \n\nTrue! \u2014 nervous \u2014 very, very dreadfully
+    nervous I had been and am; but why will you say that I am mad? The disease had
+    sharpened my senses \u2014 not destroyed \u2014 not dulled them. Above all was
+    the sense of hearing acute. I heard all things in the heaven and in the earth.
+    I heard many things in hell. How, then, am I mad? Hearken! and observe how healthily
+    \u2014 how calmly I can tell you the whole story.\n\nIt is impossible to say
+    how first the idea entered my brain; but once conceived, it haunted me day and
+    night. Object there was none. Passion there was none. I loved the old man. He
+    had never wronged me. He had never given me insult. For his gold I had no desire.
+    I think it was his eye! yes, it was this! One of his eyes resembled that of a
+    vulture \u2014 a pale blue eye, with a film over it. Whenever it fell upon me,
+    my blood ran cold; and so by degrees \u2014 very gradually \u2014 I made up my
+    mind to take the life of the old man, and thus rid myself of the eye forever.\n\nNow
+    this is the point. You fancy me mad. Madmen know nothing. But you should have
+    seen me. You should have seen how wisely I proceeded \u2014 with what caution
+    \u2014 with what foresight \u2014 with what dissimulation I went to work! I was
+    never kinder to the old man than during the whole week before I killed him. And
+    every night, about midnight, I turned the latch of his door and opened it \u2014
+    oh, so gently! And then, when I had made an opening sufficient for my head, I
+    put in a dark lantern, all closed, closed, so that no light shone out, and then
+    I thrust in my head. Oh, you would have laughed to see how cunningly I thrust
+    it in! I moved it slowly \u2014 very, very slowly, so that I might not disturb
+    the old man\u2019s sleep. It took me an hour to place my whole head within the
+    opening so far that I could see him as he lay upon his bed. Ha! \u2014 would
+    a madman have been so wise as this? And then, when my head was well in the room,
+    I undid the lantern cautiously \u2014 oh, so cautiously \u2014 cautiously (for
+    the hinges creaked) \u2014 I undid it just so much that a single thin ray fell
+    upon the vulture eye. And this I did for seven long nights \u2014 every night
+    just at midnight \u2014 but I found the eye always closed; and so it was impossible
+    to do the work; for it was not the old man who vexed me, but his Evil Eye. And
+    every morning, when the day broke, I went boldly into the chamber, and spoke
+    courageously to him, calling him by name in a hearty tone, and inquiring how
+    he had passed the night. So you see he would have been a very profound old man,
+    indeed, to suspect that every night, just at twelve, I looked in upon him while
+    he slept.\n\nUpon the eighth night I was more than usually cautious in opening
+    the door. A watch\u2019s minute hand moves more quickly than did mine. Never
+    before that night had I felt the extent of my own powers \u2014 of my sagacity.
+    I could scarcely contain my feelings of triumph. To think that there I was, opening
+    the door, little by little, and he not even to dream of my secret deeds or thoughts.
+    I fairly chuckled at the idea; and perhaps he heard me; for he moved on the bed
+    suddenly, as if startled. Now you may think that I drew back \u2014 but no. His
+    room was as black as pitch with the thick darkness, (for the shutters were close
+    fastened, through fear of robbers,) and so I knew that he could not see the opening
+    of the door, and I kept pushing it on steadily, steadily.\n\nI had my head in,
+    and was about to open the lantern, when my thumb slipped upon the tin fastening,
+    and the old man sprang up in the bed, crying out \u2014 \u201CWho\u2019s there?\u201D\n\nI
+    kept quite still and said nothing. For a whole hour I did not move a muscle,
+    and in the meantime I did not hear him lie down. He was still sitting up in the
+    bed listening; \u2014 just as I have done, night after night, hearkening to the
+    death watches in the wall.\n\nPresently I heard a slight groan, and I knew it
+    was the groan of mortal terror. It was not a groan of pain or of grief \u2014
+    oh, no! \u2014 it was the low stifled sound that arises from the bottom of the
+    soul when overcharged with awe. I knew the sound well. Many a night, just at
+    midnight, when all the world slept, it has welled up from my own bosom, deepening,
+    with its dreadful echo, the terrors that distracted me. I say I knew it well.
+    I knew what the old man felt, and pitied him, although I chuckled at heart. I
+    knew that he had been lying awake ever since the first slight noise, when he
+    had turned in the bed. His fears had been ever since growing upon him. He had
+    been trying to fancy them causeless, but could not. He had been saying to himself
+    \u2014 \u201CIt is nothing but the wind in the chimney \u2014 it is only a mouse
+    crossing the floor,\u201D or \u201Cit is merely a cricket which has made a single
+    chirp.\u201D Yes, he has been trying to comfort himself with these suppositions:
+    but he had found all in vain. All in vain; because Death, in approaching him
+    had stalked with his black shadow before him, and enveloped the victim. And it
+    was the mournful influence of the unperceived shadow that caused him to feel
+    \u2014 although he neither saw nor heard \u2014 to feel the presence of my head
+    within the room.\n\nWhen I had waited a long time, very patiently, without hearing
+    him lie down, I resolved to open a little \u2014 a very, very little crevice
+    in the lantern. So I opened it \u2014 you cannot imagine how stealthily, stealthily
+    \u2014 until, at length a single dim ray, like the thread of the spider, shot
+    from out the crevice and fell upon the vulture eye.\n\nIt was open \u2014 wide,
+    wide open \u2014 and I grew furious as I gazed upon it. I saw it with perfect
+    distinctness \u2014 all a dull blue, with a hideous veil over it that chilled
+    the very marrow in my bones; but I could see nothing else of the old man\u2019s
+    face or person: for I had directed the ray as if by instinct, precisely upon
+    the damned spot.\n\nAnd now have I not told you that what you mistake for madness
+    is but over acuteness of the senses? \u2014 now, I say, there came to my ears
+    a low, dull, quick sound, such as a watch makes when enveloped in cotton. I knew
+    that sound well, too. It was the beating of the old man\u2019s heart. It increased
+    my fury, as the beating of a drum stimulates the soldier into courage.\n\nBut
+    even yet I refrained and kept still. I scarcely breathed. I held the lantern
+    motionless. I tried how steadily I could maintain the ray upon the eye. Meantime
+    the hellish tattoo of the heart increased. It grew quicker and quicker, and louder
+    and louder every instant. The old man\u2019s terror must have been extreme! It
+    grew louder, I say, louder every moment! \u2014 do you mark me well? I have told
+    you that I am nervous: so I am. And now at the dead hour of the night, amid the
+    dreadful silence of that old house, so strange a noise as this excited me to
+    uncontrollable terror. Yet, for some minutes longer I refrained and stood still.
+    But the beating grew louder, louder! I thought the heart must burst. And now
+    a new anxiety seized me \u2014 the sound would be heard by a neighbor! The old
+    man\u2019s hour had come! With a loud yell, I threw open the lantern and leaped
+    into the room. He shrieked once \u2014 once only. In an instant I dragged him
+    to the floor, and pulled the heavy bed over him. I then smiled gaily, to find
+    the deed so far done. But, for many minutes, the heart beat on with a muffled
+    sound. This, however, did not vex me; it would not be heard through the wall.
+    At length it ceased. The old man was dead. I removed the bed and examined the
+    corpse. Yes, he was stone, stone dead. I placed my hand upon the heart and held
+    it there many minutes. There was no pulsation. He was stone dead. His eye would
+    trouble me no more.\n\nIf still you think me mad, you will think so no longer
+    when I describe the wise precautions I took for the concealment of the body.
+    The night waned, and I worked hastily, but in silence. First of all I dismembered
+    the corpse. I cut off the head and the arms and the legs.\n\nI then took up three
+    planks from the flooring of the chamber, and deposited all between the scantlings.
+    I then replaced the boards so cleverly, so cunningly, that no human eye \u2014
+    not even his \u2014 could have detected any thing wrong. There was nothing to
+    wash out \u2014 no stain of any kind \u2014 no blood-spot whatever. I had been
+    too wary for that. A tub had caught all \u2014 ha! ha!\n\nWhen I had made an
+    end of these labors, it was four o \u2018clock \u2014 still dark as midnight.
+    As the bell sounded the hour, there came a knocking at the street door. I went
+    down to open it with a light heart, \u2014 for what had I now to fear? There
+    entered three men, who introduced themselves, with perfect suavity, as officers
+    of the police. A shriek had been heard by a neighbor during the night; suspicion
+    of foul play had been aroused; information had been lodged at the police office,
+    and they (the officers) had been deputed to search the premises.\n\nI smiled,
+    \u2014 for what had I to fear? I bade the gentlemen welcome. The shriek, I said,
+    was my own in a dream. The old man, I mentioned, was absent in the country. I
+    took my visitors all over the house. I bade them search \u2014 search well. I
+    led them, at length, to his chamber. I showed them his treasures, secure, undisturbed.
+    In the enthusiasm of my confidence, I brought chairs into the room, and desired
+    them here to rest from their fatigues, while I myself, in the wild audacity of
+    my perfect triumph, placed my own seat upon the very spot beneath which reposed
+    the corpse of the victim.\n\nThe officers were satisfied. My manner had convinced
+    them. I was singularly at ease. They sat, and while I answered cheerily, they
+    chatted of familiar things. But, ere long, I felt myself getting pale and wished
+    them gone. My head ached, and I fancied a ringing in my ears: but still they
+    sat and still chatted. The ringing became more distinct: \u2014 it continued
+    and became more distinct: I talked more freely to get rid of the feeling: but
+    it continued and gained definitiveness \u2014 until, at length, I found that
+    the noise was not within my ears.\n\nNo doubt I now grew very pale; \u2014 but
+    I talked more fluently, and with a heightened voice. Yet the sound increased
+    \u2014 and what could I do? It was a low, dull, quick sound \u2014 much such
+    a sound as a watch makes when enveloped in cotton. I gasped for breath \u2014
+    and yet the officers heard it not. I talked more quickly \u2014 more vehemently;
+    but the noise steadily increased. I arose and argued about trifles, in a high
+    key and with violent gesticulations; but the noise steadily increased. Why would
+    they not be gone? I paced the floor to and fro with heavy strides, as if excited
+    to fury by the observations of the men \u2014 but the noise steadily increased.
+    Oh God! what could I do? I foamed \u2014 I raved \u2014 I swore! I swung the
+    chair upon which I had been sitting, and grated it upon the boards, but the noise
+    arose over all and continually increased. It grew louder \u2014 louder \u2014
+    louder! And still the men chatted pleasantly, and smiled. Was it possible they
+    heard not? Almighty God! \u2014 no, no! They heard! \u2014 they suspected! \u2014
+    they knew! \u2014 they were making a mockery of my horror! \u2014 this I thought,
+    and this I think. But anything was better than this agony! Anything was more
+    tolerable than this derision! I could bear those hypocritical smiles no longer!
+    I felt that I must scream or die! \u2014 and now \u2014 again! \u2014 hark! louder!
+    louder! louder! louder! \u2014\n\n\u201CVillains!\u201D I shrieked, \u201Cdissemble
+    no more! I admit the deed! \u2014 tear up the planks! \u2014 here, here! \u2014
+    it is the beating of his hideous heart!\u201D\n"
+--- !u!54 &710420452
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710420447}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &710420453
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710420447}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.013926736, y: 0.021258548, z: 0.002828615}
+  m_Center: {x: -0.00009484263, y: -1.9181155e-20, z: 1.1641535e-10}
 --- !u!1 &736265835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2507,6 +2797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   pause_menu_ui: {fileID: 1659049280}
+  pause_menu_buttons: {fileID: 350016694}
   playerController: {fileID: 1576889011}
 --- !u!1 &839980375
 GameObject:
@@ -2600,7 +2891,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2736,307 +3027,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1510866213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &908303299
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 908303303}
-  - component: {fileID: 908303302}
-  - component: {fileID: 908303301}
-  - component: {fileID: 908303300}
-  - component: {fileID: 908303304}
-  - component: {fileID: 908303305}
-  m_Layer: 0
-  m_Name: Book
-  m_TagString: Book
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &908303300
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908303299}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &908303301
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908303299}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c7b0f7dd3a63c458285a9101e745f3b9, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &908303302
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908303299}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &908303303
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908303299}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.89, y: 1.03, z: 0.25}
-  m_LocalScale: {x: 0.3, y: 0.05, z: 0.4}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1775945101}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &908303304
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908303299}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &908303305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908303299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f58b49e4622794818a5c8709faebf06a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BookContent
-  text: "The Tell-Tale Heart Text \r\n\r\nTrue! \u2014 nervous \u2014 very, very
-    dreadfully nervous I had been and am; but why will you say that I am mad? The
-    disease had sharpened my senses \u2014 not destroyed \u2014 not dulled them.
-    Above all was the sense of hearing acute. I heard all things in the heaven and
-    in the earth. I heard many things in hell. How, then, am I mad? Hearken! and
-    observe how healthily \u2014 how calmly I can tell you the whole story.\r\n\r\nIt
-    is impossible to say how first the idea entered my brain; but once conceived,
-    it haunted me day and night. Object there was none. Passion there was none. I
-    loved the old man. He had never wronged me. He had never given me insult. For
-    his gold I had no desire. I think it was his eye! yes, it was this! One of his
-    eyes resembled that of a vulture \u2014 a pale blue eye, with a film over it.
-    Whenever it fell upon me, my blood ran cold; and so by degrees \u2014 very gradually
-    \u2014 I made up my mind to take the life of the old man, and thus rid myself
-    of the eye forever.\r\n\r\nNow this is the point. You fancy me mad. Madmen know
-    nothing. But you should have seen me. You should have seen how wisely I proceeded
-    \u2014 with what caution \u2014 with what foresight \u2014 with what dissimulation
-    I went to work! I was never kinder to the old man than during the whole week
-    before I killed him. And every night, about midnight, I turned the latch of his
-    door and opened it \u2014 oh, so gently! And then, when I had made an opening
-    sufficient for my head, I put in a dark lantern, all closed, closed, so that
-    no light shone out, and then I thrust in my head. Oh, you would have laughed
-    to see how cunningly I thrust it in! I moved it slowly \u2014 very, very slowly,
-    so that I might not disturb the old man\u2019s sleep. It took me an hour to place
-    my whole head within the opening so far that I could see him as he lay upon his
-    bed. Ha! \u2014 would a madman have been so wise as this? And then, when my head
-    was well in the room, I undid the lantern cautiously \u2014 oh, so cautiously
-    \u2014 cautiously (for the hinges creaked) \u2014 I undid it just so much that
-    a single thin ray fell upon the vulture eye. And this I did for seven long nights
-    \u2014 every night just at midnight \u2014 but I found the eye always closed;
-    and so it was impossible to do the work; for it was not the old man who vexed
-    me, but his Evil Eye. And every morning, when the day broke, I went boldly into
-    the chamber, and spoke courageously to him, calling him by name in a hearty tone,
-    and inquiring how he had passed the night. So you see he would have been a very
-    profound old man, indeed, to suspect that every night, just at twelve, I looked
-    in upon him while he slept.\r\n\r\nUpon the eighth night I was more than usually
-    cautious in opening the door. A watch\u2019s minute hand moves more quickly than
-    did mine. Never before that night had I felt the extent of my own powers \u2014
-    of my sagacity. I could scarcely contain my feelings of triumph. To think that
-    there I was, opening the door, little by little, and he not even to dream of
-    my secret deeds or thoughts. I fairly chuckled at the idea; and perhaps he heard
-    me; for he moved on the bed suddenly, as if startled. Now you may think that
-    I drew back \u2014 but no. His room was as black as pitch with the thick darkness,
-    (for the shutters were close fastened, through fear of robbers,) and so I knew
-    that he could not see the opening of the door, and I kept pushing it on steadily,
-    steadily.\r\n\r\nI had my head in, and was about to open the lantern, when my
-    thumb slipped upon the tin fastening, and the old man sprang up in the bed, crying
-    out \u2014 \u201CWho\u2019s there?\u201D\r\n\r\nI kept quite still and said nothing.
-    For a whole hour I did not move a muscle, and in the meantime I did not hear
-    him lie down. He was still sitting up in the bed listening; \u2014 just as I
-    have done, night after night, hearkening to the death watches in the wall.\r\n\r\nPresently
-    I heard a slight groan, and I knew it was the groan of mortal terror. It was
-    not a groan of pain or of grief \u2014 oh, no! \u2014 it was the low stifled
-    sound that arises from the bottom of the soul when overcharged with awe. I knew
-    the sound well. Many a night, just at midnight, when all the world slept, it
-    has welled up from my own bosom, deepening, with its dreadful echo, the terrors
-    that distracted me. I say I knew it well. I knew what the old man felt, and pitied
-    him, although I chuckled at heart. I knew that he had been lying awake ever since
-    the first slight noise, when he had turned in the bed. His fears had been ever
-    since growing upon him. He had been trying to fancy them causeless, but could
-    not. He had been saying to himself \u2014 \u201CIt is nothing but the wind in
-    the chimney \u2014 it is only a mouse crossing the floor,\u201D or \u201Cit is
-    merely a cricket which has made a single chirp.\u201D Yes, he has been trying
-    to comfort himself with these suppositions: but he had found all in vain. All
-    in vain; because Death, in approaching him had stalked with his black shadow
-    before him, and enveloped the victim. And it was the mournful influence of the
-    unperceived shadow that caused him to feel \u2014 although he neither saw nor
-    heard \u2014 to feel the presence of my head within the room.\r\n\r\nWhen I had
-    waited a long time, very patiently, without hearing him lie down, I resolved
-    to open a little \u2014 a very, very little crevice in the lantern. So I opened
-    it \u2014 you cannot imagine how stealthily, stealthily \u2014 until, at length
-    a single dim ray, like the thread of the spider, shot from out the crevice and
-    fell upon the vulture eye.\r\n\r\nIt was open \u2014 wide, wide open \u2014 and
-    I grew furious as I gazed upon it. I saw it with perfect distinctness \u2014
-    all a dull blue, with a hideous veil over it that chilled the very marrow in
-    my bones; but I could see nothing else of the old man\u2019s face or person:
-    for I had directed the ray as if by instinct, precisely upon the damned spot.\r\n\r\nAnd
-    now have I not told you that what you mistake for madness is but over acuteness
-    of the senses? \u2014 now, I say, there came to my ears a low, dull, quick sound,
-    such as a watch makes when enveloped in cotton. I knew that sound well, too.
-    It was the beating of the old man\u2019s heart. It increased my fury, as the
-    beating of a drum stimulates the soldier into courage.\r\n\r\nBut even yet I
-    refrained and kept still. I scarcely breathed. I held the lantern motionless.
-    I tried how steadily I could maintain the ray upon the eye. Meantime the hellish
-    tattoo of the heart increased. It grew quicker and quicker, and louder and louder
-    every instant. The old man\u2019s terror must have been extreme! It grew louder,
-    I say, louder every moment! \u2014 do you mark me well? I have told you that
-    I am nervous: so I am. And now at the dead hour of the night, amid the dreadful
-    silence of that old house, so strange a noise as this excited me to uncontrollable
-    terror. Yet, for some minutes longer I refrained and stood still. But the beating
-    grew louder, louder! I thought the heart must burst. And now a new anxiety seized
-    me \u2014 the sound would be heard by a neighbor! The old man\u2019s hour had
-    come! With a loud yell, I threw open the lantern and leaped into the room. He
-    shrieked once \u2014 once only. In an instant I dragged him to the floor, and
-    pulled the heavy bed over him. I then smiled gaily, to find the deed so far done.
-    But, for many minutes, the heart beat on with a muffled sound. This, however,
-    did not vex me; it would not be heard through the wall. At length it ceased.
-    The old man was dead. I removed the bed and examined the corpse. Yes, he was
-    stone, stone dead. I placed my hand upon the heart and held it there many minutes.
-    There was no pulsation. He was stone dead. His eye would trouble me no more.\r\n\r\nIf
-    still you think me mad, you will think so no longer when I describe the wise
-    precautions I took for the concealment of the body. The night waned, and I worked
-    hastily, but in silence. First of all I dismembered the corpse. I cut off the
-    head and the arms and the legs.\r\n\r\nI then took up three planks from the flooring
-    of the chamber, and deposited all between the scantlings. I then replaced the
-    boards so cleverly, so cunningly, that no human eye \u2014 not even his \u2014
-    could have detected any thing wrong. There was nothing to wash out \u2014 no
-    stain of any kind \u2014 no blood-spot whatever. I had been too wary for that.
-    A tub had caught all \u2014 ha! ha!\r\n\r\nWhen I had made an end of these labors,
-    it was four o \u2018clock \u2014 still dark as midnight. As the bell sounded
-    the hour, there came a knocking at the street door. I went down to open it with
-    a light heart, \u2014 for what had I now to fear? There entered three men, who
-    introduced themselves, with perfect suavity, as officers of the police. A shriek
-    had been heard by a neighbor during the night; suspicion of foul play had been
-    aroused; information had been lodged at the police office, and they (the officers)
-    had been deputed to search the premises.\r\n\r\nI smiled, \u2014 for what had
-    I to fear? I bade the gentlemen welcome. The shriek, I said, was my own in a
-    dream. The old man, I mentioned, was absent in the country. I took my visitors
-    all over the house. I bade them search \u2014 search well. I led them, at length,
-    to his chamber. I showed them his treasures, secure, undisturbed. In the enthusiasm
-    of my confidence, I brought chairs into the room, and desired them here to rest
-    from their fatigues, while I myself, in the wild audacity of my perfect triumph,
-    placed my own seat upon the very spot beneath which reposed the corpse of the
-    victim.\r\n\r\nThe officers were satisfied. My manner had convinced them. I was
-    singularly at ease. They sat, and while I answered cheerily, they chatted of
-    familiar things. But, ere long, I felt myself getting pale and wished them gone.
-    My head ached, and I fancied a ringing in my ears: but still they sat and still
-    chatted. The ringing became more distinct: \u2014 it continued and became more
-    distinct: I talked more freely to get rid of the feeling: but it continued and
-    gained definitiveness \u2014 until, at length, I found that the noise was not
-    within my ears.\r\n\r\nNo doubt I now grew very pale; \u2014 but I talked more
-    fluently, and with a heightened voice. Yet the sound increased \u2014 and what
-    could I do? It was a low, dull, quick sound \u2014 much such a sound as a watch
-    makes when enveloped in cotton. I gasped for breath \u2014 and yet the officers
-    heard it not. I talked more quickly \u2014 more vehemently; but the noise steadily
-    increased. I arose and argued about trifles, in a high key and with violent gesticulations;
-    but the noise steadily increased. Why would they not be gone? I paced the floor
-    to and fro with heavy strides, as if excited to fury by the observations of the
-    men \u2014 but the noise steadily increased. Oh God! what could I do? I foamed
-    \u2014 I raved \u2014 I swore! I swung the chair upon which I had been sitting,
-    and grated it upon the boards, but the noise arose over all and continually increased.
-    It grew louder \u2014 louder \u2014 louder! And still the men chatted pleasantly,
-    and smiled. Was it possible they heard not? Almighty God! \u2014 no, no! They
-    heard! \u2014 they suspected! \u2014 they knew! \u2014 they were making a mockery
-    of my horror! \u2014 this I thought, and this I think. But anything was better
-    than this agony! Anything was more tolerable than this derision! I could bear
-    those hypocritical smiles no longer! I felt that I must scream or die! \u2014
-    and now \u2014 again! \u2014 hark! louder! louder! louder! louder! \u2014\r\n\r\n\u201CVillains!\u201D
-    I shrieked, \u201Cdissemble no more! I admit the deed! \u2014 tear up the planks!
-    \u2014 here, here! \u2014 it is the beating of his hideous heart!\u201D\r\n"
 --- !u!1 &957224766
 GameObject:
   m_ObjectHideFlags: 0
@@ -3105,7 +3095,7 @@ MonoBehaviour:
   fadeInTime: 0.3
   fadeOutTime: 0.2
   useFadeAnimations: 1
-  textSpeed: 0.05
+  textSpeed: 0.03
   skipOnClick: 1
   typewriterEffect: 1
   voiceSource: {fileID: 0}
@@ -3198,11 +3188,72 @@ MonoBehaviour:
         m_Calls: []
   - dialogueID: '"key"'
     lines:
-    - text: I hate this stupid fucking key.
+    - text: The floor boards here are squeaky and loose. I'm suprised my dad let
+        them get this bad.
       speakerName: 
       speakerPortrait: {fileID: 0}
       voiceClip: {fileID: 0}
       displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: floorboard_locked
+    lines:
+    - text: The floor boards here are squeaky and loose. I'm suprised my dad let
+        them get this bad.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"toybox_interact"'
+    lines:
+    - text: Dad was... particular about me cleaning up my playroom. He engineered
+        one of his crazy machines so that the basement door wouldn't open unless
+        all my toys were put away. I remember one time I threw one of the toys under
+        the door, the pressure plate system went off and closed the door, and I wasn't
+        able it open it again without that last toy. Dad didn't let me down there
+        for a week while he was fixing it, and I never did get that toy back.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
       requirePlayerInput: 0
       onLineStart:
         m_PersistentCalls:
@@ -3580,6 +3631,8 @@ MonoBehaviour:
   expected_item_id: '"evil_eye"'
   place_socket: {fileID: 1231928825}
   pedestal_light: {fileID: 511877863}
+  correct_color: {r: 0, g: 1, b: 0, a: 1}
+  incorrect_color: {r: 1, g: 0, b: 0, a: 1}
   is_correct: 0
 --- !u!65 &1066874231
 BoxCollider:
@@ -4082,6 +4135,92 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &1261358183
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1775945101}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.373
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.372
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.747
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.68496794
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.72857326
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -93.534
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_Name
+      value: Vulture Plush
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      propertyPath: m_TagString
+      value: Pickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2103745586}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2103745584}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2103745587}
+  m_SourcePrefab: {fileID: 100100000, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
 --- !u!1 &1272571145
 GameObject:
   m_ObjectHideFlags: 0
@@ -4262,159 +4401,6 @@ MonoBehaviour:
   onDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1295116938
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1295116939}
-  - component: {fileID: 1295116943}
-  - component: {fileID: 1295116942}
-  - component: {fileID: 1295116941}
-  - component: {fileID: 1295116940}
-  - component: {fileID: 1295116944}
-  m_Layer: 0
-  m_Name: Vulture Plush
-  m_TagString: Pickup
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1295116939
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295116938}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.72, y: 1.27, z: -2.73}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1775945101}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1295116940
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295116938}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1295116941
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295116938}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!23 &1295116942
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295116938}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: f66a2595e9f984b8f97c38a8776f9936, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1295116943
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295116938}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1295116944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295116938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e60ab5b0772425bac19971f469eae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::item_component
-  item_id: '"vulture"'
 --- !u!1001 &1334081486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4765,6 +4751,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431955129}
   m_CullTransparentMesh: 1
+--- !u!1 &1467450814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1467450815}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1467450815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467450814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1775945101}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1501779278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4842,6 +4859,8 @@ MonoBehaviour:
   expected_item_id: '"bust"'
   place_socket: {fileID: 901678704}
   pedestal_light: {fileID: 1681586870}
+  correct_color: {r: 0, g: 1, b: 0, a: 1}
+  incorrect_color: {r: 1, g: 0, b: 0, a: 1}
   is_correct: 0
 --- !u!4 &1510866213 stripped
 Transform:
@@ -4981,6 +5000,88 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523834213}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1524960592
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1775945101}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.40639
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.773218
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 22.282986
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.83889
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.883
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.70340955
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.71078485
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90.597
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_Name
+      value: Telltale Heart
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      propertyPath: m_TagString
+      value: Book
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 710420453}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 710420452}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 710420451}
+  m_SourcePrefab: {fileID: 100100000, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
 --- !u!1 &1576889002
 GameObject:
   m_ObjectHideFlags: 0
@@ -5059,7 +5160,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576889002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5146,7 +5247,7 @@ MonoBehaviour:
   post_inspect_lift: 0.3
   lift_duration: 0.2
   inspect_distance_offset: 0.25
-  min_inspect_distance: 0.5
+  min_inspect_distance: 2
   throw_force: 10
   interaction_text: {fileID: 1937436296}
   reticle: {fileID: 585354822}
@@ -5945,9 +6046,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1387784547}
-  - {fileID: 1295116939}
+  - {fileID: 2103745583}
   - {fileID: 1272571146}
-  - {fileID: 908303303}
+  - {fileID: 710420450}
+  - {fileID: 1467450815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878915006
@@ -6352,7 +6454,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 16
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -6397,6 +6499,94 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937436294}
   m_CullTransparentMesh: 1
+--- !u!1001 &1946939517
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.48
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.76
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7057914
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70841974
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90.213
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_Name
+      value: Toy Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      propertyPath: m_TagString
+      value: Interact
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -8700617353114198275, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+    - {fileID: 65702495048144492, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 531044272}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 531044271}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 531044274}
+  m_SourcePrefab: {fileID: 100100000, guid: 7dc4edd7d3957495cb94d8472792df53, type: 3}
 --- !u!1 &2017860399
 GameObject:
   m_ObjectHideFlags: 0
@@ -6422,7 +6612,7 @@ Transform:
   m_GameObject: {fileID: 2017860399}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0.5}
+  m_LocalPosition: {x: 0, y: -0.74, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6572,6 +6762,77 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2103745582 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+  m_PrefabInstance: {fileID: 1261358183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2103745583 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 24b9de2f2c1384644a570c5bd278056b, type: 3}
+  m_PrefabInstance: {fileID: 1261358183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2103745584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103745582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e60ab5b0772425bac19971f469eae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::item_component
+  item_id: '"vulture"'
+--- !u!54 &2103745586
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103745582}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 1.6, y: 1.41, z: 1.06}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &2103745587
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103745582}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.4059985, y: 3.0678232, z: 2.1995695}
+  m_Center: {x: 0.052007332, y: 0.55655956, z: -0.12776354}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6602,3 +6863,4 @@ SceneRoots:
   - {fileID: 472020645}
   - {fileID: 567629871}
   - {fileID: 29379326}
+  - {fileID: 1946939517}
