@@ -230,6 +230,7 @@ public class PickupController : MonoBehaviour
                         var door = hit.collider.GetComponent<door_lock_controller>();
                         if (door != null)
                         {
+                            door.KeyCollected();
                             door.OnInteract();
                             return;
                         }
@@ -265,10 +266,10 @@ public class PickupController : MonoBehaviour
                             return;
                         }
 
-                        var door = hit.collider.GetComponent<door_lock_controller>();
-                        if (door != null)
+                        var toybox = hit.collider.GetComponent<Toybox_controller>();
+                        if (toybox != null)
                         {
-                            door.OnInteract();
+                            toybox.OnInteract();
                             return;
                         }
 
@@ -276,6 +277,13 @@ public class PickupController : MonoBehaviour
                         if (ped != null)
                         {
                             ped.OnInteract();
+                            return;
+                        }
+
+                        var door = hit.collider.GetComponent<door_lock_controller>();
+                        if (door != null)
+                        {
+                            door.OnInteract();
                             return;
                         }
                     }
