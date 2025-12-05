@@ -307,41 +307,128 @@ public class PickupController : MonoBehaviour
         }
     }
 
-    void TryPickup()
+    // In the UpdateUIText method or similar location:
+    void UpdateUIText(string message)
     {
-        Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
+    if (interaction_text != null)
+    {
+        // Check if holding a book and add reading prompt
+        if (held_object != null && held_object.CompareTag("Book"))
         {
-            if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
+            message += " | [X] to Read";
+        }
+        
+        interaction_text.text = message;
+        interaction_text.gameObject.SetActive(true);
+    }
+}
+
+// In the TryPickup method, add book controller notification:
+void TryPickup()
+{
+    Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+    RaycastHit hit;
+
+    if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
+    {
+        if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
+        {
+            held_object = hit.collider.gameObject;
+            held_object_rb = held_object.GetComponent<Rigidbody>();
+
+            if (held_object_rb != null)
             {
-                held_object = hit.collider.gameObject;
-                held_object_rb = held_object.GetComponent<Rigidbody>();
+                held_object_rb.useGravity = false;
+                held_object_rb.isKinematic = true;
+            }
 
-                if (held_object_rb != null)
-                {
-                    held_object_rb.useGravity = false;
-                    held_object_rb.isKinematic = true;
-                }
+            held_object.transform.rotation = Quaternion.LookRotation(main_cam.transform.forward);
 
-                held_object.transform.rotation = Quaternion.LookRotation(main_cam.transform.forward);
+            Collider obj_collider = held_object.GetComponent<Collider>();
+            object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
 
-                Collider obj_collider = held_object.GetComponent<Collider>();
-                object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
+            // Notify book controller that it was picked up
+            BookController bookController = held_object.GetComponent<BookController>();
+            if (bookController != null)
+            {
+                bookController.OnBookPickedUp();
+            }
 
-                UpdateUIText("Press [R] to Inspect | [Q] to Drop | [Right Click] to Throw");
+            UpdateUIText("Press [R] to Inspect | [Q] to Drop | [Right Click] to Throw");
 
-                Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
+            Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
 
-                foreach (var pc in player_colliders)
-                {
-                    foreach (var oc in object_colliders)
-                        Physics.IgnoreCollision(pc, oc, true);
-                }
+            foreach (var pc in player_colliders)
+            {
+                foreach (var oc in object_colliders)
+                    Physics.IgnoreCollision(pc, oc, true);
             }
         }
     }
+}
+
+// In the DropObject method, add book controller notification:
+void DropObject()
+{
+    if (held_object == null)
+    {
+        held_object_rb = null;
+        is_inspecting = false;
+        return;
+    }
+
+    // Notify book controller before dropping
+    BookController bookController = held_object.GetComponent<BookController>();
+    if (bookController != null)
+    {
+        bookController.OnBookDropped();
+    }
+
+    if (held_object_rb != null)
+    {
+        held_object_rb.isKinematic = false;
+        held_object_rb.useGravity = true;
+    }
+
+    GameObject dropped_object = held_object; 
+
+    held_object = null;
+    held_object_rb = null;
+    is_inspecting = false;
+    object_radius = 0f;
+
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
+
+    if (main_cam != null)
+        main_cam.fieldOfView = original_fov;
+
+    if (player_movement_script != null)
+        player_movement_script.enabled = true;
+
+    if (player_camera_script != null)
+        player_camera_script.enabled = true;
+
+    if (interaction_text != null)
+    {
+        interaction_text.text = "";
+        interaction_text.gameObject.SetActive(false);
+    }
+
+    if (dropped_object != null)
+    {
+        Collider[] object_colliders = dropped_object.GetComponentsInChildren<Collider>();
+
+        if (object_colliders != null)
+        {
+            foreach (var pc in player_colliders)
+            {
+                foreach (var oc in object_colliders)
+                    Physics.IgnoreCollision(pc, oc, false);
+            }
+        }
+    }
+}
 
     void MoveHeldObject()
     {
@@ -574,60 +661,6 @@ void ClearInspectionDialogue()
         held_object.transform.position = targetPosition;
     }
 
-    void DropObject()
-    {
-        if (held_object == null)
-        {
-            held_object_rb = null;
-            is_inspecting = false;
-            return;
-        }
-
-        if (held_object_rb != null)
-        {
-            held_object_rb.isKinematic = false;
-            held_object_rb.useGravity = true;
-        }
-
-        GameObject dropped_object = held_object; 
-
-        held_object = null;
-        held_object_rb = null;
-        is_inspecting = false;
-        object_radius = 0f;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        if (main_cam != null)
-            main_cam.fieldOfView = original_fov;
-
-        if (player_movement_script != null)
-            player_movement_script.enabled = true;
-
-        if (player_camera_script != null)
-            player_camera_script.enabled = true;
-
-        if (interaction_text != null)
-        {
-            interaction_text.text = "";
-            interaction_text.gameObject.SetActive(false);
-        }
-
-        if (dropped_object != null)
-        {
-            Collider[] object_colliders = dropped_object.GetComponentsInChildren<Collider>();
-
-            if (object_colliders != null)
-            {
-                foreach (var pc in player_colliders)
-                {
-                    foreach (var oc in object_colliders)
-                        Physics.IgnoreCollision(pc, oc, false);
-                }
-            }
-        }
-    }
 
     void ThrowObject()
     {
@@ -690,12 +723,4 @@ void ClearInspectionDialogue()
         vignette_image.color = col;
     }
 
-    void UpdateUIText(string message)
-    {
-        if (interaction_text != null)
-        {
-            interaction_text.text = message;
-            interaction_text.gameObject.SetActive(true);
-        }
-    }
 }
