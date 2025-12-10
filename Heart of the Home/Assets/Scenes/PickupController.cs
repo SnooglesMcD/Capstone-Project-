@@ -66,6 +66,8 @@ public class PickupController : MonoBehaviour
     private Vector3 target_inspect_position;
     private float object_radius;
 
+    private pedestal_controller last_nearby_pedestal;
+
     void Start()
     {
         if (interaction_text != null)
@@ -105,47 +107,49 @@ public class PickupController : MonoBehaviour
     {
         if (held_object != null)
         {
-            // Update UI based on what we're looking at
-            Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
-            RaycastHit hit;
-            bool show_interaction_prompt = false;
-
-            if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
+            // Find all pedestals in range
+            pedestal_controller[] all_pedestals = FindObjectsOfType<pedestal_controller>();
+            pedestal_controller nearest_pedestal = null;
+            float nearest_distance = float.MaxValue;
+            
+            foreach (var pedestal in all_pedestals)
             {
-                // Check if we're looking at a pedestal that can accept this item
-                if (hit.collider.CompareTag("Pedestal"))
+                float distance = Vector3.Distance(transform.position, pedestal.transform.position);
+                if (distance <= pickup_range)
                 {
-                    var pedestal = hit.collider.GetComponent<pedestal_controller>();
-                    if (pedestal != null)
+                    // Check if we're looking at or near this pedestal
+                    Vector3 direction_to_pedestal = (pedestal.transform.position - main_cam.transform.position).normalized;
+                    float angle = Vector3.Angle(main_cam.transform.forward, direction_to_pedestal);
+                    
+                    // More generous angle check (up to 30 degrees)
+                    if (angle < 30f && distance < nearest_distance)
                     {
-                        show_interaction_prompt = true;
-                        if (interaction_text != null)
-                        {
-                            interaction_text.text = "Press [E] to Place";
-                            interaction_text.gameObject.SetActive(true);
-                        }
-                    }
-                }
-                // Check if we're looking at an interactable that can use this item
-                else if (hit.collider.CompareTag("Interact"))
-                {
-                    show_interaction_prompt = true;
-                    if (interaction_text != null)
-                    {
-                        interaction_text.text = "Press [E] to Use";
-                        interaction_text.gameObject.SetActive(true);
+                        nearest_pedestal = pedestal;
+                        nearest_distance = distance;
                     }
                 }
             }
-
-            // If we're not showing a specific interaction prompt, show the default held object UI
-            if (!show_interaction_prompt)
+            
+            // Show interaction prompt if we found a pedestal
+            if (nearest_pedestal != null)
             {
+                if (interaction_text != null)
+                {
+                    interaction_text.text = "Press [E] to Place";
+                    interaction_text.gameObject.SetActive(true);
+                }
+                
+                // Store the nearest pedestal for interaction
+                last_nearby_pedestal = nearest_pedestal;
+            }
+            else
+            {
+                // Default held object UI
                 UpdateUIText("Press [R] to Inspect | [Q] to Drop | [Right Click] to Throw");
             }
-
+            
             if (reticle != null)
-                reticle.color = show_interaction_prompt ? highlight_color : highlight_color;
+                reticle.color = (nearest_pedestal != null) ? highlight_color : highlight_color;
             
             return;
         }
@@ -177,6 +181,18 @@ public class PickupController : MonoBehaviour
                 if (interaction_text != null)
                 {
                     interaction_text.text = "Press [E] to Interact";
+                    interaction_text.gameObject.SetActive(true);
+                }
+            }
+
+            // If holding and looking at door (to use key), show "Use" prompt
+            else if (held_object != null && (lookHit.collider.CompareTag("Interact")))
+            {
+                // Show a "Use" prompt (e.g., use key on door)
+                looking_at_pickup = true;
+                if (interaction_text != null)
+                {
+                    interaction_text.text = "Press [E] to Use";
                     interaction_text.gameObject.SetActive(true);
                 }
             }
@@ -241,6 +257,18 @@ public class PickupController : MonoBehaviour
                             fb.OnInteract();
                             return;
                         }
+                    }
+                }
+                
+                // Use proximity-based pedestal (more forgiving)
+                if (last_nearby_pedestal != null)
+                {
+                    float distance = Vector3.Distance(transform.position, last_nearby_pedestal.transform.position);
+                    if (distance <= pickup_range)
+                    {
+                        last_nearby_pedestal.OnInteract();
+                        last_nearby_pedestal = null;
+                        return;
                     }
                 }
             }

@@ -1579,6 +1579,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d0405892aef4fdc98989289da37127ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1066874230}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d0405892aef4fdc98989289da37127ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1066874232}
   m_SourcePrefab: {fileID: 100100000, guid: d0405892aef4fdc98989289da37127ee, type: 3}
 --- !u!1 &465669578 stripped
 GameObject:
@@ -2476,13 +2479,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 179.905
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 0669f3d8f4b119f418a4bbe061cc198f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4d58a92d960ca4422a3a30cea1534a69, type: 2}
     - target: {fileID: -927199367670048503, guid: 0669f3d8f4b119f418a4bbe061cc198f, type: 3}
       propertyPath: m_Name
       value: rust_key
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 0669f3d8f4b119f418a4bbe061cc198f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 0669f3d8f4b119f418a4bbe061cc198f, type: 3}
+      propertyPath: m_TagString
+      value: Pickup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2717,6 +2728,46 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.013926736, y: 0.021258548, z: 0.002828615}
   m_Center: {x: -0.00009484263, y: -1.9181155e-20, z: 1.1641535e-10}
+--- !u!114 &710420454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710420447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6b16f1394cd4324817ec0268c9bcc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BookController
+  bookDialogueId: book_read
+  canBeRead: 1
+  bookUIPrefab: {fileID: 0}
+  bookCoverSprite: {fileID: 0}
+  bookBackgroundColor: {r: 0.95, g: 0.92, b: 0.8, a: 1}
+  pageColor: {r: 0.98, g: 0.96, b: 0.9, a: 1}
+  textColor: {r: 0.6509434, g: 0.43293878, b: 0.43293878, a: 1}
+  maxCharsPerPage: 500
+  pageTurnSoundId: page_turn
+  bookOpenSoundId: book_open
+  bookCloseSoundId: book_close
+  screenWidthPercentage: 0.8
+  screenHeightPercentage: 0.8
+  minBookWidth: 1100
+  minBookHeight: 995
+  maxBookWidth: 1200
+  maxBookHeight: 800
+  baseFontSize: 32
+  minFontSize: 32
+  maxFontSize: 40
+  textPaddingPercentage: 0.05
+  openCloseSpeed: 0.5
+  pageTurnSpeed: 0.3
+  pageTurnParticles: {fileID: 0}
+  requireHolding: 0
+  fallbackBookContent: 'This is a mysterious book you found. Its pages are filled
+    with handwritten notes and drawings. The ink is faded, making it difficult to
+    read. '
 --- !u!1 &736265835
 GameObject:
   m_ObjectHideFlags: 0
@@ -3045,7 +3096,7 @@ Transform:
   m_GameObject: {fileID: 901678703}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.36, y: 3.643, z: 0.916}
+  m_LocalPosition: {x: 0.36, y: 3.643, z: -0.332}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3274,6 +3325,189 @@ MonoBehaviour:
         the door, the pressure plate system went off and closed the door, and I wasn't
         able it open it again without that last toy. Dad didn't let me down there
         for a week while he was fixing it, and I never did get that toy back.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"book_read"'
+    lines:
+    - text: "The Tell-Tale Heart Text \n\nTrue! \u2014 nervous \u2014 very, very
+        dreadfully nervous I had been and am; but why will you say that I am mad?
+        The disease had sharpened my senses \u2014 not destroyed \u2014 not dulled
+        them. Above all was the sense of hearing acute. I heard all things in the
+        heaven and in the earth. I heard many things in hell. How, then, am I mad?
+        Hearken! and observe how healthily \u2014 how calmly I can tell you the whole
+        story.\n\nIt is impossible to say how first the idea entered my brain; but
+        once conceived, it haunted me day and night. Object there was none. Passion
+        there was none. I loved the old man. He had never wronged me. He had never
+        given me insult. For his gold I had no desire. I think it was his eye! yes,
+        it was this! One of his eyes resembled that of a vulture \u2014 a pale blue
+        eye, with a film over it. Whenever it fell upon me, my blood ran cold; and
+        so by degrees \u2014 very gradually \u2014 I made up my mind to take the
+        life of the old man, and thus rid myself of the eye forever.\n\nNow this
+        is the point. You fancy me mad. Madmen know nothing. But you should have
+        seen me. You should have seen how wisely I proceeded \u2014 with what caution
+        \u2014 with what foresight \u2014 with what dissimulation I went to work!
+        I was never kinder to the old man than during the whole week before I killed
+        him. And every night, about midnight, I turned the latch of his door and
+        opened it \u2014 oh, so gently! And then, when I had made an opening sufficient
+        for my head, I put in a dark lantern, all closed, closed, so that no light
+        shone out, and then I thrust in my head. Oh, you would have laughed to see
+        how cunningly I thrust it in! I moved it slowly \u2014 very, very slowly,
+        so that I might not disturb the old man\u2019s sleep. It took me an hour
+        to place my whole head within the opening so far that I could see him as
+        he lay upon his bed. Ha! \u2014 would a madman have been so wise as this?
+        And then, when my head was well in the room, I undid the lantern cautiously
+        \u2014 oh, so cautiously \u2014 cautiously (for the hinges creaked) \u2014
+        I undid it just so much that a single thin ray fell upon the vulture eye.
+        And this I did for seven long nights \u2014 every night just at midnight
+        \u2014 but I found the eye always closed; and so it was impossible to do
+        the work; for it was not the old man who vexed me, but his Evil Eye. And
+        every morning, when the day broke, I went boldly into the chamber, and spoke
+        courageously to him, calling him by name in a hearty tone, and inquiring
+        how he had passed the night. So you see he would have been a very profound
+        old man, indeed, to suspect that every night, just at twelve, I looked in
+        upon him while he slept.\n\nUpon the eighth night I was more than usually
+        cautious in opening the door. A watch\u2019s minute hand moves more quickly
+        than did mine. Never before that night had I felt the extent of my own powers
+        \u2014 of my sagacity. I could scarcely contain my feelings of triumph. To
+        think that there I was, opening the door, little by little, and he not even
+        to dream of my secret deeds or thoughts. I fairly chuckled at the idea; and
+        perhaps he heard me; for he moved on the bed suddenly, as if startled. Now
+        you may think that I drew back \u2014 but no. His room was as black as pitch
+        with the thick darkness, (for the shutters were close fastened, through fear
+        of robbers,) and so I knew that he could not see the opening of the door,
+        and I kept pushing it on steadily, steadily.\n\nI had my head in, and was
+        about to open the lantern, when my thumb slipped upon the tin fastening,
+        and the old man sprang up in the bed, crying out \u2014 \u201CWho\u2019s
+        there?\u201D\n\nI kept quite still and said nothing. For a whole hour I did
+        not move a muscle, and in the meantime I did not hear him lie down. He was
+        still sitting up in the bed listening; \u2014 just as I have done, night
+        after night, hearkening to the death watches in the wall.\n\nPresently I
+        heard a slight groan, and I knew it was the groan of mortal terror. It was
+        not a groan of pain or of grief \u2014 oh, no! \u2014 it was the low stifled
+        sound that arises from the bottom of the soul when overcharged with awe.
+        I knew the sound well. Many a night, just at midnight, when all the world
+        slept, it has welled up from my own bosom, deepening, with its dreadful echo,
+        the terrors that distracted me. I say I knew it well. I knew what the old
+        man felt, and pitied him, although I chuckled at heart. I knew that he had
+        been lying awake ever since the first slight noise, when he had turned in
+        the bed. His fears had been ever since growing upon him. He had been trying
+        to fancy them causeless, but could not. He had been saying to himself \u2014
+        \u201CIt is nothing but the wind in the chimney \u2014 it is only a mouse
+        crossing the floor,\u201D or \u201Cit is merely a cricket which has made
+        a single chirp.\u201D Yes, he has been trying to comfort himself with these
+        suppositions: but he had found all in vain. All in vain; because Death, in
+        approaching him had stalked with his black shadow before him, and enveloped
+        the victim. And it was the mournful influence of the unperceived shadow that
+        caused him to feel \u2014 although he neither saw nor heard \u2014 to feel
+        the presence of my head within the room.\n\nWhen I had waited a long time,
+        very patiently, without hearing him lie down, I resolved to open a little
+        \u2014 a very, very little crevice in the lantern. So I opened it \u2014
+        you cannot imagine how stealthily, stealthily \u2014 until, at length a single
+        dim ray, like the thread of the spider, shot from out the crevice and fell
+        upon the vulture eye.\n\nIt was open \u2014 wide, wide open \u2014 and I
+        grew furious as I gazed upon it. I saw it with perfect distinctness \u2014
+        all a dull blue, with a hideous veil over it that chilled the very marrow
+        in my bones; but I could see nothing else of the old man\u2019s face or person:
+        for I had directed the ray as if by instinct, precisely upon the damned spot.\n\nAnd
+        now have I not told you that what you mistake for madness is but over acuteness
+        of the senses? \u2014 now, I say, there came to my ears a low, dull, quick
+        sound, such as a watch makes when enveloped in cotton. I knew that sound
+        well, too. It was the beating of the old man\u2019s heart. It increased my
+        fury, as the beating of a drum stimulates the soldier into courage.\n\nBut
+        even yet I refrained and kept still. I scarcely breathed. I held the lantern
+        motionless. I tried how steadily I could maintain the ray upon the eye. Meantime
+        the hellish tattoo of the heart increased. It grew quicker and quicker, and
+        louder and louder every instant. The old man\u2019s terror must have been
+        extreme! It grew louder, I say, louder every moment! \u2014 do you mark me
+        well? I have told you that I am nervous: so I am. And now at the dead hour
+        of the night, amid the dreadful silence of that old house, so strange a noise
+        as this excited me to uncontrollable terror. Yet, for some minutes longer
+        I refrained and stood still. But the beating grew louder, louder! I thought
+        the heart must burst. And now a new anxiety seized me \u2014 the sound would
+        be heard by a neighbor! The old man\u2019s hour had come! With a loud yell,
+        I threw open the lantern and leaped into the room. He shrieked once \u2014
+        once only. In an instant I dragged him to the floor, and pulled the heavy
+        bed over him. I then smiled gaily, to find the deed so far done. But, for
+        many minutes, the heart beat on with a muffled sound. This, however, did
+        not vex me; it would not be heard through the wall. At length it ceased.
+        The old man was dead. I removed the bed and examined the corpse. Yes, he
+        was stone, stone dead. I placed my hand upon the heart and held it there
+        many minutes. There was no pulsation. He was stone dead. His eye would trouble
+        me no more.\n\nIf still you think me mad, you will think so no longer when
+        I describe the wise precautions I took for the concealment of the body. The
+        night waned, and I worked hastily, but in silence. First of all I dismembered
+        the corpse. I cut off the head and the arms and the legs.\n\nI then took
+        up three planks from the flooring of the chamber, and deposited all between
+        the scantlings. I then replaced the boards so cleverly, so cunningly, that
+        no human eye \u2014 not even his \u2014 could have detected any thing wrong.
+        There was nothing to wash out \u2014 no stain of any kind \u2014 no blood-spot
+        whatever. I had been too wary for that. A tub had caught all \u2014 ha! ha!\n\nWhen
+        I had made an end of these labors, it was four o \u2018clock \u2014 still
+        dark as midnight. As the bell sounded the hour, there came a knocking at
+        the street door. I went down to open it with a light heart, \u2014 for what
+        had I now to fear? There entered three men, who introduced themselves, with
+        perfect suavity, as officers of the police. A shriek had been heard by a
+        neighbor during the night; suspicion of foul play had been aroused; information
+        had been lodged at the police office, and they (the officers) had been deputed
+        to search the premises.\n\nI smiled, \u2014 for what had I to fear? I bade
+        the gentlemen welcome. The shriek, I said, was my own in a dream. The old
+        man, I mentioned, was absent in the country. I took my visitors all over
+        the house. I bade them search \u2014 search well. I led them, at length,
+        to his chamber. I showed them his treasures, secure, undisturbed. In the
+        enthusiasm of my confidence, I brought chairs into the room, and desired
+        them here to rest from their fatigues, while I myself, in the wild audacity
+        of my perfect triumph, placed my own seat upon the very spot beneath which
+        reposed the corpse of the victim.\n\nThe officers were satisfied. My manner
+        had convinced them. I was singularly at ease. They sat, and while I answered
+        cheerily, they chatted of familiar things. But, ere long, I felt myself getting
+        pale and wished them gone. My head ached, and I fancied a ringing in my ears:
+        but still they sat and still chatted. The ringing became more distinct: \u2014
+        it continued and became more distinct: I talked more freely to get rid of
+        the feeling: but it continued and gained definitiveness \u2014 until, at
+        length, I found that the noise was not within my ears.\n\nNo doubt I now
+        grew very pale; \u2014 but I talked more fluently, and with a heightened
+        voice. Yet the sound increased \u2014 and what could I do? It was a low,
+        dull, quick sound \u2014 much such a sound as a watch makes when enveloped
+        in cotton. I gasped for breath \u2014 and yet the officers heard it not.
+        I talked more quickly \u2014 more vehemently; but the noise steadily increased.
+        I arose and argued about trifles, in a high key and with violent gesticulations;
+        but the noise steadily increased. Why would they not be gone? I paced the
+        floor to and fro with heavy strides, as if excited to fury by the observations
+        of the men \u2014 but the noise steadily increased. Oh God! what could I
+        do? I foamed \u2014 I raved \u2014 I swore! I swung the chair upon which
+        I had been sitting, and grated it upon the boards, but the noise arose over
+        all and continually increased. It grew louder \u2014 louder \u2014 louder!
+        And still the men chatted pleasantly, and smiled. Was it possible they heard
+        not? Almighty God! \u2014 no, no! They heard! \u2014 they suspected! \u2014
+        they knew! \u2014 they were making a mockery of my horror! \u2014 this I
+        thought, and this I think. But anything was better than this agony! Anything
+        was more tolerable than this derision! I could bear those hypocritical smiles
+        no longer! I felt that I must scream or die! \u2014 and now \u2014 again!
+        \u2014 hark! louder! louder! louder! louder! \u2014\n\n\u201CVillains!\u201D
+        I shrieked, \u201Cdissemble no more! I admit the deed! \u2014 tear up the
+        planks! \u2014 here, here! \u2014 it is the beating of his hideous heart!\u201D\n"
       speakerName: 
       speakerPortrait: {fileID: 0}
       voiceClip: {fileID: 0}
@@ -3679,6 +3913,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4645209, y: 3.2831752, z: 2.042014}
   m_Center: {x: -0.019291759, y: 1.4239115, z: -0.055003762}
+--- !u!65 &1066874232
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066874228}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1.223897, y: 5.758034, z: 2.8892837}
+  m_Center: {x: -0.11194833, y: 2.379017, z: -0.22802067}
 --- !u!1 &1076303841
 GameObject:
   m_ObjectHideFlags: 0
@@ -3740,7 +3995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1089523551
 Transform:
   m_ObjectHideFlags: 0
@@ -4144,7 +4399,7 @@ Transform:
   m_GameObject: {fileID: 1231928824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 3.54, z: -0.16}
+  m_LocalPosition: {x: -0.06, y: 3.42, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4171,6 +4426,53 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1246744733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1398413310623440, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+  m_PrefabInstance: {fileID: 1539362103}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1246744734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246744733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6debb7c59caf34aac9ff3ff75e5539b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
+  required_key_id: key
+  locked_dialogue_id: basement_door_locked
+  keyObject: {fileID: 1923481917}
+--- !u!54 &1246744739
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246744733}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &1261358183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5117,7 +5419,85 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
       insertIndex: -1
       addedObject: {fileID: 710420451}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 710420454}
   m_SourcePrefab: {fileID: 100100000, guid: 4e2267b5f909249adbbc05db43d6a997, type: 3}
+--- !u!1001 &1539362103
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1398413310623440, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_Name
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398413310623440, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_TagString
+      value: Interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5643
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5153
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.68488646
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4993
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132120386261876, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1398413310623440, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1246744734}
+    - targetCorrespondingSourceObject: {fileID: 1398413310623440, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1246744739}
+  m_SourcePrefab: {fileID: 100100000, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
 --- !u!1 &1576889002
 GameObject:
   m_ObjectHideFlags: 0
@@ -5294,7 +5674,7 @@ MonoBehaviour:
   vignette_speed: 3
   bob_amplitude: 0.05
   bob_speed: 2
-  player_movement_script: {fileID: 0}
+  player_movement_script: {fileID: 1576889011}
   player_camera_script: {fileID: 269137738}
   showInspectionDialogue: 1
   inspectionDelay: 0.5
@@ -6900,3 +7280,4 @@ SceneRoots:
   - {fileID: 567629871}
   - {fileID: 29379326}
   - {fileID: 1946939517}
+  - {fileID: 1539362103}

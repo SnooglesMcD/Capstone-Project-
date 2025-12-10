@@ -20,8 +20,8 @@ public class door_lock_controller : MonoBehaviour
     {
         if (hasKey)
         {
-            Debug.Log("Door unlocked with key! Loading menu...");
-            SceneManager.LoadScene("Main menu");
+            Debug.Log("Door unlocked with key! Loading foyer...");
+            SceneManager.LoadScene("Foyer");
         }
         else
         {
