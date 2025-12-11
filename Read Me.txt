@@ -2,8 +2,6 @@ Team member names: Noah McDougall, Ella Camarena, Matthew Baluyot, Jordon Cachu,
 
 Control schemes: WASD for Movement, Shift for crouch 
 
-Known major bugs: Text does not stay on screen when reading longer books.
+Known major bugs: Descriptions for items may be triggered after interacting with them, Interacting with items at the same time as dropping them may get you stuck in inspector mode, the key to the door has a small hit box and may require you to walk into the door. 
 
-Big questions you have about your game. What issues keep you up at night? 
-
-	Do the atmosphere and aesthetic aid the story and feel of the game? Are the puzzles intelligible based on how its presented in the game? Will we have enough puzzles to make the game feel explorable vs just puzzles in a box. 
+Art Assets Credits: 
