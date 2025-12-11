@@ -5,3 +5,7 @@ Control schemes: WASD for Movement, Shift for crouch
 Known major bugs: Descriptions for items may be triggered after interacting with them, Interacting with items at the same time as dropping them may get you stuck in inspector mode, the key to the door has a small hit box and may require you to walk into the door. 
 
 Art Assets Credits: 
+Vulture Plush, Toy Box, and Main Character Portrait was made by Jordan Cachu
+Programming was done by Matthew
+Narrative and Level Design was done Noah and Ella
+Sound that has yet to be implemented was done by Tyler
