@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void start_game()
     {
-        SceneManager.LoadScene("Movement");
+        SceneManager.LoadScene("Basement");
     }
 
     public void quit_game()
