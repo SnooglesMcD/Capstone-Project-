@@ -2,8 +2,24 @@ Team member names: Noah McDougall, Ella Camarena, Matthew Baluyot, Jordon Cachu,
 
 Control schemes: WASD for Movement, Shift for crouch 
 
-Known major bugs: Text does not stay on screen when reading longer books.
+Known major bugs: Descriptions for items may be triggered after interacting with them, Interacting with items at the same time as dropping them may get you stuck in inspector mode, the key to the door has a small hit box and may require you to walk into the door. 
 
-Big questions you have about your game. What issues keep you up at night? 
+Art Assets Credits: 
+Vulture Plush, Toy Box, and Main Character Portrait were made by Jordan Cachu
+Programming was done by Matthew
+Narrative and Level Design was done Noah and Ella
+Sound that has yet to be implemented was done by Tyler
 
-	Do the atmosphere and aesthetic aid the story and feel of the game? Are the puzzles intelligible based on how its presented in the game? Will we have enough puzzles to make the game feel explorable vs just puzzles in a box. 
+Additional Free Assets:
+“Modular low poly letters and icons” by little dog creations
+“Picture Frames” by Tatiana Gladkaya
+“Simple Gems and Items Ultimate Animated Customizable Pack” by BenjaTheMaker
+“Simple Modular Pillars” by Knightferret Studios
+“Alchemist House” by BK
+“Free 1980 - MidPoly Retro Room” by EmacEArt
+“VINTAGE LIVING ROOM 3D GAME PACK” by ZNS3D
+“Hand Painted Seamless Wood Texture Vol - 6” by Innovana Games
+“Stylized Wood Textures” by Camisado Studios
+“Furniture FREE Pack” by DEXSOFT
+“Bedrooms & Bathroom / Interior - Low Poly assets” by Fries and Seagull
+Business Lion by cranach
