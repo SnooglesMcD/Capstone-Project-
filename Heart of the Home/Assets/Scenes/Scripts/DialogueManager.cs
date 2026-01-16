@@ -43,49 +43,100 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
 
+    [Header("UI Positioning")]
+    public DialogueBoxPosition boxPosition = DialogueBoxPosition.BottomCenter;
+    public enum DialogueBoxPosition
+    {
+        BottomCenter,
+        BottomLeft,
+        BottomRight,
+        TopCenter,
+        TopLeft,
+        TopRight,
+        MiddleCenter
+    }
+    
     [Header("UI References")]
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI dialogueText;
-    public TextMeshProUGUI speakerNameText;
-    public Image portraitImage;
-    public GameObject continuePrompt;
-    public Image backgroundPanel;
+    private GameObject dialogueContainer;
+    private GameObject dialogueBox;
+    private Image dialogueBackground;
+    private TextMeshProUGUI dialogueText;
+    private TextMeshProUGUI speakerNameText;
+    private Image portraitImage;
+    private GameObject continueIndicator;
+    private GameObject closeHint;
+    private GameObject victorNameTag;
+    private CanvasScaler canvasScaler;
     
-    [Header("UI Styling - Background")]
-    public Sprite backgroundSprite;
+    [Header("Screen Adaptation")]
+    [Range(0.7f, 0.95f)]
+    public float screenWidthPercentage = 0.85f;
+    [Range(0.15f, 0.4f)]
+    public float screenHeightPercentage = 0.25f;
+    public float minBoxWidth = 600f;
+    public float minBoxHeight = 150f;
+    public float maxBoxWidth = 1200f;
+    public float maxBoxHeight = 300f;
+    public float marginFromScreenEdge = 30f;
+    
+    [Header("Dialogue Box Settings")]
     public Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.95f);
-    public Vector2 backgroundPadding = new Vector2(50, 30);
+    public Color borderColor = new Color(0.2f, 0.2f, 0.2f, 1f);
+    public float borderThickness = 2f;
+    public float cornerRadius = 10f;
+    public Vector2 boxPadding = new Vector2(20, 15);
     
-    [Header("UI Styling - Text")]
+    [Header("Text Settings")]
     public Color dialogueTextColor = Color.white;
     public Color speakerTextColor = new Color(1f, 0.8f, 0.3f, 1f);
-    public Color continueTextColor = new Color(1f, 1f, 1f, 0.7f);
-    public int dialogueFontSize = 24;
-    public int speakerFontSize = 28;
-    
-    [Header("UI Styling - Portrait")]
-    public Sprite portraitFrameSprite;
-    public Color portraitFrameColor = Color.white;
-    public float portraitSize = 150f;
-    
-    [Header("Animation Settings")]
-    public float fadeInTime = 0.3f;
-    public float fadeOutTime = 0.2f;
-    public bool useFadeAnimations = true;
-    
-    [Header("Typewriter Settings")]
+    public Color continueIndicatorColor = Color.yellow;
+    public int baseDialogueFontSize = 22;
+    public int baseSpeakerFontSize = 20;
+    public int minFontSize = 16;
+    public int maxFontSize = 28;
     public float textSpeed = 0.05f;
-    public bool skipOnClick = true;
     public bool typewriterEffect = true;
+    
+    [Header("Portrait Settings")]
+    [Range(0.05f, 0.2f)]
+    public float portraitWidthPercentage = 0.12f;
+    public float minPortraitSize = 60f;
+    public float maxPortraitSize = 120f;
+    public Vector2 portraitOffset = new Vector2(-10, 0);
+    public Color portraitBorderColor = Color.white;
+    
+    [Header("Speaker Name Settings")]
+    public Vector2 speakerNameOffset = new Vector2(0, 25);
+    public bool showSpeakerBackground = true;
+    public Color speakerBackgroundColor = new Color(0f, 0f, 0f, 0.7f);
+    
+    [Header("Victor Name Tag")]
+    public bool showVictorNameTag = true;
+    public string victorName = "Victor";
+    public Color victorNameTagColor = new Color(0.2f, 0.4f, 0.8f, 0.9f);
+    public Color victorNameTextColor = Color.white;
+    public Vector2 victorNameTagOffset = new Vector2(15, -15);
+    
+    [Header("Close Hint")]
+    public bool showCloseHint = true;
+    public string closeHintText = "[R] to close";
+    public Color closeHintColor = new Color(0.8f, 0.8f, 0.8f, 0.7f);
+    public Vector2 closeHintOffset = new Vector2(-15, 15);
+    
+    [Header("Continue Indicator")]
+    public string continueText = "▶";
+    public float continueBlinkSpeed = 1f;
+    public bool showContinueIndicator = true;
+    
+    [Header("Input")]
+    public KeyCode advanceKey = KeyCode.E;
+    public KeyCode skipKey = KeyCode.Space;
+    public KeyCode closeKey = KeyCode.Escape;
     
     [Header("Audio")]
     public AudioSource voiceSource;
     public AudioClip defaultTextSound;
     public float pitchVariation = 0.1f;
-    
-    [Header("Input")]
-    public KeyCode advanceKey = KeyCode.E;
-    public KeyCode skipKey = KeyCode.Space;
     
     [Header("Dialogue Database")]
     public List<Dialogue> dialogueDatabase = new List<Dialogue>();
@@ -96,7 +147,14 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueActive = false;
     private bool isTyping = false;
     private Coroutine typingCoroutine;
-    private CanvasGroup canvasGroup;
+    private Coroutine blinkCoroutine;
+    
+    // Adaptive values
+    private float currentBoxWidth;
+    private float currentBoxHeight;
+    private float currentDialogueFontSize;
+    private float currentSpeakerFontSize;
+    private float currentPortraitSize;
     
     private PickupController playerPickupController;
     
@@ -126,48 +184,453 @@ public class DialogueManager : MonoBehaviour
         // Find player components
         playerPickupController = FindObjectOfType<PickupController>();
         
-        // Initialize UI
-        InitializeUI();
+        // Create UI
+        CreateDialogueUI();
         
-        if (dialoguePanel != null) 
-        {
-            canvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-                canvasGroup = dialoguePanel.AddComponent<CanvasGroup>();
-        }
-        
-        
-        // Apply UI styling
-
+        // Hide UI initially
+        if (dialogueContainer != null)
+            dialogueContainer.SetActive(false);
     }
     
-    void InitializeUI()
+    void CalculateResponsiveDimensions()
     {
-        // If UI elements aren't assigned, try to find them
-        if (dialoguePanel == null)
-        {
-            dialoguePanel = GameObject.Find("DialoguePanel");
-        }
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
         
-        if (dialogueText == null && dialoguePanel != null)
-        {
-            dialogueText = dialoguePanel.GetComponentInChildren<TextMeshProUGUI>();
-        }
+        // Calculate box size based on screen percentage
+        currentBoxWidth = screenWidth * screenWidthPercentage;
+        currentBoxHeight = screenHeight * screenHeightPercentage;
         
+        // Clamp to min/max values
+        currentBoxWidth = Mathf.Clamp(currentBoxWidth, minBoxWidth, maxBoxWidth);
+        currentBoxHeight = Mathf.Clamp(currentBoxHeight, minBoxHeight, maxBoxHeight);
+        
+        // Calculate font sizes based on screen height (using 1080p as baseline)
+        float screenRatio = screenHeight / 1080f;
+        currentDialogueFontSize = Mathf.RoundToInt(baseDialogueFontSize * screenRatio);
+        currentSpeakerFontSize = Mathf.RoundToInt(baseSpeakerFontSize * screenRatio);
+        
+        currentDialogueFontSize = Mathf.Clamp(currentDialogueFontSize, minFontSize, maxFontSize);
+        currentSpeakerFontSize = Mathf.Clamp(currentSpeakerFontSize, minFontSize, maxFontSize - 2);
+        
+        // Calculate portrait size based on box height
+        currentPortraitSize = currentBoxHeight * portraitWidthPercentage;
+        currentPortraitSize = Mathf.Clamp(currentPortraitSize, minPortraitSize, maxPortraitSize);
+        
+        Debug.Log($"Responsive dimensions: Box={currentBoxWidth}x{currentBoxHeight}, " +
+                  $"DialogueFont={currentDialogueFontSize}, SpeakerFont={currentSpeakerFontSize}, " +
+                  $"Portrait={currentPortraitSize}");
     }
     
+    void CreateDialogueUI()
+    {
+        // Calculate responsive dimensions first
+        CalculateResponsiveDimensions();
+        
+        // Create Canvas if it doesn't exist
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas == null)
+        {
+            GameObject canvasObj = new GameObject("DialogueCanvas");
+            canvas = canvasObj.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 100;
+            canvasObj.AddComponent<GraphicRaycaster>();
+        }
+        
+        // Add CanvasScaler for responsive UI
+        if (canvas.GetComponent<CanvasScaler>() == null)
+        {
+            canvasScaler = canvas.gameObject.AddComponent<CanvasScaler>();
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            canvasScaler.referenceResolution = new Vector2(1920, 1080);
+            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            canvasScaler.matchWidthOrHeight = 0.5f;
+        }
+        else
+        {
+            canvasScaler = canvas.GetComponent<CanvasScaler>();
+        }
+        
+        // Create dialogue container
+        dialogueContainer = new GameObject("DialogueContainer");
+        dialogueContainer.transform.SetParent(canvas.transform);
+        RectTransform containerRT = dialogueContainer.AddComponent<RectTransform>();
+        SetContainerPosition(containerRT);
+        
+        // Create dialogue box
+        dialogueBox = new GameObject("DialogueBox");
+        dialogueBox.transform.SetParent(dialogueContainer.transform);
+        dialogueBackground = dialogueBox.AddComponent<Image>();
+        dialogueBackground.color = backgroundColor;
+        dialogueBackground.type = Image.Type.Sliced;
+        
+        // Set box size and position
+        RectTransform boxRT = dialogueBox.GetComponent<RectTransform>();
+        boxRT.anchorMin = new Vector2(0.5f, 0.5f);
+        boxRT.anchorMax = new Vector2(0.5f, 0.5f);
+        boxRT.pivot = new Vector2(0.5f, 0.5f);
+        boxRT.sizeDelta = new Vector2(currentBoxWidth, currentBoxHeight);
+        boxRT.anchoredPosition = Vector2.zero;
+        
+        // Create portrait
+        GameObject portraitObj = new GameObject("Portrait");
+        portraitObj.transform.SetParent(dialogueBox.transform);
+        portraitImage = portraitObj.AddComponent<Image>();
+        portraitImage.preserveAspect = true;
+        
+        RectTransform portraitRT = portraitImage.GetComponent<RectTransform>();
+        portraitRT.anchorMin = new Vector2(0, 0.5f);
+        portraitRT.anchorMax = new Vector2(0, 0.5f);
+        portraitRT.pivot = new Vector2(0, 0.5f);
+        portraitRT.sizeDelta = new Vector2(currentPortraitSize, currentPortraitSize);
+        portraitRT.anchoredPosition = new Vector2(boxPadding.x + portraitOffset.x, portraitOffset.y);
+        
+        // Create speaker name background
+        GameObject speakerBgObj = new GameObject("SpeakerBackground");
+        speakerBgObj.transform.SetParent(dialogueBox.transform);
+        Image speakerBg = speakerBgObj.AddComponent<Image>();
+        speakerBg.color = speakerBackgroundColor;
+        
+        RectTransform speakerBgRT = speakerBg.GetComponent<RectTransform>();
+        speakerBgRT.anchorMin = new Vector2(0, 1);
+        speakerBgRT.anchorMax = new Vector2(0.4f, 1);
+        speakerBgRT.pivot = new Vector2(0, 1);
+        float speakerBgWidth = Mathf.Min(currentBoxWidth * 0.4f, 250f * (Screen.width / 1920f));
+        speakerBgRT.sizeDelta = new Vector2(speakerBgWidth, 40f * (Screen.height / 1080f));
+        speakerBgRT.anchoredPosition = new Vector2(boxPadding.x, -boxPadding.y);
+        speakerBgObj.SetActive(showSpeakerBackground);
+        
+        // Create speaker name text
+        GameObject speakerObj = new GameObject("SpeakerName");
+        speakerObj.transform.SetParent(speakerBgObj.transform);
+        speakerNameText = speakerObj.AddComponent<TextMeshProUGUI>();
+        speakerNameText.color = speakerTextColor;
+        speakerNameText.fontSize = currentSpeakerFontSize;
+        speakerNameText.alignment = TextAlignmentOptions.Left;
+        speakerNameText.fontStyle = FontStyles.Bold;
+        
+        RectTransform speakerRT = speakerNameText.GetComponent<RectTransform>();
+        speakerRT.anchorMin = Vector2.zero;
+        speakerRT.anchorMax = Vector2.one;
+        speakerRT.offsetMin = new Vector2(10f * (Screen.width / 1920f), 0);
+        speakerRT.offsetMax = new Vector2(-10f * (Screen.width / 1920f), 0);
+        
+        // Create dialogue text area
+        GameObject textObj = new GameObject("DialogueText");
+        textObj.transform.SetParent(dialogueBox.transform);
+        dialogueText = textObj.AddComponent<TextMeshProUGUI>();
+        dialogueText.color = dialogueTextColor;
+        dialogueText.fontSize = currentDialogueFontSize;
+        dialogueText.alignment = TextAlignmentOptions.TopLeft;
+        dialogueText.enableWordWrapping = true;
+        
+        RectTransform textRT = dialogueText.GetComponent<RectTransform>();
+        textRT.anchorMin = new Vector2(0, 0);
+        textRT.anchorMax = new Vector2(1, 1);
+        float textLeftPadding = boxPadding.x + currentPortraitSize + 10f * (Screen.width / 1920f);
+        textRT.offsetMin = new Vector2(textLeftPadding, boxPadding.y + 10f * (Screen.height / 1080f));
+        textRT.offsetMax = new Vector2(-boxPadding.x, -boxPadding.y);
+        
+        // Create Victor name tag
+        if (showVictorNameTag)
+        {
+            CreateVictorNameTag();
+        }
+        
+        // Create close hint
+        if (showCloseHint)
+        {
+            CreateCloseHint();
+        }
+        
+        // Create continue indicator
+        GameObject continueObj = new GameObject("ContinueIndicator");
+        continueObj.transform.SetParent(dialogueBox.transform);
+        continueIndicator = continueObj;
+        
+        TextMeshProUGUI continueTextComp = continueObj.AddComponent<TextMeshProUGUI>();
+        continueTextComp.text = continueText;
+        continueTextComp.color = continueIndicatorColor;
+        continueTextComp.fontSize = Mathf.RoundToInt(currentDialogueFontSize * 1.1f);
+        continueTextComp.alignment = TextAlignmentOptions.BottomRight;
+        
+        RectTransform continueRT = continueTextComp.GetComponent<RectTransform>();
+        continueRT.anchorMin = new Vector2(1, 0);
+        continueRT.anchorMax = new Vector2(1, 0);
+        continueRT.pivot = new Vector2(1, 0);
+        float indicatorSize = 30f * (Screen.height / 1080f);
+        continueRT.sizeDelta = new Vector2(indicatorSize, indicatorSize);
+        continueRT.anchoredPosition = new Vector2(-10f * (Screen.width / 1920f), 10f * (Screen.height / 1080f));
+        
+        continueIndicator.SetActive(false);
+        
+        Debug.Log("Adaptive RPG-style dialogue UI created with Victor name tag");
+    }
     
+    void CreateVictorNameTag()
+    {
+        // Create Victor name tag background
+        GameObject victorTagObj = new GameObject("VictorNameTag");
+        victorTagObj.transform.SetParent(dialogueBox.transform);
+        victorNameTag = victorTagObj;
+        
+        Image victorBg = victorTagObj.AddComponent<Image>();
+        victorBg.color = victorNameTagColor;
+        victorBg.type = Image.Type.Sliced;
+        
+        // Set size and position (top-left corner of dialogue box)
+        RectTransform victorRT = victorTagObj.GetComponent<RectTransform>();
+        victorRT.anchorMin = new Vector2(0, 1);
+        victorRT.anchorMax = new Vector2(0, 1);
+        victorRT.pivot = new Vector2(0, 1);
+        
+        float tagWidth = 100f * (Screen.width / 1920f);
+        float tagHeight = 35f * (Screen.height / 1080f);
+        victorRT.sizeDelta = new Vector2(tagWidth, tagHeight);
+        victorRT.anchoredPosition = victorNameTagOffset;
+        
+        // Create Victor name text
+        GameObject victorTextObj = new GameObject("VictorText");
+        victorTextObj.transform.SetParent(victorTagObj.transform);
+        TextMeshProUGUI victorText = victorTextObj.AddComponent<TextMeshProUGUI>();
+        victorText.text = victorName;
+        victorText.color = victorNameTextColor;
+        victorText.fontSize = Mathf.RoundToInt(currentSpeakerFontSize * 0.9f);
+        victorText.alignment = TextAlignmentOptions.Center;
+        victorText.fontStyle = FontStyles.Bold;
+        
+        RectTransform victorTextRT = victorText.GetComponent<RectTransform>();
+        victorTextRT.anchorMin = Vector2.zero;
+        victorTextRT.anchorMax = Vector2.one;
+        victorTextRT.offsetMin = new Vector2(5, 0);
+        victorTextRT.offsetMax = new Vector2(-5, 0);
+    }
+    
+    void CreateCloseHint()
+    {
+        // Create close hint text
+        GameObject closeHintObj = new GameObject("CloseHint");
+        closeHintObj.transform.SetParent(dialogueBox.transform);
+        closeHint = closeHintObj;
+        
+        TextMeshProUGUI closeHintTextComp = closeHintObj.AddComponent<TextMeshProUGUI>();
+        closeHintTextComp.text = closeHintText;
+        closeHintTextComp.color = closeHintColor;
+        closeHintTextComp.fontSize = Mathf.RoundToInt(currentDialogueFontSize * 0.8f);
+        closeHintTextComp.alignment = TextAlignmentOptions.TopRight;
+        closeHintTextComp.fontStyle = FontStyles.Italic;
+        
+        // Set position (top-right corner of dialogue box)
+        RectTransform closeHintRT = closeHintTextComp.GetComponent<RectTransform>();
+        closeHintRT.anchorMin = new Vector2(1, 1);
+        closeHintRT.anchorMax = new Vector2(1, 1);
+        closeHintRT.pivot = new Vector2(1, 1);
+        
+        float hintWidth = 120f * (Screen.width / 1920f);
+        float hintHeight = 25f * (Screen.height / 1080f);
+        closeHintRT.sizeDelta = new Vector2(hintWidth, hintHeight);
+        closeHintRT.anchoredPosition = closeHintOffset;
+    }
+    
+    void SetContainerPosition(RectTransform containerRT)
+    {
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+        float marginX = marginFromScreenEdge * (screenWidth / 1920f);
+        float marginY = marginFromScreenEdge * (screenHeight / 1080f);
+        
+        switch (boxPosition)
+        {
+            case DialogueBoxPosition.BottomCenter:
+                containerRT.anchorMin = new Vector2(0.5f, 0);
+                containerRT.anchorMax = new Vector2(0.5f, 0);
+                containerRT.pivot = new Vector2(0.5f, 0);
+                containerRT.anchoredPosition = new Vector2(0, marginY);
+                break;
+                
+            case DialogueBoxPosition.BottomLeft:
+                containerRT.anchorMin = new Vector2(0, 0);
+                containerRT.anchorMax = new Vector2(0, 0);
+                containerRT.pivot = new Vector2(0, 0);
+                containerRT.anchoredPosition = new Vector2(marginX, marginY);
+                break;
+                
+            case DialogueBoxPosition.BottomRight:
+                containerRT.anchorMin = new Vector2(1, 0);
+                containerRT.anchorMax = new Vector2(1, 0);
+                containerRT.pivot = new Vector2(1, 0);
+                containerRT.anchoredPosition = new Vector2(-marginX, marginY);
+                break;
+                
+            case DialogueBoxPosition.TopCenter:
+                containerRT.anchorMin = new Vector2(0.5f, 1);
+                containerRT.anchorMax = new Vector2(0.5f, 1);
+                containerRT.pivot = new Vector2(0.5f, 1);
+                containerRT.anchoredPosition = new Vector2(0, -marginY);
+                break;
+                
+            case DialogueBoxPosition.TopLeft:
+                containerRT.anchorMin = new Vector2(0, 1);
+                containerRT.anchorMax = new Vector2(0, 1);
+                containerRT.pivot = new Vector2(0, 1);
+                containerRT.anchoredPosition = new Vector2(marginX, -marginY);
+                break;
+                
+            case DialogueBoxPosition.TopRight:
+                containerRT.anchorMin = new Vector2(1, 1);
+                containerRT.anchorMax = new Vector2(1, 1);
+                containerRT.pivot = new Vector2(1, 1);
+                containerRT.anchoredPosition = new Vector2(-marginX, -marginY);
+                break;
+                
+            case DialogueBoxPosition.MiddleCenter:
+                containerRT.anchorMin = new Vector2(0.5f, 0.5f);
+                containerRT.anchorMax = new Vector2(0.5f, 0.5f);
+                containerRT.pivot = new Vector2(0.5f, 0.5f);
+                containerRT.anchoredPosition = Vector2.zero;
+                break;
+        }
+    }
+    
+    void UpdateUILayout()
+    {
+        if (dialogueContainer == null || dialogueBox == null) return;
+        
+        // Recalculate responsive dimensions
+        CalculateResponsiveDimensions();
+        
+        // Update box size
+        RectTransform boxRT = dialogueBox.GetComponent<RectTransform>();
+        if (boxRT != null)
+        {
+            boxRT.sizeDelta = new Vector2(currentBoxWidth, currentBoxHeight);
+        }
+        
+        // Update fonts
+        if (dialogueText != null) dialogueText.fontSize = currentDialogueFontSize;
+        if (speakerNameText != null) speakerNameText.fontSize = currentSpeakerFontSize;
+        
+        // Update portrait size
+        if (portraitImage != null)
+        {
+            RectTransform portraitRT = portraitImage.GetComponent<RectTransform>();
+            if (portraitRT != null)
+            {
+                portraitRT.sizeDelta = new Vector2(currentPortraitSize, currentPortraitSize);
+            }
+        }
+        
+        // Update text area padding
+        if (dialogueText != null)
+        {
+            RectTransform textRT = dialogueText.GetComponent<RectTransform>();
+            if (textRT != null)
+            {
+                float textLeftPadding = boxPadding.x + currentPortraitSize + 10f * (Screen.width / 1920f);
+                textRT.offsetMin = new Vector2(textLeftPadding, boxPadding.y + 10f * (Screen.height / 1080f));
+                textRT.offsetMax = new Vector2(-boxPadding.x, -boxPadding.y);
+            }
+        }
+        
+        // Update continue indicator
+        if (continueIndicator != null)
+        {
+            TextMeshProUGUI continueTextComp = continueIndicator.GetComponent<TextMeshProUGUI>();
+            if (continueTextComp != null)
+            {
+                continueTextComp.fontSize = Mathf.RoundToInt(currentDialogueFontSize * 1.1f);
+                
+                RectTransform continueRT = continueTextComp.GetComponent<RectTransform>();
+                if (continueRT != null)
+                {
+                    float indicatorSize = 30f * (Screen.height / 1080f);
+                    continueRT.sizeDelta = new Vector2(indicatorSize, indicatorSize);
+                    continueRT.anchoredPosition = new Vector2(-10f * (Screen.width / 1920f), 10f * (Screen.height / 1080f));
+                }
+            }
+        }
+        
+        // Update speaker background
+        Transform speakerBg = dialogueBox.transform.Find("SpeakerBackground");
+        if (speakerBg != null)
+        {
+            RectTransform speakerBgRT = speakerBg.GetComponent<RectTransform>();
+            if (speakerBgRT != null)
+            {
+                float speakerBgWidth = Mathf.Min(currentBoxWidth * 0.4f, 250f * (Screen.width / 1920f));
+                speakerBgRT.sizeDelta = new Vector2(speakerBgWidth, 40f * (Screen.height / 1080f));
+                speakerBgRT.anchoredPosition = new Vector2(boxPadding.x, -boxPadding.y);
+            }
+        }
+        
+        // Update Victor name tag
+        if (victorNameTag != null)
+        {
+            RectTransform victorRT = victorNameTag.GetComponent<RectTransform>();
+            if (victorRT != null)
+            {
+                float tagWidth = 100f * (Screen.width / 1920f);
+                float tagHeight = 35f * (Screen.height / 1080f);
+                victorRT.sizeDelta = new Vector2(tagWidth, tagHeight);
+                victorRT.anchoredPosition = victorNameTagOffset;
+            }
+            
+            // Update Victor text font size
+            TextMeshProUGUI victorText = victorNameTag.GetComponentInChildren<TextMeshProUGUI>();
+            if (victorText != null)
+            {
+                victorText.fontSize = Mathf.RoundToInt(currentSpeakerFontSize * 0.9f);
+            }
+        }
+        
+        // Update close hint
+        if (closeHint != null)
+        {
+            TextMeshProUGUI closeHintTextComp = closeHint.GetComponent<TextMeshProUGUI>();
+            if (closeHintTextComp != null)
+            {
+                closeHintTextComp.fontSize = Mathf.RoundToInt(currentDialogueFontSize * 0.8f);
+                
+                RectTransform closeHintRT = closeHintTextComp.GetComponent<RectTransform>();
+                if (closeHintRT != null)
+                {
+                    float hintWidth = 120f * (Screen.width / 1920f);
+                    float hintHeight = 25f * (Screen.height / 1080f);
+                    closeHintRT.sizeDelta = new Vector2(hintWidth, hintHeight);
+                    closeHintRT.anchoredPosition = closeHintOffset;
+                }
+            }
+        }
+        
+        // Update container position
+        RectTransform containerRT = dialogueContainer.GetComponent<RectTransform>();
+        SetContainerPosition(containerRT);
+    }
     
     void Update()
     {
         if (!isDialogueActive) return;
         
         HandleInput();
+        
+        // Optional: Update layout dynamically if screen size changes
+        if (dialogueContainer != null && dialogueContainer.activeInHierarchy)
+        {
+            UpdateUILayout();
+        }
     }
     
     void HandleInput()
     {
         if (currentDialogue == null) return;
+        
+        // Check for close key
+        if (Input.GetKeyDown(closeKey))
+        {
+            ForceEndDialogue();
+            return;
+        }
         
         // Skip typing with skip key
         if (Input.GetKeyDown(skipKey) && isTyping)
@@ -176,10 +639,10 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         
-        // Advance dialogue
+        // Advance dialogue with advance key
         if (Input.GetKeyDown(advanceKey))
         {
-            if (isTyping && skipOnClick)
+            if (isTyping)
             {
                 SkipTyping();
             }
@@ -211,7 +674,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         
-        // Stop any active dialogue
         if (isDialogueActive)
         {
             EndDialogue();
@@ -221,60 +683,34 @@ public class DialogueManager : MonoBehaviour
         currentLineIndex = 0;
         isDialogueActive = true;
         
-        // Lock player controls if specified
         if (dialogue.lockPlayerMovement && playerPickupController != null)
         {
             LockPlayerControls(true);
         }
         
-        // Show UI with animation
-        if (useFadeAnimations && canvasGroup != null)
+        if (dialogueContainer == null)
         {
-            StartCoroutine(FadeInUI());
-        }
-        else if (dialoguePanel != null)
-        {
-            dialoguePanel.SetActive(true);
+            CreateDialogueUI();
         }
         
-        // Trigger start events
+        if (dialogueContainer != null)
+        {
+            UpdateUILayout();
+            dialogueContainer.SetActive(true);
+            
+            // Show/hide Victor name tag based on settings
+            if (victorNameTag != null)
+                victorNameTag.SetActive(showVictorNameTag);
+            
+            // Show/hide close hint based on settings
+            if (closeHint != null)
+                closeHint.SetActive(showCloseHint);
+        }
+        
         dialogue.onDialogueStart?.Invoke();
         OnDialogueStart?.Invoke(dialogue);
         
-        // Display first line
         DisplayCurrentLine();
-    }
-    
-    IEnumerator FadeInUI()
-    {
-        dialoguePanel.SetActive(true);
-        canvasGroup.alpha = 0;
-        
-        float elapsed = 0f;
-        while (elapsed < fadeInTime)
-        {
-            canvasGroup.alpha = Mathf.Lerp(0, 1, elapsed / fadeInTime);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        
-        canvasGroup.alpha = 1;
-    }
-    
-    IEnumerator FadeOutUI()
-    {
-        if (canvasGroup == null) yield break;
-        
-        float elapsed = 0f;
-        while (elapsed < fadeOutTime)
-        {
-            canvasGroup.alpha = Mathf.Lerp(1, 0, elapsed / fadeOutTime);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        
-        canvasGroup.alpha = 0;
-        
     }
     
     void DisplayCurrentLine()
@@ -291,7 +727,8 @@ public class DialogueManager : MonoBehaviour
         if (speakerNameText != null)
         {
             speakerNameText.text = currentDialogue.showSpeakerName ? line.speakerName : "";
-            speakerNameText.gameObject.SetActive(!string.IsNullOrEmpty(speakerNameText.text));
+            if (speakerNameText.transform.parent != null)
+                speakerNameText.transform.parent.gameObject.SetActive(!string.IsNullOrEmpty(speakerNameText.text));
         }
         
         if (portraitImage != null)
@@ -300,14 +737,11 @@ public class DialogueManager : MonoBehaviour
             portraitImage.gameObject.SetActive(line.speakerPortrait != null && currentDialogue.showPortrait);
         }
         
-        // Clear text
         if (dialogueText != null) dialogueText.text = "";
         
-        // Trigger line start events
         line.onLineStart?.Invoke();
         OnLineStart?.Invoke(line);
         
-        // Play voice clip
         if (voiceSource != null && line.voiceClip != null)
         {
             voiceSource.Stop();
@@ -315,7 +749,6 @@ public class DialogueManager : MonoBehaviour
             voiceSource.Play();
         }
         
-        // Start typing effect
         if (typewriterEffect && dialogueText != null)
         {
             typingCoroutine = StartCoroutine(TypeText(line.text, line));
@@ -324,9 +757,8 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = line.text;
             isTyping = false;
-            ShowContinuePrompt(line.requirePlayerInput);
+            ShowContinueIndicator(line.requirePlayerInput);
             
-            // Start auto-advance timer if needed
             if (!line.requirePlayerInput && line.displayTime > 0)
             {
                 StartCoroutine(AutoAdvance(line.displayTime));
@@ -337,13 +769,12 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeText(string text, DialogueLine line)
     {
         isTyping = true;
-        ShowContinuePrompt(false);
+        ShowContinueIndicator(false);
         
         for (int i = 0; i < text.Length; i++)
         {
             dialogueText.text += text[i];
             
-            // Play typing sound
             if (defaultTextSound != null)
             {
                 PlayTypingSound();
@@ -354,12 +785,10 @@ public class DialogueManager : MonoBehaviour
         
         isTyping = false;
         
-        // Trigger line end events
         line.onLineEnd?.Invoke();
         OnLineEnd?.Invoke(line);
         
-        // Show continue prompt or auto-advance
-        ShowContinuePrompt(line.requirePlayerInput);
+        ShowContinueIndicator(line.requirePlayerInput);
         
         if (!line.requirePlayerInput && line.displayTime > 0)
         {
@@ -399,11 +828,10 @@ public class DialogueManager : MonoBehaviour
             
             isTyping = false;
             
-            // Trigger line end events
             line.onLineEnd?.Invoke();
             OnLineEnd?.Invoke(line);
             
-            ShowContinuePrompt(line.requirePlayerInput);
+            ShowContinueIndicator(line.requirePlayerInput);
             
             if (!line.requirePlayerInput && line.displayTime > 0)
             {
@@ -426,11 +854,35 @@ public class DialogueManager : MonoBehaviour
         }
     }
     
-    void ShowContinuePrompt(bool show)
+    void ShowContinueIndicator(bool show)
     {
-        if (continuePrompt != null)
+        if (continueIndicator != null && showContinueIndicator)
         {
-            continuePrompt.SetActive(show && !isTyping);
+            continueIndicator.SetActive(show && !isTyping);
+            
+            if (show && !isTyping)
+            {
+                if (blinkCoroutine != null) StopCoroutine(blinkCoroutine);
+                blinkCoroutine = StartCoroutine(BlinkContinueIndicator());
+            }
+            else if (blinkCoroutine != null)
+            {
+                StopCoroutine(blinkCoroutine);
+                blinkCoroutine = null;
+            }
+        }
+    }
+    
+    IEnumerator BlinkContinueIndicator()
+    {
+        TextMeshProUGUI indicatorText = continueIndicator.GetComponent<TextMeshProUGUI>();
+        Color originalColor = indicatorText.color;
+        
+        while (true)
+        {
+            float alpha = Mathf.PingPong(Time.time * continueBlinkSpeed, 1f);
+            indicatorText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
         }
     }
     
@@ -438,11 +890,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogue != null)
         {
-            // Trigger end events
             currentDialogue.onDialogueEnd?.Invoke();
             OnDialogueEnd?.Invoke(currentDialogue);
             
-            // Check for chained dialogue
             if (!string.IsNullOrEmpty(currentDialogue.nextDialogueID))
             {
                 StartDialogue(currentDialogue.nextDialogueID);
@@ -450,39 +900,33 @@ public class DialogueManager : MonoBehaviour
             }
         }
         
-        // Hide UI with animation
-        if (useFadeAnimations && canvasGroup != null)
+        if (dialogueContainer != null)
         {
-            StartCoroutine(FadeOutUI());
+            dialogueContainer.SetActive(false);
         }
         
-        
-        // Unlock player controls
         LockPlayerControls(false);
         
-        // Reset state
         currentDialogue = null;
         currentLineIndex = 0;
         isDialogueActive = false;
         isTyping = false;
         
         if (voiceSource != null) voiceSource.Stop();
+        if (blinkCoroutine != null) StopCoroutine(blinkCoroutine);
     }
     
     void LockPlayerControls(bool lockControls)
     {
         if (playerPickupController != null)
         {
-            // Disable player movement and camera if dialogue locks controls
             if (lockControls)
             {
-                // Store current inspection state
                 if (playerPickupController.IsInspecting)
                 {
                     playerPickupController.ExitInspectMode();
                 }
                 
-                // Disable player scripts
                 if (playerPickupController.player_movement_script != null)
                     playerPickupController.player_movement_script.enabled = false;
                 if (playerPickupController.player_camera_script != null)
@@ -490,7 +934,6 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                // Re-enable player scripts
                 if (playerPickupController.player_movement_script != null)
                     playerPickupController.player_movement_script.enabled = true;
                 if (playerPickupController.player_camera_script != null)
@@ -519,6 +962,7 @@ public class DialogueManager : MonoBehaviour
     
     public void ForceEndDialogue()
     {
+        Debug.Log("Dialogue force closed by player");
         EndDialogue();
     }
     
@@ -568,31 +1012,65 @@ public class DialogueManager : MonoBehaviour
     }
     
     // UI customization methods
-    public void SetBackgroundColor(Color color)
+    public void UpdateUIStyling()
     {
-        backgroundColor = color;
-        if (backgroundPanel != null)
-            backgroundPanel.color = backgroundColor;
-    }
-    
-    public void SetTextColor(Color color)
-    {
-        dialogueTextColor = color;
+        if (dialogueBackground != null)
+            dialogueBackground.color = backgroundColor;
+        
         if (dialogueText != null)
             dialogueText.color = dialogueTextColor;
-    }
-    
-    public void SetSpeakerColor(Color color)
-    {
-        speakerTextColor = color;
+        
         if (speakerNameText != null)
             speakerNameText.color = speakerTextColor;
+        
+        if (continueIndicator != null)
+        {
+            TextMeshProUGUI indicatorText = continueIndicator.GetComponent<TextMeshProUGUI>();
+            if (indicatorText != null)
+                indicatorText.color = continueIndicatorColor;
+        }
+        
+        if (victorNameTag != null)
+        {
+            Image victorBg = victorNameTag.GetComponent<Image>();
+            if (victorBg != null)
+                victorBg.color = victorNameTagColor;
+            
+            TextMeshProUGUI victorText = victorNameTag.GetComponentInChildren<TextMeshProUGUI>();
+            if (victorText != null)
+                victorText.color = victorNameTextColor;
+        }
+        
+        if (closeHint != null)
+        {
+            TextMeshProUGUI closeHintTextComp = closeHint.GetComponent<TextMeshProUGUI>();
+            if (closeHintTextComp != null)
+                closeHintTextComp.color = closeHintColor;
+        }
     }
     
     [ContextMenu("Test Simple Dialogue")]
     void TestSimpleDialogue()
     {
-        ShowSimpleMessage("This is a test message with the new UI styling!", 3f);
+        ShowSimpleMessage("This is a test message with Victor's name tag and close hint!", 3f);
+    }
+    
+    [ContextMenu("Toggle Victor Name Tag")]
+    void ToggleVictorNameTag()
+    {
+        showVictorNameTag = !showVictorNameTag;
+        if (victorNameTag != null)
+            victorNameTag.SetActive(showVictorNameTag);
+        Debug.Log($"Victor name tag: {showVictorNameTag}");
+    }
+    
+    [ContextMenu("Toggle Close Hint")]
+    void ToggleCloseHint()
+    {
+        showCloseHint = !showCloseHint;
+        if (closeHint != null)
+            closeHint.SetActive(showCloseHint);
+        Debug.Log($"Close hint: {showCloseHint}");
     }
     
     [ContextMenu("Apply Dark Theme")]
@@ -601,8 +1079,10 @@ public class DialogueManager : MonoBehaviour
         backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.95f);
         dialogueTextColor = Color.white;
         speakerTextColor = new Color(1f, 0.8f, 0.3f, 1f);
-        continueTextColor = new Color(1f, 1f, 1f, 0.7f);
-
+        continueIndicatorColor = Color.yellow;
+        victorNameTagColor = new Color(0.2f, 0.4f, 0.8f, 0.9f);
+        closeHintColor = new Color(0.8f, 0.8f, 0.8f, 0.7f);
+        UpdateUIStyling();
     }
     
     [ContextMenu("Apply Parchment Theme")]
@@ -611,7 +1091,25 @@ public class DialogueManager : MonoBehaviour
         backgroundColor = new Color(0.98f, 0.96f, 0.9f, 0.98f);
         dialogueTextColor = new Color(0.2f, 0.15f, 0.1f, 1f);
         speakerTextColor = new Color(0.5f, 0.2f, 0.1f, 1f);
-        continueTextColor = new Color(0.3f, 0.2f, 0.1f, 0.8f);
-
+        continueIndicatorColor = new Color(0.3f, 0.2f, 0.1f, 1f);
+        victorNameTagColor = new Color(0.6f, 0.4f, 0.2f, 0.9f);
+        closeHintColor = new Color(0.4f, 0.3f, 0.2f, 0.8f);
+        UpdateUIStyling();
+    }
+    
+    // Screen size adaptation
+    void OnRectTransformDimensionsChange()
+    {
+        // This gets called when the screen size changes
+        if (isDialogueActive && dialogueContainer != null && dialogueContainer.activeInHierarchy)
+        {
+            UpdateUILayout();
+        }
+    }
+    
+    void OnDestroy()
+    {
+        if (dialogueContainer != null)
+            Destroy(dialogueContainer);
     }
 }

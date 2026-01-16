@@ -14,7 +14,7 @@ public class PickupController : MonoBehaviour
     public float pickup_range = 3f;
     public float move_force = 250f;
     public float inspect_zoom_speed = 4f;
-    public float rotation_speed = 100f;
+    public float rotation_speed = 360f;
     public float post_inspect_lift = 0.3f;
     public float lift_duration = 0.2f;
     public float inspect_distance_offset = 0.25f;
@@ -68,6 +68,12 @@ public class PickupController : MonoBehaviour
 
     private pedestal_controller last_nearby_pedestal;
 
+    //Track if game was paused while inspecting
+    private bool wasInspectingBeforePause = false;
+
+    //Track if dialogue is active
+    private bool isDialogueActive = false;
+
     void Start()
     {
         if (interaction_text != null)
@@ -92,6 +98,23 @@ public class PickupController : MonoBehaviour
         {
             min_inspect_distance = main_cam.nearClipPlane + 0.2f;
         }
+
+        // Subscribe to DialogueManager events
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueStart += OnDialogueStarted;
+            DialogueManager.Instance.OnDialogueEnd += OnDialogueEnded;
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe from DialogueManager events
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueStart -= OnDialogueStarted;
+            DialogueManager.Instance.OnDialogueEnd -= OnDialogueEnded;
+        }
     }
 
     void Update()
@@ -101,6 +124,22 @@ public class PickupController : MonoBehaviour
         HandleInspectRotation();
         MoveHeldObject();
         UpdateVignette();
+
+        // Skip UI updates if dialogue is active
+        if (isDialogueActive)
+        {
+            // Hide UI elements when dialogue is active
+            if (interaction_text != null && interaction_text.gameObject.activeSelf)
+                interaction_text.gameObject.SetActive(false);
+            
+            // Keep reticle visible but  dimmed
+            if (reticle != null)
+                reticle.color = normal_color * 0.5f;
+                
+            return;
+        }
+        
+        
     }
 
     void HandleLook()
@@ -221,6 +260,14 @@ public class PickupController : MonoBehaviour
             return;
         }
 
+        //  Don't process input if dialogue is active (except for closing dialogue)
+        if (isDialogueActive)
+        {
+            return;
+        }
+
+        
+
         // E key for interactions (pick up, place, use)
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -338,125 +385,140 @@ public class PickupController : MonoBehaviour
     // In the UpdateUIText method or similar location:
     void UpdateUIText(string message)
     {
-    if (interaction_text != null)
-    {
-        // Check if holding a book and add reading prompt
-        if (held_object != null && held_object.CompareTag("Book"))
-        {
-            message += " | [X] to Read";
-        }
+        // Don't update UI if dialogue is active
+        if (isDialogueActive) return;
         
-        interaction_text.text = message;
-        interaction_text.gameObject.SetActive(true);
-    }
-}
-
-// In the TryPickup method, add book controller notification:
-void TryPickup()
-{
-    Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
-    RaycastHit hit;
-
-    if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
-    {
-        if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
+        if (interaction_text != null)
         {
-            held_object = hit.collider.gameObject;
-            held_object_rb = held_object.GetComponent<Rigidbody>();
-
-            if (held_object_rb != null)
+            // Check if holding a book and add reading prompt
+            if (held_object != null && held_object.CompareTag("Book"))
             {
-                held_object_rb.useGravity = false;
-                held_object_rb.isKinematic = true;
+                message += " | [X] to Read";
             }
+            
+            interaction_text.text = message;
+            interaction_text.gameObject.SetActive(true);
+        }
+    }
 
-            held_object.transform.rotation = Quaternion.LookRotation(main_cam.transform.forward);
+    // In the TryPickup method, add book controller notification:
+    void TryPickup()
+    {
+        // Don't allow pickup if dialogue is active
+        if (isDialogueActive) return;
+        
+        Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+        RaycastHit hit;
 
-            Collider obj_collider = held_object.GetComponent<Collider>();
-            object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
-
-            // Notify book controller that it was picked up
-            BookController bookController = held_object.GetComponent<BookController>();
-            if (bookController != null)
+        if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
+        {
+            if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
             {
-                bookController.OnBookPickedUp();
-            }
+                held_object = hit.collider.gameObject;
+                held_object_rb = held_object.GetComponent<Rigidbody>();
 
-            UpdateUIText("Press [R] to Inspect | [Q] to Drop | [Right Click] to Throw");
+                if (held_object_rb != null)
+                {
+                    held_object_rb.useGravity = false;
+                    held_object_rb.isKinematic = true;
+                }
 
-            Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
+                held_object.transform.rotation = Quaternion.LookRotation(main_cam.transform.forward);
 
-            foreach (var pc in player_colliders)
-            {
-                foreach (var oc in object_colliders)
-                    Physics.IgnoreCollision(pc, oc, true);
+                Collider obj_collider = held_object.GetComponent<Collider>();
+                object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
+
+                // Notify book controller that it was picked up
+                BookController bookController = held_object.GetComponent<BookController>();
+                if (bookController != null)
+                {
+                    bookController.OnBookPickedUp();
+                }
+
+                UpdateUIText("Press [R] to Inspect | [Q] to Drop | [Right Click] to Throw");
+
+                Collider[] object_colliders = held_object.GetComponentsInChildren<Collider>();
+
+                foreach (var pc in player_colliders)
+                {
+                    foreach (var oc in object_colliders)
+                        Physics.IgnoreCollision(pc, oc, true);
+                }
             }
         }
     }
-}
 
-// In the DropObject method, add book controller notification:
-void DropObject()
-{
-    if (held_object == null)
+    // In the DropObject method, add book controller notification:
+    void DropObject()
     {
+        //  Don't allow drop if dialogue is active
+        if (isDialogueActive) return;
+        
+        if (held_object == null)
+        {
+            held_object_rb = null;
+            is_inspecting = false;
+            wasInspectingBeforePause = false; // Reset pause tracking
+            return;
+        }
+
+        // Notify book controller before dropping
+        BookController bookController = held_object.GetComponent<BookController>();
+        if (bookController != null)
+        {
+            bookController.OnBookDropped();
+        }
+
+        if (held_object_rb != null)
+        {
+            held_object_rb.isKinematic = false;
+            held_object_rb.useGravity = true;
+        }
+
+        GameObject dropped_object = held_object; 
+
+        held_object = null;
         held_object_rb = null;
         is_inspecting = false;
-        return;
-    }
+        object_radius = 0f;
+        wasInspectingBeforePause = false; // Reset pause tracking
 
-    // Notify book controller before dropping
-    BookController bookController = held_object.GetComponent<BookController>();
-    if (bookController != null)
-    {
-        bookController.OnBookDropped();
-    }
-
-    if (held_object_rb != null)
-    {
-        held_object_rb.isKinematic = false;
-        held_object_rb.useGravity = true;
-    }
-
-    GameObject dropped_object = held_object; 
-
-    held_object = null;
-    held_object_rb = null;
-    is_inspecting = false;
-    object_radius = 0f;
-
-    Cursor.lockState = CursorLockMode.Locked;
-    Cursor.visible = false;
-
-    if (main_cam != null)
-        main_cam.fieldOfView = original_fov;
-
-    if (player_movement_script != null)
-        player_movement_script.enabled = true;
-
-    if (player_camera_script != null)
-        player_camera_script.enabled = true;
-
-    if (interaction_text != null)
-    {
-        interaction_text.text = "";
-        interaction_text.gameObject.SetActive(false);
-    }
-
-    if (dropped_object != null)
-    {
-        Collider[] object_colliders = dropped_object.GetComponentsInChildren<Collider>();
-
-        if (object_colliders != null)
+        // Only re-enable controls if we're not in inspect mode
+        if (!is_inspecting)
         {
-            foreach (var pc in player_colliders)
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            if (player_movement_script != null)
+                player_movement_script.enabled = true;
+
+            if (player_camera_script != null)
+                player_camera_script.enabled = true;
+        }
+
+        if (main_cam != null)
+            main_cam.fieldOfView = original_fov;
+
+        if (interaction_text != null)
+        {
+            interaction_text.text = "";
+            interaction_text.gameObject.SetActive(false);
+        }
+
+        if (dropped_object != null)
+        {
+            Collider[] object_colliders = dropped_object.GetComponentsInChildren<Collider>();
+
+            if (object_colliders != null)
             {
-                foreach (var oc in object_colliders)
-                    Physics.IgnoreCollision(pc, oc, false);
+                foreach (var pc in player_colliders)
+                {
+                    foreach (var oc in object_colliders)
+                        Physics.IgnoreCollision(pc, oc, false);
+                }
             }
         }
     }
-}
 
     void MoveHeldObject()
     {
@@ -538,33 +600,35 @@ void DropObject()
     }
 
 
-// Update EnterInspectMode():
-void EnterInspectMode()
-{
-    if (held_object == null) return;
-
-    is_inspecting = true;
-    Cursor.lockState = CursorLockMode.None;
-    Cursor.visible = true;
-
-    if (player_movement_script != null)
-        player_movement_script.enabled = false;
-
-    if (player_camera_script != null)
-        player_camera_script.enabled = false;
-
-    if (object_radius <= 0f)
+    // Update EnterInspectMode():
+    void EnterInspectMode()
     {
-        Collider obj_collider = held_object.GetComponent<Collider>();
-        object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
-    }
+        
+        if (held_object == null) return;
 
-    // Immediate positioning
-    Vector3 desired_position = CalculateDesiredInspectPosition();
-    Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
-    held_object.transform.position = collision_adjusted_position;
-    
-    // Show inspection dialogue after delay
+        is_inspecting = true;
+        wasInspectingBeforePause = true; // Track that we were inspecting
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (player_movement_script != null)
+            player_movement_script.enabled = false;
+
+        if (player_camera_script != null)
+            player_camera_script.enabled = false;
+
+        if (object_radius <= 0f)
+        {
+            Collider obj_collider = held_object.GetComponent<Collider>();
+            object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
+        }
+
+        // Immediate positioning
+        Vector3 desired_position = CalculateDesiredInspectPosition();
+        Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
+        held_object.transform.position = collision_adjusted_position;
+        
+        // Show inspection dialogue after delay
         if (showInspectionDialogue && DialogueManager.Instance != null)
         {
             if (inspectionCoroutine != null)
@@ -577,72 +641,76 @@ void EnterInspectMode()
             isInspectionDialogueActive = false;
             
             inspectionCoroutine = StartCoroutine(ShowInspectionDialogue());
+        }
     }
-}
 
-IEnumerator ShowInspectionDialogue()
-{
-    yield return new WaitForSeconds(inspectionDelay);
-    
-    // Get the item_component to retrieve the item_id
-    item_component itemComp = held_object.GetComponent<item_component>();
-    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+    IEnumerator ShowInspectionDialogue()
     {
-        // Try to show inspection dialogue using the item_id
-        string dialogueID = itemComp.item_id;
-        isInspectionDialogueActive = true;
-        DialogueManager.Instance.StartDialogue(dialogueID);
+        yield return new WaitForSeconds(inspectionDelay);
+        
+        // Get the item_component to retrieve the item_id
+        item_component itemComp = held_object.GetComponent<item_component>();
+        if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+        {
+            // Try to show inspection dialogue using the item_id
+            string dialogueID = itemComp.item_id;
+            isInspectionDialogueActive = true;
+            DialogueManager.Instance.StartDialogue(dialogueID);
+        }
+        else
+        {
+            // Fallback to name-based dialogue ID
+            string dialogueID = GetInspectionDialogueID(held_object);
+            isInspectionDialogueActive = true;
+            DialogueManager.Instance.StartDialogue(dialogueID);
+        }
     }
-    else
+
+    string GetInspectionDialogueID(GameObject obj)
     {
-        // Fallback to name-based dialogue ID
-        string dialogueID = GetInspectionDialogueID(held_object);
-        isInspectionDialogueActive = true;
-        DialogueManager.Instance.StartDialogue(dialogueID);
+        // First try to get item_component
+        item_component itemComp = obj.GetComponent<item_component>();
+        if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+        {
+            return itemComp.item_id;
+        }
+        
+        // Fallback to name-based detection
+        string itemName = obj.name.ToLower();
+        
+        if (itemName.Contains("vulture")) return "vulture";
+        if (itemName.Contains("bust")) return "bust";
+        if (itemName.Contains("evil_eye")) return "evil_eye";
+        if (itemName.Contains("book")) return "book";
+        if (itemName.Contains("key")) return "key";
+        
+        else return "N/A";
+        
     }
-}
 
-string GetInspectionDialogueID(GameObject obj)
-{
-    // First try to get item_component
-    item_component itemComp = obj.GetComponent<item_component>();
-    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+    
+    public void ExitInspectMode()
     {
-        return itemComp.item_id;
-    }
-    
-    // Fallback to name-based detection
-    string itemName = obj.name.ToLower();
-    
-    if (itemName.Contains("vulture")) return "vulture";
-    if (itemName.Contains("bust")) return "bust";
-    if (itemName.Contains("evil_eye")) return "evil_eye";
-    if (itemName.Contains("book")) return "book";
-    if (itemName.Contains("key")) return "key";
-    
-    else return "N/A";
-    
-}
+        
+        if (held_object == null) return;
 
-// Update ExitInspectMode() to stop coroutine:
-public void ExitInspectMode()
-{
-    if (held_object == null) return;
+        is_inspecting = false;
+        wasInspectingBeforePause = false; // Reset pause tracking
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
-    is_inspecting = false;
-    Cursor.lockState = CursorLockMode.Locked;
-    Cursor.visible = false;
+        if (main_cam != null)
+            main_cam.fieldOfView = original_fov;
 
-    if (main_cam != null)
-        main_cam.fieldOfView = original_fov;
+        //  Only re-enable controls if we're exiting inspect mode normally
+        // (not just because game was paused/unpaused)
+        if (player_movement_script != null)
+            player_movement_script.enabled = true;
 
-    if (player_movement_script != null)
-        player_movement_script.enabled = true;
+        if (player_camera_script != null)
+            player_camera_script.enabled = true;
 
-    if (player_camera_script != null)
-        player_camera_script.enabled = true;
-
-    // Clear any active inspection dialogue
+        // Clear any active inspection dialogue
         ClearInspectionDialogue();
 
         // Stop any ongoing inspection coroutine
@@ -652,14 +720,14 @@ public void ExitInspectMode()
             inspectionCoroutine = null;
         }
         
-    // Reset the flag
-    isInspectionDialogueActive = false;
-    
-    // Use a quick coroutine to smoothly return to hold position
-    StartCoroutine(ReturnToHoldPosition());
-}
+        // Reset the flag
+        isInspectionDialogueActive = false;
+        
+        // Use a quick coroutine to smoothly return to hold position
+        StartCoroutine(ReturnToHoldPosition());
+    }
 
-void ClearInspectionDialogue()
+    void ClearInspectionDialogue()
     {
         if (isInspectionDialogueActive && DialogueManager.Instance != null)
         {
@@ -668,8 +736,6 @@ void ClearInspectionDialogue()
             {
                 DialogueManager.Instance.ForceEndDialogue();
             }
-            
-            
         }
     }
 
@@ -692,6 +758,9 @@ void ClearInspectionDialogue()
 
     void ThrowObject()
     {
+        //  Don't allow throwing if dialogue is active
+        if (isDialogueActive) return;
+        
         if (held_object == null || held_object_rb == null) return;
 
         held_object_rb.isKinematic = false;
@@ -701,19 +770,24 @@ void ClearInspectionDialogue()
         held_object = null;
         held_object_rb = null;
         is_inspecting = false;
+        wasInspectingBeforePause = false; // Reset pause tracking
         object_radius = 0f;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Only re-enable controls if we're not in inspect mode
+        if (!is_inspecting)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            if (player_movement_script != null)
+                player_movement_script.enabled = true;
+
+            if (player_camera_script != null)
+                player_camera_script.enabled = true;
+        }
 
         if (main_cam != null)
             main_cam.fieldOfView = original_fov;
-
-        if (player_movement_script != null)
-            player_movement_script.enabled = true;
-
-        if (player_camera_script != null)
-            player_camera_script.enabled = true;
 
         if (interaction_text != null)
         {
@@ -727,6 +801,7 @@ void ClearInspectionDialogue()
         if (held_object == null)
         {
             held_object_rb = null;
+            wasInspectingBeforePause = false; // Reset pause tracking
             return;
         }
 
@@ -739,6 +814,7 @@ void ClearInspectionDialogue()
         held_object = null;
         held_object_rb = null;
         object_radius = 0f;
+        wasInspectingBeforePause = false; // Reset pause tracking
     }
 
     void UpdateVignette()
@@ -751,4 +827,97 @@ void ClearInspectionDialogue()
         vignette_image.color = col;
     }
 
+    // METHODS TO HANDLE PAUSE/UNPAUSE WHILE INSPECTING
+    public void OnGamePaused()
+    {
+        // Store whether we were inspecting before pause
+        wasInspectingBeforePause = is_inspecting;
+        
+        if (is_inspecting)
+        {
+            // While inspecting, we don't want to change cursor state on pause
+            // because the pause menu will handle its own cursor
+        }
+    }
+
+    public void OnGameResumed()
+    {
+        // Check if we were inspecting before pause
+        if (wasInspectingBeforePause && held_object != null)
+        {
+            // We were inspecting when game was paused
+            // Don't re-enable player controls - stay in inspect mode
+            if (player_movement_script != null)
+                player_movement_script.enabled = false;
+
+            if (player_camera_script != null)
+                player_camera_script.enabled = false;
+
+            // Keep cursor unlocked and visible for inspect mode
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            
+            // Update UI to show we're still in inspect mode
+            if (interaction_text != null)
+            {
+                interaction_text.text = "Inspecting - Press [R] to Exit";
+                interaction_text.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            // We weren't inspecting, or we don't have an object
+            wasInspectingBeforePause = false;
+            
+            // Normal cursor state for non-inspect mode
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
+    // Helper method to check if controls should be enabled
+    public bool ShouldControlsBeEnabled()
+    {
+        // Controls should be enabled if we're not inspecting
+        return !is_inspecting;
+    }
+
+    // Dialogue event handlers
+    void OnDialogueStarted(Dialogue dialogue)
+    {
+        isDialogueActive = true;
+        
+        // Hide interaction UI when dialogue starts
+        if (interaction_text != null)
+            interaction_text.gameObject.SetActive(false);
+            
+        // Dim the reticle
+        if (reticle != null)
+            reticle.color = normal_color * 0.5f;
+            
+        Debug.Log("Dialogue started - hiding interaction UI");
+    }
+
+    void OnDialogueEnded(Dialogue dialogue)
+    {
+        isDialogueActive = false;
+        
+        // Reset reticle to normal
+        if (reticle != null)
+            reticle.color = normal_color;
+            
+        Debug.Log("Dialogue ended - interaction UI can be shown again");
+        
+        // If we were in inspection dialogue, mark it as no longer active
+        if (isInspectionDialogueActive)
+        {
+            isInspectionDialogueActive = false;
+        }
+    }
+
+    // Check if dialogue is active
+    public bool IsDialogueActive()
+    {
+        return isDialogueActive;
+    }
 }
