@@ -8168,9 +8168,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b044ba8139f6642e8bef612abbb4e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  pause_menu_ui: {fileID: 1659049280}
-  pause_menu_buttons: {fileID: 350016694}
+  bookCoverSprite: {fileID: 0}
+  bookBackgroundColor: {r: 0.2, g: 0.15, b: 0.1, a: 0.95}
+  pageColor: {r: 0.98, g: 0.96, b: 0.9, a: 1}
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  buttonColor: {r: 0.2, g: 0.15, b: 0.1, a: 0.9}
+  buttonHoverColor: {r: 0.3, g: 0.25, b: 0.2, a: 1}
+  titleFontSize: 36
+  buttonFontSize: 24
+  minFontSize: 14
+  textPaddingPercentage: 0.1
   playerController: {fileID: 1576889011}
+  pickupController: {fileID: 1576889009}
 --- !u!1 &747966631
 GameObject:
   m_ObjectHideFlags: 0
@@ -8561,7 +8570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9804ab0bbe3a84695945a96df30a9a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HorrorPostProcessing
-  volume: {fileID: 0}
 --- !u!114 &922047436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8574,12 +8582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0afe19b4595460e975bf900de271ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasementLightPlacer
-  candlePrefab: {fileID: 0}
-  torchPrefab: {fileID: 0}
-  crackLightPrefab: {fileID: 0}
-  candleCount: 5
-  torchCount: 3
-  crackCount: 2
 --- !u!4 &922047437
 Transform:
   m_ObjectHideFlags: 0
@@ -8684,34 +8686,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9661d4f8887a84a4e8c193e0125c9fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  dialoguePanel: {fileID: 567629867}
-  dialogueText: {fileID: 839980377}
-  speakerNameText: {fileID: 1431955131}
-  portraitImage: {fileID: 350016696}
-  continuePrompt: {fileID: 0}
-  backgroundPanel: {fileID: 0}
-  backgroundSprite: {fileID: 0}
+  boxPosition: 0
+  screenWidthPercentage: 0.85
+  screenHeightPercentage: 0.25
+  minBoxWidth: 600
+  minBoxHeight: 150
+  maxBoxWidth: 1200
+  maxBoxHeight: 300
+  marginFromScreenEdge: 30
   backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.95}
-  backgroundPadding: {x: 50, y: 30}
+  borderColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  borderThickness: 2
+  cornerRadius: 10
+  boxPadding: {x: 20, y: 15}
   dialogueTextColor: {r: 1, g: 1, b: 1, a: 1}
   speakerTextColor: {r: 1, g: 0.8, b: 0.3, a: 1}
-  continueTextColor: {r: 1, g: 1, b: 1, a: 0.7}
-  dialogueFontSize: 24
-  speakerFontSize: 28
-  portraitFrameSprite: {fileID: 0}
-  portraitFrameColor: {r: 1, g: 1, b: 1, a: 1}
-  portraitSize: 150
-  fadeInTime: 0.3
-  fadeOutTime: 0.2
-  useFadeAnimations: 1
+  continueIndicatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  baseDialogueFontSize: 22
+  baseSpeakerFontSize: 20
+  minFontSize: 16
+  maxFontSize: 28
   textSpeed: 0.03
-  skipOnClick: 1
   typewriterEffect: 1
+  portraitWidthPercentage: 0.12
+  minPortraitSize: 60
+  maxPortraitSize: 120
+  portraitOffset: {x: -10, y: 0}
+  portraitBorderColor: {r: 1, g: 1, b: 1, a: 1}
+  speakerNameOffset: {x: 0, y: 25}
+  showSpeakerBackground: 1
+  speakerBackgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
+  showVictorNameTag: 1
+  victorName: Victor
+  victorNameTagColor: {r: 0.2, g: 0.4, b: 0.8, a: 0.9}
+  victorNameTextColor: {r: 1, g: 1, b: 1, a: 1}
+  victorNameTagOffset: {x: 15, y: -15}
+  showCloseHint: 1
+  closeHintText: '[R] to close'
+  closeHintColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
+  closeHintOffset: {x: -15, y: 15}
+  continueText: "\u25B6"
+  continueBlinkSpeed: 1
+  showContinueIndicator: 1
+  advanceKey: 114
+  skipKey: 32
+  closeKey: 27
   voiceSource: {fileID: 0}
   defaultTextSound: {fileID: 0}
   pitchVariation: 0.1
-  advanceKey: 114
-  skipKey: 32
   dialogueDatabase:
   - dialogueID: '"vulture"'
     lines:
@@ -8853,12 +8875,9 @@ MonoBehaviour:
         m_Calls: []
   - dialogueID: '"toybox_interact"'
     lines:
-    - text: Dad was... particular about me cleaning up my playroom. He engineered
-        one of his crazy machines so that the basement door wouldn't open unless
-        all my toys were put away. I remember one time I threw one of the toys under
-        the door, the pressure plate system went off and closed the door, and I wasn't
-        able it open it again without that last toy. Dad didn't let me down there
-        for a week while he was fixing it, and I never did get that toy back.
+    - text: 'Dad was... particular about me cleaning up my playroom. He engineered
+        one of his crazy machines so that the basement door wouldn''t open unless
+        all my toys were put away. '
       speakerName: 
       speakerPortrait: {fileID: 0}
       voiceClip: {fileID: 0}
@@ -9388,7 +9407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1089523551
 Transform:
   m_ObjectHideFlags: 0
@@ -9397,13 +9416,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089523550}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9861065, y: 0.0069837635, z: -0.042958364, w: -0.16031204}
-  m_LocalPosition: {x: 5.6373453, y: -8.570367, z: -46.926647}
+  m_LocalRotation: {x: -0.976975, y: 0.0048514493, z: -0.04325122, w: -0.20886756}
+  m_LocalPosition: {x: -1.3, y: 30.6, z: 18.7}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1979159956}
-  m_LocalEulerAnglesHint: {x: -109.107, y: -14.595001, z: 15.406998}
+  m_LocalEulerAnglesHint: {x: -204.113, y: -5.1849976, z: -0.53900146}
 --- !u!114 &1089523552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9444,8 +9463,8 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 0.41960785, g: 0.9098039, b: 1, a: 1}
-  m_Intensity: 4000
-  m_Range: 10
+  m_Intensity: 5000
+  m_Range: 50
   m_SpotAngle: 45.662502
   m_InnerSpotAngle: 30.623077
   m_CookieSize: 10
@@ -11341,7 +11360,7 @@ MonoBehaviour:
   pickup_range: 3
   move_force: 250
   inspect_zoom_speed: 4
-  rotation_speed: 120
+  rotation_speed: 500
   post_inspect_lift: 0.3
   lift_duration: 0.2
   inspect_distance_offset: 0.25

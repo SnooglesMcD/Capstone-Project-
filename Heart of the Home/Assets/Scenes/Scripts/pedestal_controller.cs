@@ -9,6 +9,7 @@ public class pedestal_controller : MonoBehaviour
     public Color incorrect_color = Color.red;
 
     private GameObject placed_item;
+    private Vector3 original_item_scale; // Store the original scale
     public bool is_correct;
 
     void Start()
@@ -26,6 +27,12 @@ public class pedestal_controller : MonoBehaviour
     {
         // Player must be holding an item
         var pickup = FindObjectOfType<PickupController>();
+        if (pickup == null)
+        {
+            Debug.LogWarning("No PickupController found in scene!");
+            return;
+        }
+        
         GameObject held = pickup.HeldObject;
         if (held == null) return;
 
@@ -33,6 +40,9 @@ public class pedestal_controller : MonoBehaviour
         if (comp == null) return;
 
         placed_item = held;
+
+        // Save the original world scale BEFORE parenting
+        original_item_scale = held.transform.lossyScale;
 
         // Disable physics so item stays locked in place
         Rigidbody rb = held.GetComponent<Rigidbody>();
@@ -42,12 +52,9 @@ public class pedestal_controller : MonoBehaviour
             rb.useGravity = false;     // No falling
         }
 
-        // IMPORTANT:
-        // DO NOT disable the collider!
-        // Instead, move item to a safe layer that doesn't collide with player/hands.
-        held.layer = LayerMask.NameToLayer("PlacedItem"); // Must exist in Unity project
+        
 
-        // Ensure collider is ON so object doesn't fall through the floor
+        
         Collider col = held.GetComponent<Collider>();
         if (col != null)
         {
@@ -55,13 +62,42 @@ public class pedestal_controller : MonoBehaviour
             col.isTrigger = false;     // Ensure it's solid
         }
 
-        // Snap object into exact placement position
-        held.transform.SetParent(place_socket);
-        held.transform.localPosition = Vector3.zero;      // Perfect alignment
-        held.transform.localRotation = Quaternion.identity;
+        // Parent the item to the socket while preserving world position/rotation
+        held.transform.SetParent(place_socket, false);
+        
+        // Set position and rotation to match socket
+        held.transform.position = place_socket.position;
+        held.transform.rotation = place_socket.rotation;
+        
+        
+        // Calculate and set the local scale to preserve the original world scale
+        // This prevents distortion from parent scale
+        if (place_socket != null)
+        {
+            Vector3 parentLossyScale = place_socket.lossyScale;
+            
+            // Avoid division by zero
+            if (Mathf.Abs(parentLossyScale.x) > 0.001f && 
+                Mathf.Abs(parentLossyScale.y) > 0.001f && 
+                Mathf.Abs(parentLossyScale.z) > 0.001f)
+            {
+                held.transform.localScale = new Vector3(
+                    original_item_scale.x / parentLossyScale.x,
+                    original_item_scale.y / parentLossyScale.y,
+                    original_item_scale.z / parentLossyScale.z
+                );
+            }
+            else
+            {
+                // Fallback: set uniform scale
+                held.transform.localScale = Vector3.one;
+                Debug.LogWarning("Pedestal socket has near-zero scale, using uniform scaling instead.");
+            }
+        }
 
         // Drop from player's inventory
         pickup.ForceDrop();
+        rb.isKinematic = true; 
 
         // Check pedestal correctness
         is_correct = (comp.item_id == expected_item_id);
@@ -71,6 +107,8 @@ public class pedestal_controller : MonoBehaviour
 
         // Notify puzzle manager
         puzzle_manager.instance.Notify_pedestal_changed(this);
+        
+        Debug.Log($"Item placed. Correct: {is_correct}, Original scale: {original_item_scale}, Current scale: {held.transform.lossyScale}");
     }
 
     void UpdateLightState(bool correct)
@@ -91,7 +129,7 @@ public class pedestal_controller : MonoBehaviour
         }
     }
 
-    // Optional: Method to force light state
+    // Method to force light state
     public void SetLight(bool enabled, Color? color = null)
     {
         if (pedestal_light != null)
@@ -109,32 +147,8 @@ public class pedestal_controller : MonoBehaviour
         }
     }
 
-    // Optional: Reset method
-    public void ResetPedestal()
-    {
-        if (placed_item != null)
-        {
-            // Return item to interactable layer
-            placed_item.layer = LayerMask.NameToLayer("Default");
-            
-            // Re-enable physics if needed
-            Rigidbody rb = placed_item.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.useGravity = true;
-            }
-            
-            // Unparent
-            placed_item.transform.SetParent(null);
-            
-            placed_item = null;
-        }
-        
-        is_correct = false;
-        UpdateLightState(false);
-    }
     
+
     // Debug method to check light state
     public void DebugLightState()
     {
@@ -149,6 +163,29 @@ public class pedestal_controller : MonoBehaviour
         else
         {
             Debug.LogWarning("pedestal_light is null!");
+        }
+    }
+    
+    // Helper method to debug scale information
+    public void DebugScaleInfo()
+    {
+        if (placed_item != null)
+        {
+            Debug.Log($"Item: {placed_item.name}");
+            Debug.Log($"Local Scale: {placed_item.transform.localScale}");
+            Debug.Log($"World Scale: {placed_item.transform.lossyScale}");
+            Debug.Log($"Parent Socket Scale: {place_socket.lossyScale}");
+        }
+        
+        if (place_socket != null)
+        {
+            Debug.Log($"Socket full hierarchy:");
+            Transform current = place_socket;
+            while (current != null)
+            {
+                Debug.Log($"  {current.name} - Local Scale: {current.localScale}");
+                current = current.parent;
+            }
         }
     }
 }
