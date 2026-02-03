@@ -8,6 +8,10 @@ TagManager:
   - Book
   - Pedestal
   - Interact
+  - Safe
+  - Calendar
+  - Note
+  - Door
   layers:
   - Default
   - TransparentFX

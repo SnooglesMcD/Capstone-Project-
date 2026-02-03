@@ -75,7 +75,7 @@ public class BookController : MonoBehaviour
     private float currentPadding;
     
     // Book state
-    private bool isBeingRead = false;
+    public bool isBeingRead = false;
     private bool isBeingHeld = false;
     private PickupController pickupController;
     private string[] pages;

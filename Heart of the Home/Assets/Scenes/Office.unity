@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 306cf6742433e44059d616624da29950, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: fcbfa44891de848b3aee275c83982785, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: bbfb284afd3f645e3b52c42ac99c11c0, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -501,6 +501,75 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ccf92fadedee324e98da9325185d59a, type: 3}
   m_PrefabInstance: {fileID: 105226953}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &94997826
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 825694531}
+    m_Modifications:
+    - target: {fileID: 2303921292967740188, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.522
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.095
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6637489
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7479555
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -96.827
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303921294396319335, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      propertyPath: m_Name
+      value: Keypad
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2303921294396319335, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1147335042}
+  m_SourcePrefab: {fileID: 100100000, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+--- !u!4 &94997827 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+  m_PrefabInstance: {fileID: 94997826}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &105226953
 PrefabInstance:
@@ -1021,6 +1090,453 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 023de7066c8cb4f4b8fac239aa224628, type: 3}
   m_PrefabInstance: {fileID: 335570850}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &341543788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 341543789}
+  - component: {fileID: 341543790}
+  m_Layer: 0
+  m_Name: Dialogue Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &341543789
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341543788}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1782726630}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &341543790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341543788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9661d4f8887a84a4e8c193e0125c9fe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
+  boxPosition: 0
+  screenWidthPercentage: 0.85
+  screenHeightPercentage: 0.25
+  minBoxWidth: 600
+  minBoxHeight: 150
+  maxBoxWidth: 1200
+  maxBoxHeight: 300
+  marginFromScreenEdge: 30
+  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.95}
+  borderColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  borderThickness: 2
+  cornerRadius: 10
+  boxPadding: {x: 20, y: 15}
+  dialogueTextColor: {r: 1, g: 1, b: 1, a: 1}
+  speakerTextColor: {r: 1, g: 0.8, b: 0.3, a: 1}
+  continueIndicatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  baseDialogueFontSize: 22
+  baseSpeakerFontSize: 20
+  minFontSize: 16
+  maxFontSize: 28
+  textSpeed: 0.03
+  typewriterEffect: 1
+  portraitWidthPercentage: 0.12
+  minPortraitSize: 60
+  maxPortraitSize: 120
+  portraitOffset: {x: -10, y: 0}
+  portraitBorderColor: {r: 1, g: 1, b: 1, a: 1}
+  speakerNameOffset: {x: 0, y: 25}
+  showSpeakerBackground: 1
+  speakerBackgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
+  showVictorNameTag: 1
+  victorName: Victor
+  victorNameTagColor: {r: 0.2, g: 0.4, b: 0.8, a: 0.9}
+  victorNameTextColor: {r: 1, g: 1, b: 1, a: 1}
+  victorNameTagOffset: {x: 15, y: -15}
+  showCloseHint: 1
+  closeHintText: '[R] to close'
+  closeHintColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
+  closeHintOffset: {x: -15, y: 15}
+  continueText: "\u25B6"
+  continueBlinkSpeed: 1
+  showContinueIndicator: 1
+  advanceKey: 114
+  skipKey: 32
+  closeKey: 27
+  voiceSource: {fileID: 0}
+  defaultTextSound: {fileID: 0}
+  pitchVariation: 0.1
+  dialogueDatabase:
+  - dialogueID: '"vulture"'
+    lines:
+    - text: I don't remember this one... It's got the price tag on it still.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"evil_eye"'
+    lines:
+    - text: It feels smooth and cold to the touch. I always wondered why they call
+        it an "evil eye" if it's supposed to protect you.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"bust"'
+    lines:
+    - text: It looks like me. Minus a few years or so. Why did they make this?
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"key"'
+    lines:
+    - text: The floor boards here are squeaky and loose. I'm suprised my dad let
+        them get this bad.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: floorboard_locked
+    lines:
+    - text: The floor boards here are squeaky and loose. I'm suprised my dad let
+        them get this bad.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"toybox_interact"'
+    lines:
+    - text: 'Dad was... particular about me cleaning up my playroom. He engineered
+        one of his crazy machines so that the basement door wouldn''t open unless
+        all my toys were put away. '
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"book_read"'
+    lines:
+    - text: "The Tell-Tale Heart Text \n\nTrue! \u2014 nervous \u2014 very, very
+        dreadfully nervous I had been and am; but why will you say that I am mad?
+        The disease had sharpened my senses \u2014 not destroyed \u2014 not dulled
+        them. Above all was the sense of hearing acute. I heard all things in the
+        heaven and in the earth. I heard many things in hell. How, then, am I mad?
+        Hearken! and observe how healthily \u2014 how calmly I can tell you the whole
+        story.\n\nIt is impossible to say how first the idea entered my brain; but
+        once conceived, it haunted me day and night. Object there was none. Passion
+        there was none. I loved the old man. He had never wronged me. He had never
+        given me insult. For his gold I had no desire. I think it was his eye! yes,
+        it was this! One of his eyes resembled that of a vulture \u2014 a pale blue
+        eye, with a film over it. Whenever it fell upon me, my blood ran cold; and
+        so by degrees \u2014 very gradually \u2014 I made up my mind to take the
+        life of the old man, and thus rid myself of the eye forever.\n\nNow this
+        is the point. You fancy me mad. Madmen know nothing. But you should have
+        seen me. You should have seen how wisely I proceeded \u2014 with what caution
+        \u2014 with what foresight \u2014 with what dissimulation I went to work!
+        I was never kinder to the old man than during the whole week before I killed
+        him. And every night, about midnight, I turned the latch of his door and
+        opened it \u2014 oh, so gently! And then, when I had made an opening sufficient
+        for my head, I put in a dark lantern, all closed, closed, so that no light
+        shone out, and then I thrust in my head. Oh, you would have laughed to see
+        how cunningly I thrust it in! I moved it slowly \u2014 very, very slowly,
+        so that I might not disturb the old man\u2019s sleep. It took me an hour
+        to place my whole head within the opening so far that I could see him as
+        he lay upon his bed. Ha! \u2014 would a madman have been so wise as this?
+        And then, when my head was well in the room, I undid the lantern cautiously
+        \u2014 oh, so cautiously \u2014 cautiously (for the hinges creaked) \u2014
+        I undid it just so much that a single thin ray fell upon the vulture eye.
+        And this I did for seven long nights \u2014 every night just at midnight
+        \u2014 but I found the eye always closed; and so it was impossible to do
+        the work; for it was not the old man who vexed me, but his Evil Eye. And
+        every morning, when the day broke, I went boldly into the chamber, and spoke
+        courageously to him, calling him by name in a hearty tone, and inquiring
+        how he had passed the night. So you see he would have been a very profound
+        old man, indeed, to suspect that every night, just at twelve, I looked in
+        upon him while he slept.\n\nUpon the eighth night I was more than usually
+        cautious in opening the door. A watch\u2019s minute hand moves more quickly
+        than did mine. Never before that night had I felt the extent of my own powers
+        \u2014 of my sagacity. I could scarcely contain my feelings of triumph. To
+        think that there I was, opening the door, little by little, and he not even
+        to dream of my secret deeds or thoughts. I fairly chuckled at the idea; and
+        perhaps he heard me; for he moved on the bed suddenly, as if startled. Now
+        you may think that I drew back \u2014 but no. His room was as black as pitch
+        with the thick darkness, (for the shutters were close fastened, through fear
+        of robbers,) and so I knew that he could not see the opening of the door,
+        and I kept pushing it on steadily, steadily.\n\nI had my head in, and was
+        about to open the lantern, when my thumb slipped upon the tin fastening,
+        and the old man sprang up in the bed, crying out \u2014 \u201CWho\u2019s
+        there?\u201D\n\nI kept quite still and said nothing. For a whole hour I did
+        not move a muscle, and in the meantime I did not hear him lie down. He was
+        still sitting up in the bed listening; \u2014 just as I have done, night
+        after night, hearkening to the death watches in the wall.\n\nPresently I
+        heard a slight groan, and I knew it was the groan of mortal terror. It was
+        not a groan of pain or of grief \u2014 oh, no! \u2014 it was the low stifled
+        sound that arises from the bottom of the soul when overcharged with awe.
+        I knew the sound well. Many a night, just at midnight, when all the world
+        slept, it has welled up from my own bosom, deepening, with its dreadful echo,
+        the terrors that distracted me. I say I knew it well. I knew what the old
+        man felt, and pitied him, although I chuckled at heart. I knew that he had
+        been lying awake ever since the first slight noise, when he had turned in
+        the bed. His fears had been ever since growing upon him. He had been trying
+        to fancy them causeless, but could not. He had been saying to himself \u2014
+        \u201CIt is nothing but the wind in the chimney \u2014 it is only a mouse
+        crossing the floor,\u201D or \u201Cit is merely a cricket which has made
+        a single chirp.\u201D Yes, he has been trying to comfort himself with these
+        suppositions: but he had found all in vain. All in vain; because Death, in
+        approaching him had stalked with his black shadow before him, and enveloped
+        the victim. And it was the mournful influence of the unperceived shadow that
+        caused him to feel \u2014 although he neither saw nor heard \u2014 to feel
+        the presence of my head within the room.\n\nWhen I had waited a long time,
+        very patiently, without hearing him lie down, I resolved to open a little
+        \u2014 a very, very little crevice in the lantern. So I opened it \u2014
+        you cannot imagine how stealthily, stealthily \u2014 until, at length a single
+        dim ray, like the thread of the spider, shot from out the crevice and fell
+        upon the vulture eye.\n\nIt was open \u2014 wide, wide open \u2014 and I
+        grew furious as I gazed upon it. I saw it with perfect distinctness \u2014
+        all a dull blue, with a hideous veil over it that chilled the very marrow
+        in my bones; but I could see nothing else of the old man\u2019s face or person:
+        for I had directed the ray as if by instinct, precisely upon the damned spot.\n\nAnd
+        now have I not told you that what you mistake for madness is but over acuteness
+        of the senses? \u2014 now, I say, there came to my ears a low, dull, quick
+        sound, such as a watch makes when enveloped in cotton. I knew that sound
+        well, too. It was the beating of the old man\u2019s heart. It increased my
+        fury, as the beating of a drum stimulates the soldier into courage.\n\nBut
+        even yet I refrained and kept still. I scarcely breathed. I held the lantern
+        motionless. I tried how steadily I could maintain the ray upon the eye. Meantime
+        the hellish tattoo of the heart increased. It grew quicker and quicker, and
+        louder and louder every instant. The old man\u2019s terror must have been
+        extreme! It grew louder, I say, louder every moment! \u2014 do you mark me
+        well? I have told you that I am nervous: so I am. And now at the dead hour
+        of the night, amid the dreadful silence of that old house, so strange a noise
+        as this excited me to uncontrollable terror. Yet, for some minutes longer
+        I refrained and stood still. But the beating grew louder, louder! I thought
+        the heart must burst. And now a new anxiety seized me \u2014 the sound would
+        be heard by a neighbor! The old man\u2019s hour had come! With a loud yell,
+        I threw open the lantern and leaped into the room. He shrieked once \u2014
+        once only. In an instant I dragged him to the floor, and pulled the heavy
+        bed over him. I then smiled gaily, to find the deed so far done. But, for
+        many minutes, the heart beat on with a muffled sound. This, however, did
+        not vex me; it would not be heard through the wall. At length it ceased.
+        The old man was dead. I removed the bed and examined the corpse. Yes, he
+        was stone, stone dead. I placed my hand upon the heart and held it there
+        many minutes. There was no pulsation. He was stone dead. His eye would trouble
+        me no more.\n\nIf still you think me mad, you will think so no longer when
+        I describe the wise precautions I took for the concealment of the body. The
+        night waned, and I worked hastily, but in silence. First of all I dismembered
+        the corpse. I cut off the head and the arms and the legs.\n\nI then took
+        up three planks from the flooring of the chamber, and deposited all between
+        the scantlings. I then replaced the boards so cleverly, so cunningly, that
+        no human eye \u2014 not even his \u2014 could have detected any thing wrong.
+        There was nothing to wash out \u2014 no stain of any kind \u2014 no blood-spot
+        whatever. I had been too wary for that. A tub had caught all \u2014 ha! ha!\n\nWhen
+        I had made an end of these labors, it was four o \u2018clock \u2014 still
+        dark as midnight. As the bell sounded the hour, there came a knocking at
+        the street door. I went down to open it with a light heart, \u2014 for what
+        had I now to fear? There entered three men, who introduced themselves, with
+        perfect suavity, as officers of the police. A shriek had been heard by a
+        neighbor during the night; suspicion of foul play had been aroused; information
+        had been lodged at the police office, and they (the officers) had been deputed
+        to search the premises.\n\nI smiled, \u2014 for what had I to fear? I bade
+        the gentlemen welcome. The shriek, I said, was my own in a dream. The old
+        man, I mentioned, was absent in the country. I took my visitors all over
+        the house. I bade them search \u2014 search well. I led them, at length,
+        to his chamber. I showed them his treasures, secure, undisturbed. In the
+        enthusiasm of my confidence, I brought chairs into the room, and desired
+        them here to rest from their fatigues, while I myself, in the wild audacity
+        of my perfect triumph, placed my own seat upon the very spot beneath which
+        reposed the corpse of the victim.\n\nThe officers were satisfied. My manner
+        had convinced them. I was singularly at ease. They sat, and while I answered
+        cheerily, they chatted of familiar things. But, ere long, I felt myself getting
+        pale and wished them gone. My head ached, and I fancied a ringing in my ears:
+        but still they sat and still chatted. The ringing became more distinct: \u2014
+        it continued and became more distinct: I talked more freely to get rid of
+        the feeling: but it continued and gained definitiveness \u2014 until, at
+        length, I found that the noise was not within my ears.\n\nNo doubt I now
+        grew very pale; \u2014 but I talked more fluently, and with a heightened
+        voice. Yet the sound increased \u2014 and what could I do? It was a low,
+        dull, quick sound \u2014 much such a sound as a watch makes when enveloped
+        in cotton. I gasped for breath \u2014 and yet the officers heard it not.
+        I talked more quickly \u2014 more vehemently; but the noise steadily increased.
+        I arose and argued about trifles, in a high key and with violent gesticulations;
+        but the noise steadily increased. Why would they not be gone? I paced the
+        floor to and fro with heavy strides, as if excited to fury by the observations
+        of the men \u2014 but the noise steadily increased. Oh God! what could I
+        do? I foamed \u2014 I raved \u2014 I swore! I swung the chair upon which
+        I had been sitting, and grated it upon the boards, but the noise arose over
+        all and continually increased. It grew louder \u2014 louder \u2014 louder!
+        And still the men chatted pleasantly, and smiled. Was it possible they heard
+        not? Almighty God! \u2014 no, no! They heard! \u2014 they suspected! \u2014
+        they knew! \u2014 they were making a mockery of my horror! \u2014 this I
+        thought, and this I think. But anything was better than this agony! Anything
+        was more tolerable than this derision! I could bear those hypocritical smiles
+        no longer! I felt that I must scream or die! \u2014 and now \u2014 again!
+        \u2014 hark! louder! louder! louder! louder! \u2014\n\n\u201CVillains!\u201D
+        I shrieked, \u201Cdissemble no more! I admit the deed! \u2014 tear up the
+        planks! \u2014 here, here! \u2014 it is the beating of his hideous heart!\u201D\n"
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1001 &343134313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1171,10 +1687,12 @@ MonoBehaviour:
   inspect_distance_offset: 0.25
   min_inspect_distance: 2
   throw_force: 10
-  interaction_text: {fileID: 0}
-  reticle: {fileID: 0}
+  interaction_text: {fileID: 1037939886}
+  reticle: {fileID: 665381137}
   normal_color: {r: 1, g: 1, b: 1, a: 1}
   highlight_color: {r: 1, g: 0.009498963, b: 0, a: 1}
+  safe_color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  calendar_color: {r: 1, g: 0, b: 1, a: 1}
   vignette_image: {fileID: 0}
   vignette_max_alpha: 0.25
   vignette_speed: 3
@@ -1182,6 +1700,7 @@ MonoBehaviour:
   bob_speed: 2
   player_movement_script: {fileID: 0}
   player_camera_script: {fileID: 505491176}
+  currentCalendar: {fileID: 0}
   showInspectionDialogue: 1
   inspectionDelay: 0.5
   zoomed_fov: 20
@@ -2246,6 +2765,7 @@ GameObject:
   - component: {fileID: 590267045}
   - component: {fileID: 590267044}
   - component: {fileID: 590267043}
+  - component: {fileID: 590267046}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2321,12 +2841,56 @@ Transform:
   m_GameObject: {fileID: 590267042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 28.059994, y: 5.2899995, z: -35.34871}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &590267046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590267042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1001 &590989609
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2551,6 +3115,142 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 70, y: 30, z: 0}
+--- !u!1 &619924106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 619924107}
+  - component: {fileID: 619924109}
+  - component: {fileID: 619924108}
+  m_Layer: 0
+  m_Name: Speaker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &619924107
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619924106}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1782726630}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &619924108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619924106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4283223295
+  m_fontColor: {r: 1, g: 0.8, b: 0.3, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 28
+  m_fontSizeBase: 28
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &619924109
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619924106}
+  m_CullTransparentMesh: 1
 --- !u!1001 &632916967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2661,6 +3361,7 @@ Transform:
   - {fileID: 275662441}
   - {fileID: 1815513094}
   - {fileID: 632916968}
+  - {fileID: 1115263135}
   - {fileID: 690003914}
   - {fileID: 588142336}
   - {fileID: 53605519}
@@ -2681,8 +3382,84 @@ Transform:
   - {fileID: 1735849341}
   - {fileID: 1261071822}
   - {fileID: 335570851}
+  - {fileID: 825694531}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &665381135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 665381136}
+  - component: {fileID: 665381138}
+  - component: {fileID: 665381137}
+  m_Layer: 5
+  m_Name: Reticle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &665381136
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665381135}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -0.03, y: -0.03, z: -0.03}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1526906795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &665381137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665381135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &665381138
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665381135}
+  m_CullTransparentMesh: 1
 --- !u!1001 &690003913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3309,6 +4086,147 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ccf92fadedee324e98da9325185d59a, type: 3}
+--- !u!1 &825694530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825694531}
+  - component: {fileID: 825694534}
+  - component: {fileID: 825694533}
+  - component: {fileID: 825694532}
+  - component: {fileID: 825694535}
+  m_Layer: 0
+  m_Name: Safe
+  m_TagString: Safe
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &825694531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825694530}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.23, y: 1.41, z: -9.23}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 94997827}
+  m_Father: {fileID: 654920837}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &825694532
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825694530}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &825694533
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825694530}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &825694534
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825694530}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &825694535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825694530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc8bafbdc197423697ae4e3d15498f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SafeController
+  correctCode: 1407
+  unlockSound: {fileID: 0}
+  lockSound: {fileID: 0}
+  errorSound: {fileID: 0}
+  buttonSound: {fileID: 0}
+  lockedMat: {fileID: 0}
+  unlockedMat: {fileID: 0}
+  statusLight: {fileID: 0}
+  encodedNote: {fileID: 0}
+  onUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
+  onLocked:
+    m_PersistentCalls:
+      m_Calls: []
+  keypadPrefab: {fileID: 0}
 --- !u!1001 &829596872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3647,7 +4565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &915243703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3751,7 +4669,7 @@ Transform:
   m_GameObject: {fileID: 915243702}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 28.8, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4212,6 +5130,215 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fbf90be352b36b74aadbb8334d127160, type: 3}
   m_PrefabInstance: {fileID: 1024057756}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1037939884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1037939885}
+  - component: {fileID: 1037939887}
+  - component: {fileID: 1037939886}
+  m_Layer: 5
+  m_Name: InteractionText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1037939885
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037939884}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1526906795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -150}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1037939886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037939884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Press E to Pick up
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 24
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1037939887
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037939884}
+  m_CullTransparentMesh: 1
+--- !u!1001 &1070860349
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 654920837}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7554
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.36
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.037
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70236975
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7118124
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90.765
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c7b0f7dd3a63c458285a9101e745f3b9, type: 2}
+    - target: {fileID: 919132149155446097, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+      propertyPath: m_Name
+      value: Desk 2 (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
 --- !u!1001 &1098747828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4469,6 +5596,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 14c300696aaf7c74eac4266f184b954e, type: 3}
   m_PrefabInstance: {fileID: 1109806899}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1115263135 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d8d2510b57d893d43ada4f471b98556c, type: 3}
+  m_PrefabInstance: {fileID: 1070860349}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1145176640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4535,6 +5667,162 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ccf92fadedee324e98da9325185d59a, type: 3}
   m_PrefabInstance: {fileID: 1145176640}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1147335039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2303921294396319335, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
+  m_PrefabInstance: {fileID: 94997826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1147335042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147335039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8f6506083dc14e4caf1f80db9917022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeypadButton
+  buttonValue: 0
+  safeController: {fileID: 0}
+  pressSound: {fileID: 0}
+--- !u!1 &1156792202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1156792203}
+  - component: {fileID: 1156792205}
+  - component: {fileID: 1156792204}
+  m_Layer: 0
+  m_Name: Dialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1156792203
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156792202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1782726630}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 277}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1156792204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156792202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 24
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1156792205
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156792202}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1163946145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4680,7 +5968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1227004180
 Light:
   m_ObjectHideFlags: 0
@@ -4692,7 +5980,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5779,6 +7067,109 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9c4d856153768f04e9135bb6f7467f21, type: 3}
   m_PrefabInstance: {fileID: 1470391878}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1526906791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1526906795}
+  - component: {fileID: 1526906794}
+  - component: {fileID: 1526906793}
+  - component: {fileID: 1526906792}
+  m_Layer: 5
+  m_Name: Interaction Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1526906792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526906791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1526906793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526906791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &1526906794
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526906791}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &1526906795
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526906791}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1037939885}
+  - {fileID: 665381136}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1001 &1533042107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6947,6 +8338,110 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1768250422}
   m_CullTransparentMesh: 1
+--- !u!1 &1782726626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1782726630}
+  - component: {fileID: 1782726629}
+  - component: {fileID: 1782726628}
+  - component: {fileID: 1782726627}
+  m_Layer: 0
+  m_Name: Dialogue Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1782726627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782726626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1782726628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782726626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &1782726629
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782726626}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &1782726630
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782726626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 341543789}
+  - {fileID: 1156792203}
+  - {fileID: 619924107}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1815513093
 GameObject:
   m_ObjectHideFlags: 0
@@ -12717,3 +14212,5 @@ SceneRoots:
   - {fileID: 785027198}
   - {fileID: 1941179893}
   - {fileID: 654920837}
+  - {fileID: 1782726630}
+  - {fileID: 1526906795}
