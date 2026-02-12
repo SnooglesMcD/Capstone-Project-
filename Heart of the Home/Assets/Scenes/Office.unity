@@ -5684,10 +5684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f6506083dc14e4caf1f80db9917022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeypadButton
-  buttonValue: 0
-  safeController: {fileID: 0}
-  pressSound: {fileID: 0}
-  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1156792202
 GameObject:
   m_ObjectHideFlags: 0

@@ -80,6 +80,8 @@ public class PickupController : MonoBehaviour
     public GameObject HeldObject => held_object;
     public bool IsInspecting => is_inspecting;
     public bool IsEnteringSafeCode => false;
+    public pedestal_controller last_nearby_pedestal;
+
 
     void Start()
     {
@@ -115,15 +117,6 @@ public class PickupController : MonoBehaviour
         Debug.Log("PickupController initialized for Office Puzzle");
     }
 
-    void OnDestroy()
-    {
-        // Unsubscribe from DialogueManager events
-        if (DialogueManager.Instance != null)
-        {
-            DialogueManager.Instance.OnDialogueStart -= OnDialogueStarted;
-            DialogueManager.Instance.OnDialogueEnd -= OnDialogueEnded;
-        }
-    }
 
     void Update()
     {
@@ -148,6 +141,54 @@ public class PickupController : MonoBehaviour
 
     void HandleLook()
     {
+        if (held_object != null)
+        {
+            // Find all pedestals in range
+            pedestal_controller[] all_pedestals = FindObjectsOfType<pedestal_controller>();
+            pedestal_controller nearest_pedestal = null;
+            float nearest_distance = float.MaxValue;
+            
+            foreach (var pedestal in all_pedestals)
+            {
+                float distance = Vector3.Distance(transform.position, pedestal.transform.position);
+                if (distance <= pickup_range)
+                {
+                    // Check if we're looking at or near this pedestal
+                    Vector3 direction_to_pedestal = (pedestal.transform.position - main_cam.transform.position).normalized;
+                    float angle = Vector3.Angle(main_cam.transform.forward, direction_to_pedestal);
+                    
+                    // More generous angle check (up to 30 degrees)
+                    if (angle < 30f && distance < nearest_distance)
+                    {
+                        nearest_pedestal = pedestal;
+                        nearest_distance = distance;
+                    }
+                }
+            }
+            
+            // Show interaction prompt if we found a pedestal
+            if (nearest_pedestal != null)
+            {
+                if (interaction_text != null)
+                {
+                    interaction_text.text = "Press [E] to Place";
+                    interaction_text.gameObject.SetActive(true);
+                }
+                
+                // Store the nearest pedestal for interaction
+                last_nearby_pedestal = nearest_pedestal;
+            }
+            else
+            {
+                // Default held object UI
+                UpdateUIText("Press [R] to Inspect | [Q] to Drop | [Right Click] to Throw");
+            }
+            
+            if (reticle != null)
+                reticle.color = (nearest_pedestal != null) ? highlight_color : highlight_color;
+            
+            return;
+        }
         Ray lookRay = new Ray(main_cam.transform.position, main_cam.transform.forward);
         RaycastHit lookHit;
         bool looking_at_interactable = false;
@@ -182,6 +223,13 @@ public class PickupController : MonoBehaviour
                 looking_at_interactable = true;
                 UpdateUIText("Press [E] to Pick Up", highlight_color);
             }
+            // ADD THIS NEW BLOCK - Pedestal detection
+            else if (held_object != null && hitObject.CompareTag("Pedestal"))
+            {
+                looking_at_interactable = true;
+                UpdateUIText("Press [E] to Place on Pedestal", highlight_color);
+            }
+            // END ADDED BLOCK
             else if (hitObject.CompareTag("Door") || hitObject.CompareTag("Interact"))
             {
                 looking_at_interactable = true;
@@ -237,56 +285,96 @@ public class PickupController : MonoBehaviour
         // E key for interactions
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (currentSafe != null && !currentSafe.IsUnlocked())
+            if (held_object != null)
             {
-            DynamicKeypad keypad = FindObjectOfType<DynamicKeypad>();
-            if (keypad != null)
+                // If holding an item, E is for placing/using
+                Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
                 {
-                    keypad.ShowKeypad(currentSafe);
-                    return;
+                    if (hit.collider.CompareTag("Pedestal"))
+                    {
+                        var ped = hit.collider.GetComponent<pedestal_controller>();
+                        if (ped != null)
+                        {
+                            ped.OnInteract();
+                            return;
+                        }
+                    }
+                    else if (hit.collider.CompareTag("Interact"))
+                    {
+                        var door = hit.collider.GetComponent<door_lock_controller>();
+                        if (door != null)
+                        {
+                            door.KeyCollected();
+                            door.OnInteract();
+                            return;
+                        }
+
+                        var fb = hit.collider.GetComponent<floor_board_controller>();
+                        if (fb != null)
+                        {
+                            fb.OnInteract();
+                            return;
+                        }
+                    }
                 }
-            } 
-            Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
-            {
-                GameObject hitObject = hit.collider.gameObject;
-
-                if (hitObject.CompareTag("Safe"))
-                {
-                    SafeController safe = hitObject.GetComponent<SafeController>();
-                    DynamicKeypad keypad = FindObjectOfType<DynamicKeypad>();
                 
-                    if (safe != null && keypad != null && !safe.IsUnlocked())
+                // Use proximity-based pedestal (more forgiving)
+                if (last_nearby_pedestal != null)
+                {
+                    float distance = Vector3.Distance(transform.position, last_nearby_pedestal.transform.position);
+                    if (distance <= pickup_range)
                     {
-                        keypad.ShowKeypad(safe);
+                        last_nearby_pedestal.OnInteract();
+                        last_nearby_pedestal = null;
                         return;
                     }
                 }
+            }
+            else
+            {
+                // If not holding an item, E is for picking up or interacting
+                Ray ray = new Ray(main_cam.transform.position, main_cam.transform.forward);
+                RaycastHit hit;
 
-                if (held_object != null)
+                if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
                 {
-                    // Handle using held object
-                    if (hitObject.CompareTag("Door") || hitObject.CompareTag("Interact"))
-                    {
-                        TryUseHeldObject(hitObject);
-                        return;
-                    }
-                }
-                else
-                {
-                    // Handle picking up or interacting
-                    if (hitObject.CompareTag("Pickup") || hitObject.CompareTag("Book"))
+                    if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
                     {
                         TryPickup();
                         return;
                     }
-                    else if (hitObject.CompareTag("Note"))
+                    else if (hit.collider.CompareTag("Interact"))
                     {
-                        // Use generic interaction for notes
-                        Debug.Log($"Reading note: {hitObject.name}");
-                        return;
+                        var fb = hit.collider.GetComponent<floor_board_controller>();
+                        if (fb != null)
+                        {
+                            fb.OnInteract();
+                            return;
+                        }
+
+                        var toybox = hit.collider.GetComponent<Toybox_controller>();
+                        if (toybox != null)
+                        {
+                            toybox.OnInteract();
+                            return;
+                        }
+
+                        var ped = hit.collider.GetComponent<pedestal_controller>();
+                        if (ped != null)
+                        {
+                            ped.OnInteract();
+                            return;
+                        }
+
+                        var door = hit.collider.GetComponent<door_lock_controller>();
+                        if (door != null)
+                        {
+                            door.OnInteract();
+                            return;
+                        }
                     }
                 }
             }
@@ -570,100 +658,167 @@ public class PickupController : MonoBehaviour
 
     void EnterInspectMode()
     {
-        if (held_object == null) return;
+    if (held_object == null) return;
 
-        is_inspecting = true;
-        wasInspectingBeforePause = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+    is_inspecting = true;
+    wasInspectingBeforePause = true;
+    Cursor.lockState = CursorLockMode.None;
+    Cursor.visible = true;
 
-        if (player_movement_script != null)
-            player_movement_script.enabled = false;
+    if (player_movement_script != null)
+        player_movement_script.enabled = false;
 
-        if (player_camera_script != null)
-            player_camera_script.enabled = false;
+    if (player_camera_script != null)
+        player_camera_script.enabled = false;
 
-        if (object_radius <= 0f)
-        {
-            Collider obj_collider = held_object.GetComponent<Collider>();
-            object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
-        }
-
-        Vector3 desired_position = CalculateDesiredInspectPosition();
-        Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
-        held_object.transform.position = collision_adjusted_position;
-        
-        UpdateUIText("Inspecting | [R] to Exit", highlight_color);
+    if (object_radius <= 0f)
+    {
+        Collider obj_collider = held_object.GetComponent<Collider>();
+        object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
     }
 
-
-    public void ExitInspectMode()
+    Vector3 desired_position = CalculateDesiredInspectPosition();
+    Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
+    held_object.transform.position = collision_adjusted_position;
+    
+    UpdateUIText("Inspecting | [R] to Exit", highlight_color);
+    
+    // Show inspection dialogue after delay
+    if (showInspectionDialogue && DialogueManager.Instance != null)
     {
-        if (held_object == null) return;
-
-        is_inspecting = false;
-        wasInspectingBeforePause = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        if (main_cam != null)
-            main_cam.fieldOfView = original_fov;
-
-        if (player_movement_script != null)
-            player_movement_script.enabled = true;
-
-        if (player_camera_script != null)
-            player_camera_script.enabled = true;
-
-        // Clear any inspection dialogue
-        if (isInspectionDialogueActive)
-        {
-            isInspectionDialogueActive = false;
-        }
-
-        // Stop any inspection coroutine
         if (inspectionCoroutine != null)
         {
             StopCoroutine(inspectionCoroutine);
             inspectionCoroutine = null;
         }
         
-        // Return to hold position
-        StartCoroutine(ReturnToHoldPosition());
+        // Reset dialogue flag
+        isInspectionDialogueActive = false;
         
-        // Update UI based on what we're holding
-        if (held_object.CompareTag("Book"))
-        {
-            UpdateUIText("Press [X] to Read | [R] to Inspect | [Q] to Drop", highlight_color);
-        }
-        else
-        {
-            UpdateUIText("Press [R] to Inspect | [Q] to Drop | [Right Click] to Throw", highlight_color);
-        }
+        inspectionCoroutine = StartCoroutine(ShowInspectionDialogue());
+    }
     }
 
-    IEnumerator ReturnToHoldPosition()
+    IEnumerator ShowInspectionDialogue()
+{
+    yield return new WaitForSeconds(inspectionDelay);
+    
+    // Get the item_component to retrieve the item_id
+    item_component itemComp = held_object.GetComponent<item_component>();
+    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+    {
+        // Try to show inspection dialogue using the item_id
+        string dialogueID = itemComp.item_id;
+        isInspectionDialogueActive = true;
+        DialogueManager.Instance.StartDialogue(dialogueID);
+    }
+    else
+    {
+        // Fallback to name-based dialogue ID
+        string dialogueID = GetInspectionDialogueID(held_object);
+        if (dialogueID != "N/A")
+        {
+            isInspectionDialogueActive = true;
+            DialogueManager.Instance.StartDialogue(dialogueID);
+        }
+    }
+}
+
+string GetInspectionDialogueID(GameObject obj)
+    {
+    // First try to get item_component
+    item_component itemComp = obj.GetComponent<item_component>();
+    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+    {
+        return itemComp.item_id;
+    }
+    
+    // Fallback to name-based detection
+    string itemName = obj.name.ToLower();
+    
+    if (itemName.Contains("vulture")) return "vulture";
+    if (itemName.Contains("bust")) return "bust";
+    if (itemName.Contains("evil_eye")) return "evil_eye";
+    if (itemName.Contains("book")) return "book";
+    if (itemName.Contains("key")) return "key";
+    
+    return "N/A";
+    }
+
+
+    public void ExitInspectMode()
+{
+    if (held_object == null) return;
+
+    is_inspecting = false;
+    wasInspectingBeforePause = false; // Reset pause tracking
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
+
+    if (main_cam != null)
+        main_cam.fieldOfView = original_fov;
+
+    // Only re-enable controls if we're exiting inspect mode normally
+    // (not just because game was paused/unpaused)
+    if (player_movement_script != null)
+        player_movement_script.enabled = true;
+
+    if (player_camera_script != null)
+        player_camera_script.enabled = true;
+
+    // Clear any active inspection dialogue
+    ClearInspectionDialogue();
+
+    // Stop any ongoing inspection coroutine
+    if (inspectionCoroutine != null)
+    {
+        StopCoroutine(inspectionCoroutine);
+        inspectionCoroutine = null;
+    }
+    
+    // Reset the flag
+    isInspectionDialogueActive = false;
+    
+    // Use a quick coroutine to smoothly return to hold position
+    StartCoroutine(ReturnToHoldPosition());
+}
+
+void ClearInspectionDialogue()
+{
+    if (isInspectionDialogueActive && DialogueManager.Instance != null)
+    {
+        // Check if dialogue is actually active
+        if (DialogueManager.Instance.IsDialogueActive())
+        {
+            DialogueManager.Instance.ForceEndDialogue();
+        }
+        isInspectionDialogueActive = false;
+    }
+}
+
+IEnumerator ReturnToHoldPosition()
+{
+    if (held_object == null) yield break;
+    
+    Vector3 startPosition = held_object.transform.position;
+    Vector3 targetPosition = hold_point.position + Vector3.up * post_inspect_lift;
+    float elapsed = 0f;
+
+    while (elapsed < 0.1f) // Very short duration for quick return
     {
         if (held_object == null) yield break;
         
-        Vector3 startPosition = held_object.transform.position;
-        Vector3 targetPosition = hold_point.position + Vector3.up * post_inspect_lift;
-        float elapsed = 0f;
-
-        while (elapsed < 0.1f)
-        {
-            if (held_object == null) yield break;
-            
-            held_object.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsed / 0.1f);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        if (held_object != null)
-        {
-            held_object.transform.position = targetPosition;
-        }
+        held_object.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsed / 0.1f);
+        elapsed += Time.deltaTime;
+        yield return null;
     }
+
+    if (held_object != null)
+    {
+        held_object.transform.position = targetPosition;
+    }
+}
+
 
     void UpdateVignette()
     {
