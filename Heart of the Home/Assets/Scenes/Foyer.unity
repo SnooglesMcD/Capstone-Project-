@@ -261,9 +261,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b044ba8139f6642e8bef612abbb4e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  pause_menu_ui: {fileID: 598163880}
-  pause_menu_buttons: {fileID: 556947506}
+  bookCoverSprite: {fileID: 0}
+  bookBackgroundColor: {r: 0.2, g: 0.15, b: 0.1, a: 1}
+  pageColor: {r: 0.98, g: 0.96, b: 0.9, a: 1}
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  buttonColor: {r: 0.2, g: 0.15, b: 0.1, a: 0.9}
+  buttonHoverColor: {r: 0.3, g: 0.25, b: 0.2, a: 1}
+  titleFontSize: 48
+  buttonFontSize: 32
+  minFontSize: 14
+  textPaddingPercentage: 0.05
   playerController: {fileID: 1518635931}
+  pickupController: {fileID: 0}
 --- !u!143 &11976136
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1789,34 +1798,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9661d4f8887a84a4e8c193e0125c9fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  dialoguePanel: {fileID: 1120488898}
-  dialogueText: {fileID: 304986056}
-  speakerNameText: {fileID: 656316046}
-  portraitImage: {fileID: 556947507}
-  continuePrompt: {fileID: 0}
-  backgroundPanel: {fileID: 0}
-  backgroundSprite: {fileID: 0}
+  boxPosition: 0
+  screenWidthPercentage: 0.85
+  screenHeightPercentage: 0.25
+  minBoxWidth: 600
+  minBoxHeight: 150
+  maxBoxWidth: 1200
+  maxBoxHeight: 300
+  marginFromScreenEdge: 30
   backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.95}
-  backgroundPadding: {x: 50, y: 30}
+  borderColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  borderThickness: 2
+  cornerRadius: 10
+  boxPadding: {x: 20, y: 15}
   dialogueTextColor: {r: 1, g: 1, b: 1, a: 1}
   speakerTextColor: {r: 1, g: 0.8, b: 0.3, a: 1}
-  continueTextColor: {r: 1, g: 1, b: 1, a: 0.7}
-  dialogueFontSize: 24
-  speakerFontSize: 28
-  portraitFrameSprite: {fileID: 0}
-  portraitFrameColor: {r: 1, g: 1, b: 1, a: 1}
-  portraitSize: 150
-  fadeInTime: 0.3
-  fadeOutTime: 0.2
-  useFadeAnimations: 1
+  continueIndicatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  baseDialogueFontSize: 22
+  baseSpeakerFontSize: 20
+  minFontSize: 16
+  maxFontSize: 28
   textSpeed: 0.03
-  skipOnClick: 1
   typewriterEffect: 1
+  portraitWidthPercentage: 0.12
+  minPortraitSize: 60
+  maxPortraitSize: 120
+  portraitOffset: {x: -10, y: 0}
+  portraitBorderColor: {r: 1, g: 1, b: 1, a: 1}
+  speakerNameOffset: {x: 0, y: 25}
+  showSpeakerBackground: 1
+  speakerBackgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
+  showVictorNameTag: 1
+  victorName: Victor
+  victorNameTagColor: {r: 0.2, g: 0.4, b: 0.8, a: 0.9}
+  victorNameTextColor: {r: 1, g: 1, b: 1, a: 1}
+  victorNameTagOffset: {x: 15, y: -15}
+  showCloseHint: 1
+  closeHintText: '[R] to close'
+  closeHintColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
+  closeHintOffset: {x: -15, y: 15}
+  continueText: "\u25B6"
+  continueBlinkSpeed: 1
+  showContinueIndicator: 1
+  advanceKey: 114
+  skipKey: 32
+  closeKey: 27
   voiceSource: {fileID: 0}
   defaultTextSound: {fileID: 0}
   pitchVariation: 0.1
-  advanceKey: 114
-  skipKey: 32
   dialogueDatabase:
   - dialogueID: '"vulture"'
     lines:
@@ -2363,7 +2392,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
   required_key_id: key
   locked_dialogue_id: basement_door_locked
+  destination: 
   keyObject: {fileID: 0}
+  requireKey: 1
+  startLocked: 1
 --- !u!1 &758000123
 GameObject:
   m_ObjectHideFlags: 0
@@ -7249,9 +7281,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6debb7c59caf34aac9ff3ff75e5539b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
-  required_key_id: key
-  locked_dialogue_id: basement_door_locked
+  required_key_id: 
+  locked_dialogue_id: 
+  destination: Basement
   keyObject: {fileID: 0}
+  requireKey: 0
+  startLocked: 0
 --- !u!1 &772607495
 GameObject:
   m_ObjectHideFlags: 0
@@ -8524,9 +8559,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6debb7c59caf34aac9ff3ff75e5539b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
-  required_key_id: key
-  locked_dialogue_id: basement_door_locked
+  required_key_id: 
+  locked_dialogue_id: 
+  destination: East Hallway
   keyObject: {fileID: 0}
+  requireKey: 0
+  startLocked: 0
 --- !u!1 &1348528279
 GameObject:
   m_ObjectHideFlags: 0
@@ -9063,6 +9101,8 @@ MonoBehaviour:
   reticle: {fileID: 725209464}
   normal_color: {r: 1, g: 1, b: 1, a: 1}
   highlight_color: {r: 1, g: 0.009498963, b: 0, a: 1}
+  safe_color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  calendar_color: {r: 1, g: 0, b: 1, a: 1}
   vignette_image: {fileID: 0}
   vignette_max_alpha: 0.25
   vignette_speed: 3
@@ -9070,9 +9110,11 @@ MonoBehaviour:
   bob_speed: 2
   player_movement_script: {fileID: 0}
   player_camera_script: {fileID: 1348528281}
+  currentCalendar: {fileID: 0}
   showInspectionDialogue: 1
   inspectionDelay: 0.5
   zoomed_fov: 20
+  last_nearby_pedestal: {fileID: 0}
 --- !u!143 &1518635935
 CharacterController:
   m_ObjectHideFlags: 0
@@ -9194,7 +9236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1598860184
 Light:
   m_ObjectHideFlags: 0
@@ -10677,7 +10719,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
   required_key_id: key
   locked_dialogue_id: basement_door_locked
+  destination: 
   keyObject: {fileID: 0}
+  requireKey: 1
+  startLocked: 1
 --- !u!1 &2140451891
 GameObject:
   m_ObjectHideFlags: 0

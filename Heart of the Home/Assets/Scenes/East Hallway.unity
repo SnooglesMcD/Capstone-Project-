@@ -516,7 +516,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
   required_key_id: key
   locked_dialogue_id: basement_door_locked
+  destination: Spare Room
   keyObject: {fileID: 0}
+  requireKey: 1
+  startLocked: 1
 --- !u!1 &731596070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,9 +1165,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b044ba8139f6642e8bef612abbb4e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  pause_menu_ui: {fileID: 771063989}
-  pause_menu_buttons: {fileID: 1062880121}
+  bookCoverSprite: {fileID: 0}
+  bookBackgroundColor: {r: 0.2, g: 0.15, b: 0.1, a: 1}
+  pageColor: {r: 0.98, g: 0.96, b: 0.9, a: 1}
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  buttonColor: {r: 0.2, g: 0.15, b: 0.1, a: 0.9}
+  buttonHoverColor: {r: 0.3, g: 0.25, b: 0.2, a: 1}
+  titleFontSize: 48
+  buttonFontSize: 32
+  minFontSize: 14
+  textPaddingPercentage: 0.05
   playerController: {fileID: 1872086412}
+  pickupController: {fileID: 0}
 --- !u!143 &912593949
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1912,9 +1924,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6debb7c59caf34aac9ff3ff75e5539b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
-  required_key_id: key
-  locked_dialogue_id: basement_door_locked
+  required_key_id: 
+  locked_dialogue_id: 
+  destination: Foyer
   keyObject: {fileID: 0}
+  requireKey: 0
+  startLocked: 0
 --- !u!1 &1593255095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,6 +2282,8 @@ MonoBehaviour:
   reticle: {fileID: 0}
   normal_color: {r: 1, g: 1, b: 1, a: 1}
   highlight_color: {r: 1, g: 0.009498963, b: 0, a: 1}
+  safe_color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  calendar_color: {r: 1, g: 0, b: 1, a: 1}
   vignette_image: {fileID: 0}
   vignette_max_alpha: 0.25
   vignette_speed: 3
@@ -2274,9 +2291,11 @@ MonoBehaviour:
   bob_speed: 2
   player_movement_script: {fileID: 0}
   player_camera_script: {fileID: 553733776}
+  currentCalendar: {fileID: 0}
   showInspectionDialogue: 1
   inspectionDelay: 0.5
   zoomed_fov: 20
+  last_nearby_pedestal: {fileID: 0}
 --- !u!143 &1872086416
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2800,7 +2819,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::door_lock_controller
   required_key_id: key
   locked_dialogue_id: basement_door_locked
+  destination: Office
   keyObject: {fileID: 0}
+  requireKey: 1
+  startLocked: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
