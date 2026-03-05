@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.078431375, g: 0.05882353, b: 0.11764706, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.07
+  m_FogDensity: 0.7
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.06526879, g: 0.043512527, b: 0.108781315, a: 1}
@@ -1322,7 +1322,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
+  - {fileID: 2100000, guid: e31ae8c65a1bfaf4695d740c6348de7f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1566,7 +1566,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.5882353, g: 0.50980395, b: 0.78431374, a: 0.11764706}
+      maxColor: {r: 0.63159233, g: 0.5521538, b: 0.8301887, a: 0.11764706}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6108,7 +6108,7 @@ Transform:
   m_GameObject: {fileID: 273352053}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -39.1, y: -6.42, z: -5.8}
+  m_LocalPosition: {x: -6.54, y: -6.42, z: 15.02}
   m_LocalScale: {x: 20.590546, y: 20.590546, z: 20.590546}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -12980,7 +12980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2003906773
 MonoBehaviour:
   m_ObjectHideFlags: 0
