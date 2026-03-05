@@ -2396,13 +2396,6 @@ MonoBehaviour:
   keyObject: {fileID: 0}
   requireKey: 1
   startLocked: 1
-  doorOpenSound: {fileID: 0}
-  doorCloseSound: {fileID: 0}
-  doorLockedSound: {fileID: 0}
-  sourceAreaTag: 
-  areaEnterSound: {fileID: 0}
-  areaExitSound: {fileID: 0}
-  pathSpecificSounds: []
 --- !u!1 &758000123
 GameObject:
   m_ObjectHideFlags: 0
@@ -7294,13 +7287,6 @@ MonoBehaviour:
   keyObject: {fileID: 0}
   requireKey: 0
   startLocked: 0
-  doorOpenSound: {fileID: 0}
-  doorCloseSound: {fileID: 0}
-  doorLockedSound: {fileID: 0}
-  sourceAreaTag: 
-  areaEnterSound: {fileID: 0}
-  areaExitSound: {fileID: 0}
-  pathSpecificSounds: []
 --- !u!1 &772607495
 GameObject:
   m_ObjectHideFlags: 0
@@ -8579,18 +8565,6 @@ MonoBehaviour:
   keyObject: {fileID: 0}
   requireKey: 0
   startLocked: 0
-  doorOpenSound: {fileID: 0}
-  doorCloseSound: {fileID: 0}
-  doorLockedSound: {fileID: 0}
-  sourceAreaTag: East Hallway
-  areaEnterSound: {fileID: 0}
-  areaExitSound: {fileID: 0}
-  pathSpecificSounds:
-  - fromArea: East Hallway
-    toArea: Foyer
-    enterSound: {fileID: 0}
-    exitSound: {fileID: 0}
-    oneTimeOnly: 1
 --- !u!1 &1348528279
 GameObject:
   m_ObjectHideFlags: 0
@@ -10749,13 +10723,6 @@ MonoBehaviour:
   keyObject: {fileID: 0}
   requireKey: 1
   startLocked: 1
-  doorOpenSound: {fileID: 0}
-  doorCloseSound: {fileID: 0}
-  doorLockedSound: {fileID: 0}
-  sourceAreaTag: 
-  areaEnterSound: {fileID: 0}
-  areaExitSound: {fileID: 0}
-  pathSpecificSounds: []
 --- !u!1 &2140451891
 GameObject:
   m_ObjectHideFlags: 0
