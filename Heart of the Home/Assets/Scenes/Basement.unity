@@ -10109,7 +10109,6 @@ GameObject:
   - component: {fileID: 1272571149}
   - component: {fileID: 1272571148}
   - component: {fileID: 1272571147}
-  - component: {fileID: 1272571152}
   m_Layer: 8
   m_Name: Family Crest
   m_TagString: Pickup
@@ -10249,32 +10248,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272571145}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1272571152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1272571145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7efe9e10536ae416cb0fa2d084622142, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
-  dialogueID: 
-  triggerOnInteract: 1
-  triggerOnEnter: 0
-  oneTimeOnly: 1
-  triggerDelay: 0
-  requiresItem: 0
-  requiredItemID: 
-  consumesItem: 0
-  indicator: {fileID: 0}
-  showPrompt: 1
-  customPromptText: Talk
-  onDialogueTriggered:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1277384423 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4021259400297441588, guid: fbf90be352b36b74aadbb8334d127160, type: 3}
