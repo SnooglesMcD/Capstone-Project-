@@ -130,63 +130,75 @@ public class door_lock_controller : MonoBehaviour
         Debug.Log("Door unlocked!");
     }
 
-    public void OnInteract()
+public void OnInteract()
+{
+    if (requireKey)
     {
-        if (requireKey)
+        // Original key-required behavior
+        if (hasKey)
         {
-            // Original key-required behavior
-            if (hasKey)
-            {
-                Debug.Log("Door unlocked with key! Loading " + destination + "...");
-                PlaySound(mainAudioSource, doorOpenSound, "door open");
-                PlayAreaExitSoundWithPath();
-                
-                // Save path information BEFORE loading scene
-                PlayerPrefs.SetString("LastPathFrom", sourceAreaTag);
-                PlayerPrefs.SetString("LastPathTo", destination);
-                if (debugMode) Debug.Log($"Saved path: {sourceAreaTag} → {destination}");
-                
-                SceneManager.LoadScene(destination);
-            }
-            else
-            {
-                Debug.Log("Door is locked! Need key.");
-                PlaySound(mainAudioSource, doorLockedSound, "locked");
-                
-                if (DialogueManager.Instance != null)
-                {
-                    DialogueManager.Instance.StartDialogue(locked_dialogue_id);
-                }
-            }
+            Debug.Log("Door unlocked with key! Loading " + destination + "...");
+            PlaySound(mainAudioSource, doorOpenSound, "door open");
+            PlayAreaExitSoundWithPath();
+            
+            // Save path information for sounds
+            PlayerPrefs.SetString("LastPathFrom", sourceAreaTag);
+            PlayerPrefs.SetString("LastPathTo", destination);
+            
+            // Save the destination scene and the current door name
+            // The door in the destination scene should have a matching name
+            PlayerPrefs.SetString("SpawnDoorName", gameObject.name);
+            PlayerPrefs.SetString("DestinationScene", destination);
+            Debug.Log($"🔴 SAVED: Will spawn at door '{gameObject.name}' in scene '{destination}'");
+            // =================================
+            
+            SceneManager.LoadScene(destination);
         }
         else
         {
-            // New behavior - doors that don't need keys
-            if (isUnlocked || !startLocked)
+            Debug.Log("Door is locked! Need key.");
+            PlaySound(mainAudioSource, doorLockedSound, "locked");
+            
+            if (DialogueManager.Instance != null)
             {
-                Debug.Log("Door opened! Loading " + destination + "...");
-                PlaySound(mainAudioSource, doorOpenSound, "door open");
-                PlayAreaExitSoundWithPath();
-                
-                // Save path information BEFORE loading scene
-                PlayerPrefs.SetString("LastPathFrom", sourceAreaTag);
-                PlayerPrefs.SetString("LastPathTo", destination);
-                if (debugMode) Debug.Log($"Saved path: {sourceAreaTag} → {destination}");
-                
-                SceneManager.LoadScene(destination);
-            }
-            else
-            {
-                Debug.Log("Door is locked!");
-                PlaySound(mainAudioSource, doorLockedSound, "locked");
-                
-                if (DialogueManager.Instance != null && !string.IsNullOrEmpty(locked_dialogue_id))
-                {
-                    DialogueManager.Instance.StartDialogue(locked_dialogue_id);
-                }
+                DialogueManager.Instance.StartDialogue(locked_dialogue_id);
             }
         }
     }
+    else
+    {
+        // New behavior - doors that don't need keys
+        if (isUnlocked || !startLocked)
+        {
+            Debug.Log("Door opened! Loading " + destination + "...");
+            PlaySound(mainAudioSource, doorOpenSound, "door open");
+            PlayAreaExitSoundWithPath();
+            
+            // Save path information for sounds
+            PlayerPrefs.SetString("LastPathFrom", sourceAreaTag);
+            PlayerPrefs.SetString("LastPathTo", destination);
+            
+            // Save the destination scene and the current door name
+            // The door in the destination scene should have a matching name
+            PlayerPrefs.SetString("SpawnDoorName", gameObject.name);
+            PlayerPrefs.SetString("DestinationScene", destination);
+            Debug.Log($"🔴 SAVED: Will spawn at door '{gameObject.name}' in scene '{destination}'");
+            
+            
+            SceneManager.LoadScene(destination);
+        }
+        else
+        {
+            Debug.Log("Door is locked!");
+            PlaySound(mainAudioSource, doorLockedSound, "locked");
+            
+            if (DialogueManager.Instance != null && !string.IsNullOrEmpty(locked_dialogue_id))
+            {
+                DialogueManager.Instance.StartDialogue(locked_dialogue_id);
+            }
+        }
+    }
+}
 
     void PlayAreaExitSoundWithPath()
     {
