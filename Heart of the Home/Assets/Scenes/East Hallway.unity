@@ -252,6 +252,142 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264496731}
   m_CullTransparentMesh: 1
+--- !u!1 &342323900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342323901}
+  - component: {fileID: 342323903}
+  - component: {fileID: 342323902}
+  m_Layer: 0
+  m_Name: Speaker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &342323901
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342323900}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 753705669}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &342323902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342323900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4283223295
+  m_fontColor: {r: 1, g: 0.8, b: 0.3, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 28
+  m_fontSizeBase: 28
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &342323903
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342323900}
+  m_CullTransparentMesh: 1
 --- !u!1 &553733774
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +663,9 @@ MonoBehaviour:
   areaEnterSound: {fileID: 0}
   areaExitSound: {fileID: 0}
   pathSpecificSounds: []
+  mainAudioSource: {fileID: 0}
+  alarmAudioSource: {fileID: 0}
+  debugMode: 1
 --- !u!1 &731596070
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,6 +915,110 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &753705665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 753705669}
+  - component: {fileID: 753705668}
+  - component: {fileID: 753705667}
+  - component: {fileID: 753705666}
+  m_Layer: 0
+  m_Name: Dialogue Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &753705666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753705665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &753705667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753705665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &753705668
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753705665}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &753705669
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753705665}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1481338531}
+  - {fileID: 1779535865}
+  - {fileID: 342323901}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &771063989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,6 +1999,142 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1133598483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1133598484}
+  - component: {fileID: 1133598486}
+  - component: {fileID: 1133598485}
+  m_Layer: 5
+  m_Name: InteractionText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1133598484
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133598483}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1830041652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -150}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1133598485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133598483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Press E to Pick up
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 24
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1133598486
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133598483}
+  m_CullTransparentMesh: 1
 --- !u!1 &1236361842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,6 +2395,453 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &1481338530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481338531}
+  - component: {fileID: 1481338532}
+  m_Layer: 0
+  m_Name: Dialogue Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1481338531
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481338530}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 753705669}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1481338532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481338530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9661d4f8887a84a4e8c193e0125c9fe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
+  boxPosition: 0
+  screenWidthPercentage: 0.85
+  screenHeightPercentage: 0.25
+  minBoxWidth: 600
+  minBoxHeight: 150
+  maxBoxWidth: 1200
+  maxBoxHeight: 300
+  marginFromScreenEdge: 30
+  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 0.95}
+  borderColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  borderThickness: 2
+  cornerRadius: 10
+  boxPadding: {x: 20, y: 15}
+  dialogueTextColor: {r: 1, g: 1, b: 1, a: 1}
+  speakerTextColor: {r: 1, g: 0.8, b: 0.3, a: 1}
+  continueIndicatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  baseDialogueFontSize: 22
+  baseSpeakerFontSize: 20
+  minFontSize: 16
+  maxFontSize: 28
+  textSpeed: 0.03
+  typewriterEffect: 1
+  portraitWidthPercentage: 0.12
+  minPortraitSize: 60
+  maxPortraitSize: 120
+  portraitOffset: {x: -10, y: 0}
+  portraitBorderColor: {r: 1, g: 1, b: 1, a: 1}
+  speakerNameOffset: {x: 0, y: 25}
+  showSpeakerBackground: 1
+  speakerBackgroundColor: {r: 0, g: 0, b: 0, a: 0.7}
+  showVictorNameTag: 1
+  victorName: Victor
+  victorNameTagColor: {r: 0.2, g: 0.4, b: 0.8, a: 0.9}
+  victorNameTextColor: {r: 1, g: 1, b: 1, a: 1}
+  victorNameTagOffset: {x: 15, y: -15}
+  showCloseHint: 1
+  closeHintText: '[R] to close'
+  closeHintColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.7}
+  closeHintOffset: {x: -15, y: 15}
+  continueText: "\u25B6"
+  continueBlinkSpeed: 1
+  showContinueIndicator: 1
+  advanceKey: 114
+  skipKey: 32
+  closeKey: 27
+  voiceSource: {fileID: 0}
+  defaultTextSound: {fileID: 0}
+  pitchVariation: 0.1
+  dialogueDatabase:
+  - dialogueID: '"vulture"'
+    lines:
+    - text: I don't remember this one... It's got the price tag on it still.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"evil_eye"'
+    lines:
+    - text: It feels smooth and cold to the touch. I always wondered why they call
+        it an "evil eye" if it's supposed to protect you.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"bust"'
+    lines:
+    - text: It looks like me. Minus a few years or so. Why did they make this?
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"key"'
+    lines:
+    - text: The floor boards here are squeaky and loose. I'm suprised my dad let
+        them get this bad.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 0
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: floorboard_locked
+    lines:
+    - text: The floor boards here are squeaky and loose. I'm suprised my dad let
+        them get this bad.
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"toybox_interact"'
+    lines:
+    - text: 'Dad was... particular about me cleaning up my playroom. He engineered
+        one of his crazy machines so that the basement door wouldn''t open unless
+        all my toys were put away. '
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueID: '"book_read"'
+    lines:
+    - text: "The Tell-Tale Heart Text \n\nTrue! \u2014 nervous \u2014 very, very
+        dreadfully nervous I had been and am; but why will you say that I am mad?
+        The disease had sharpened my senses \u2014 not destroyed \u2014 not dulled
+        them. Above all was the sense of hearing acute. I heard all things in the
+        heaven and in the earth. I heard many things in hell. How, then, am I mad?
+        Hearken! and observe how healthily \u2014 how calmly I can tell you the whole
+        story.\n\nIt is impossible to say how first the idea entered my brain; but
+        once conceived, it haunted me day and night. Object there was none. Passion
+        there was none. I loved the old man. He had never wronged me. He had never
+        given me insult. For his gold I had no desire. I think it was his eye! yes,
+        it was this! One of his eyes resembled that of a vulture \u2014 a pale blue
+        eye, with a film over it. Whenever it fell upon me, my blood ran cold; and
+        so by degrees \u2014 very gradually \u2014 I made up my mind to take the
+        life of the old man, and thus rid myself of the eye forever.\n\nNow this
+        is the point. You fancy me mad. Madmen know nothing. But you should have
+        seen me. You should have seen how wisely I proceeded \u2014 with what caution
+        \u2014 with what foresight \u2014 with what dissimulation I went to work!
+        I was never kinder to the old man than during the whole week before I killed
+        him. And every night, about midnight, I turned the latch of his door and
+        opened it \u2014 oh, so gently! And then, when I had made an opening sufficient
+        for my head, I put in a dark lantern, all closed, closed, so that no light
+        shone out, and then I thrust in my head. Oh, you would have laughed to see
+        how cunningly I thrust it in! I moved it slowly \u2014 very, very slowly,
+        so that I might not disturb the old man\u2019s sleep. It took me an hour
+        to place my whole head within the opening so far that I could see him as
+        he lay upon his bed. Ha! \u2014 would a madman have been so wise as this?
+        And then, when my head was well in the room, I undid the lantern cautiously
+        \u2014 oh, so cautiously \u2014 cautiously (for the hinges creaked) \u2014
+        I undid it just so much that a single thin ray fell upon the vulture eye.
+        And this I did for seven long nights \u2014 every night just at midnight
+        \u2014 but I found the eye always closed; and so it was impossible to do
+        the work; for it was not the old man who vexed me, but his Evil Eye. And
+        every morning, when the day broke, I went boldly into the chamber, and spoke
+        courageously to him, calling him by name in a hearty tone, and inquiring
+        how he had passed the night. So you see he would have been a very profound
+        old man, indeed, to suspect that every night, just at twelve, I looked in
+        upon him while he slept.\n\nUpon the eighth night I was more than usually
+        cautious in opening the door. A watch\u2019s minute hand moves more quickly
+        than did mine. Never before that night had I felt the extent of my own powers
+        \u2014 of my sagacity. I could scarcely contain my feelings of triumph. To
+        think that there I was, opening the door, little by little, and he not even
+        to dream of my secret deeds or thoughts. I fairly chuckled at the idea; and
+        perhaps he heard me; for he moved on the bed suddenly, as if startled. Now
+        you may think that I drew back \u2014 but no. His room was as black as pitch
+        with the thick darkness, (for the shutters were close fastened, through fear
+        of robbers,) and so I knew that he could not see the opening of the door,
+        and I kept pushing it on steadily, steadily.\n\nI had my head in, and was
+        about to open the lantern, when my thumb slipped upon the tin fastening,
+        and the old man sprang up in the bed, crying out \u2014 \u201CWho\u2019s
+        there?\u201D\n\nI kept quite still and said nothing. For a whole hour I did
+        not move a muscle, and in the meantime I did not hear him lie down. He was
+        still sitting up in the bed listening; \u2014 just as I have done, night
+        after night, hearkening to the death watches in the wall.\n\nPresently I
+        heard a slight groan, and I knew it was the groan of mortal terror. It was
+        not a groan of pain or of grief \u2014 oh, no! \u2014 it was the low stifled
+        sound that arises from the bottom of the soul when overcharged with awe.
+        I knew the sound well. Many a night, just at midnight, when all the world
+        slept, it has welled up from my own bosom, deepening, with its dreadful echo,
+        the terrors that distracted me. I say I knew it well. I knew what the old
+        man felt, and pitied him, although I chuckled at heart. I knew that he had
+        been lying awake ever since the first slight noise, when he had turned in
+        the bed. His fears had been ever since growing upon him. He had been trying
+        to fancy them causeless, but could not. He had been saying to himself \u2014
+        \u201CIt is nothing but the wind in the chimney \u2014 it is only a mouse
+        crossing the floor,\u201D or \u201Cit is merely a cricket which has made
+        a single chirp.\u201D Yes, he has been trying to comfort himself with these
+        suppositions: but he had found all in vain. All in vain; because Death, in
+        approaching him had stalked with his black shadow before him, and enveloped
+        the victim. And it was the mournful influence of the unperceived shadow that
+        caused him to feel \u2014 although he neither saw nor heard \u2014 to feel
+        the presence of my head within the room.\n\nWhen I had waited a long time,
+        very patiently, without hearing him lie down, I resolved to open a little
+        \u2014 a very, very little crevice in the lantern. So I opened it \u2014
+        you cannot imagine how stealthily, stealthily \u2014 until, at length a single
+        dim ray, like the thread of the spider, shot from out the crevice and fell
+        upon the vulture eye.\n\nIt was open \u2014 wide, wide open \u2014 and I
+        grew furious as I gazed upon it. I saw it with perfect distinctness \u2014
+        all a dull blue, with a hideous veil over it that chilled the very marrow
+        in my bones; but I could see nothing else of the old man\u2019s face or person:
+        for I had directed the ray as if by instinct, precisely upon the damned spot.\n\nAnd
+        now have I not told you that what you mistake for madness is but over acuteness
+        of the senses? \u2014 now, I say, there came to my ears a low, dull, quick
+        sound, such as a watch makes when enveloped in cotton. I knew that sound
+        well, too. It was the beating of the old man\u2019s heart. It increased my
+        fury, as the beating of a drum stimulates the soldier into courage.\n\nBut
+        even yet I refrained and kept still. I scarcely breathed. I held the lantern
+        motionless. I tried how steadily I could maintain the ray upon the eye. Meantime
+        the hellish tattoo of the heart increased. It grew quicker and quicker, and
+        louder and louder every instant. The old man\u2019s terror must have been
+        extreme! It grew louder, I say, louder every moment! \u2014 do you mark me
+        well? I have told you that I am nervous: so I am. And now at the dead hour
+        of the night, amid the dreadful silence of that old house, so strange a noise
+        as this excited me to uncontrollable terror. Yet, for some minutes longer
+        I refrained and stood still. But the beating grew louder, louder! I thought
+        the heart must burst. And now a new anxiety seized me \u2014 the sound would
+        be heard by a neighbor! The old man\u2019s hour had come! With a loud yell,
+        I threw open the lantern and leaped into the room. He shrieked once \u2014
+        once only. In an instant I dragged him to the floor, and pulled the heavy
+        bed over him. I then smiled gaily, to find the deed so far done. But, for
+        many minutes, the heart beat on with a muffled sound. This, however, did
+        not vex me; it would not be heard through the wall. At length it ceased.
+        The old man was dead. I removed the bed and examined the corpse. Yes, he
+        was stone, stone dead. I placed my hand upon the heart and held it there
+        many minutes. There was no pulsation. He was stone dead. His eye would trouble
+        me no more.\n\nIf still you think me mad, you will think so no longer when
+        I describe the wise precautions I took for the concealment of the body. The
+        night waned, and I worked hastily, but in silence. First of all I dismembered
+        the corpse. I cut off the head and the arms and the legs.\n\nI then took
+        up three planks from the flooring of the chamber, and deposited all between
+        the scantlings. I then replaced the boards so cleverly, so cunningly, that
+        no human eye \u2014 not even his \u2014 could have detected any thing wrong.
+        There was nothing to wash out \u2014 no stain of any kind \u2014 no blood-spot
+        whatever. I had been too wary for that. A tub had caught all \u2014 ha! ha!\n\nWhen
+        I had made an end of these labors, it was four o \u2018clock \u2014 still
+        dark as midnight. As the bell sounded the hour, there came a knocking at
+        the street door. I went down to open it with a light heart, \u2014 for what
+        had I now to fear? There entered three men, who introduced themselves, with
+        perfect suavity, as officers of the police. A shriek had been heard by a
+        neighbor during the night; suspicion of foul play had been aroused; information
+        had been lodged at the police office, and they (the officers) had been deputed
+        to search the premises.\n\nI smiled, \u2014 for what had I to fear? I bade
+        the gentlemen welcome. The shriek, I said, was my own in a dream. The old
+        man, I mentioned, was absent in the country. I took my visitors all over
+        the house. I bade them search \u2014 search well. I led them, at length,
+        to his chamber. I showed them his treasures, secure, undisturbed. In the
+        enthusiasm of my confidence, I brought chairs into the room, and desired
+        them here to rest from their fatigues, while I myself, in the wild audacity
+        of my perfect triumph, placed my own seat upon the very spot beneath which
+        reposed the corpse of the victim.\n\nThe officers were satisfied. My manner
+        had convinced them. I was singularly at ease. They sat, and while I answered
+        cheerily, they chatted of familiar things. But, ere long, I felt myself getting
+        pale and wished them gone. My head ached, and I fancied a ringing in my ears:
+        but still they sat and still chatted. The ringing became more distinct: \u2014
+        it continued and became more distinct: I talked more freely to get rid of
+        the feeling: but it continued and gained definitiveness \u2014 until, at
+        length, I found that the noise was not within my ears.\n\nNo doubt I now
+        grew very pale; \u2014 but I talked more fluently, and with a heightened
+        voice. Yet the sound increased \u2014 and what could I do? It was a low,
+        dull, quick sound \u2014 much such a sound as a watch makes when enveloped
+        in cotton. I gasped for breath \u2014 and yet the officers heard it not.
+        I talked more quickly \u2014 more vehemently; but the noise steadily increased.
+        I arose and argued about trifles, in a high key and with violent gesticulations;
+        but the noise steadily increased. Why would they not be gone? I paced the
+        floor to and fro with heavy strides, as if excited to fury by the observations
+        of the men \u2014 but the noise steadily increased. Oh God! what could I
+        do? I foamed \u2014 I raved \u2014 I swore! I swung the chair upon which
+        I had been sitting, and grated it upon the boards, but the noise arose over
+        all and continually increased. It grew louder \u2014 louder \u2014 louder!
+        And still the men chatted pleasantly, and smiled. Was it possible they heard
+        not? Almighty God! \u2014 no, no! They heard! \u2014 they suspected! \u2014
+        they knew! \u2014 they were making a mockery of my horror! \u2014 this I
+        thought, and this I think. But anything was better than this agony! Anything
+        was more tolerable than this derision! I could bear those hypocritical smiles
+        no longer! I felt that I must scream or die! \u2014 and now \u2014 again!
+        \u2014 hark! louder! louder! louder! louder! \u2014\n\n\u201CVillains!\u201D
+        I shrieked, \u201Cdissemble no more! I admit the deed! \u2014 tear up the
+        planks! \u2014 here, here! \u2014 it is the beating of his hideous heart!\u201D\n"
+      speakerName: 
+      speakerPortrait: {fileID: 0}
+      voiceClip: {fileID: 0}
+      displayTime: 1
+      requirePlayerInput: 0
+      onLineStart:
+        m_PersistentCalls:
+          m_Calls: []
+      onLineEnd:
+        m_PersistentCalls:
+          m_Calls: []
+    canBeInterrupted: 0
+    lockPlayerMovement: 0
+    showSpeakerName: 0
+    showPortrait: 0
+    nextDialogueID: 
+    requiresItem: 0
+    requiredItemID: 
+    onDialogueStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onDialogueEnd:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1529575172 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1398413310623440, guid: ff36c605a739def44ad4a550d4ab7d54, type: 3}
@@ -2073,6 +2899,9 @@ MonoBehaviour:
   areaEnterSound: {fileID: 0}
   areaExitSound: {fileID: 0}
   pathSpecificSounds: []
+  mainAudioSource: {fileID: 0}
+  alarmAudioSource: {fileID: 0}
+  debugMode: 1
 --- !u!1 &1593255095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,6 +3150,245 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659838708}
   m_CullTransparentMesh: 1
+--- !u!1 &1779535864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1779535865}
+  - component: {fileID: 1779535867}
+  - component: {fileID: 1779535866}
+  m_Layer: 0
+  m_Name: Dialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1779535865
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779535864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 753705669}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 277}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1779535866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779535864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 24
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1779535867
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779535864}
+  m_CullTransparentMesh: 1
+--- !u!1 &1830041648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1830041652}
+  - component: {fileID: 1830041651}
+  - component: {fileID: 1830041650}
+  - component: {fileID: 1830041649}
+  m_Layer: 5
+  m_Name: Interaction Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1830041649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830041648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1830041650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830041648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &1830041651
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830041648}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &1830041652
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830041648}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1133598484}
+  - {fileID: 1915471330}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1849302922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2670,6 +3738,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872086411}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1915471329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1915471330}
+  - component: {fileID: 1915471332}
+  - component: {fileID: 1915471331}
+  m_Layer: 5
+  m_Name: Reticle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1915471330
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915471329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -0.03, y: -0.03, z: -0.03}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1830041652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1915471331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915471329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1915471332
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915471329}
+  m_CullTransparentMesh: 1
 --- !u!1 &1952882701
 GameObject:
   m_ObjectHideFlags: 0
@@ -3105,6 +4248,9 @@ MonoBehaviour:
     enterSound: {fileID: 8300000, guid: 015a5357ed4b5407a898b60c24a27198, type: 3}
     exitSound: {fileID: 0}
     oneTimeOnly: 0
+  mainAudioSource: {fileID: 0}
+  alarmAudioSource: {fileID: 0}
+  debugMode: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3126,3 +4272,5 @@ SceneRoots:
   - {fileID: 912593950}
   - {fileID: 1849302925}
   - {fileID: 1120386313}
+  - {fileID: 1830041652}
+  - {fileID: 753705669}
