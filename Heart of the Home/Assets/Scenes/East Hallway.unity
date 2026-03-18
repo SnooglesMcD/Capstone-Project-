@@ -3764,8 +3764,8 @@ MonoBehaviour:
   inspect_distance_offset: 0.25
   min_inspect_distance: 2
   throw_force: 10
-  interaction_text: {fileID: 0}
-  reticle: {fileID: 0}
+  interaction_text: {fileID: 1133598485}
+  reticle: {fileID: 1915471331}
   normal_color: {r: 1, g: 1, b: 1, a: 1}
   highlight_color: {r: 1, g: 0.009498963, b: 0, a: 1}
   safe_color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -3775,7 +3775,7 @@ MonoBehaviour:
   vignette_speed: 3
   bob_amplitude: 0.05
   bob_speed: 2
-  player_movement_script: {fileID: 0}
+  player_movement_script: {fileID: 1872086412}
   player_camera_script: {fileID: 553733776}
   currentCalendar: {fileID: 0}
   showInspectionDialogue: 1

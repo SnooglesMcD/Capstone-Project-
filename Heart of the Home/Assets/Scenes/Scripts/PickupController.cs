@@ -44,9 +44,6 @@ public class PickupController : MonoBehaviour
     public FirstPersonController player_movement_script;
     public MonoBehaviour player_camera_script;
 
-    [Header("Puzzle Integration")]
-    public CalendarController currentCalendar;
-
     [Header("Inspection Integration")]
     public bool showInspectionDialogue = true;
     public float inspectionDelay = 0.5f;    
@@ -194,7 +191,6 @@ public class PickupController : MonoBehaviour
         bool looking_at_interactable = false;
 
         currentSafe = null;
-        currentCalendar = null;
 
         if (Physics.Raycast(lookRay, out lookHit, pickup_range, collision_mask))
         {
@@ -207,12 +203,6 @@ public class PickupController : MonoBehaviour
                 UpdateUIText("Press [E] to Enter Code", safe_color);
             }
 
-            else if (hitObject.CompareTag("Calendar"))
-            {
-                currentCalendar = hitObject.GetComponent<CalendarController>();
-                looking_at_interactable = true;
-                UpdateUIText("Press [E] to Examine", calendar_color);
-            }
             else if (hitObject.CompareTag("Note"))
             {
                 looking_at_interactable = true;
@@ -223,13 +213,13 @@ public class PickupController : MonoBehaviour
                 looking_at_interactable = true;
                 UpdateUIText("Press [E] to Pick Up", highlight_color);
             }
-            // ADD THIS NEW BLOCK - Pedestal detection
+            
             else if (held_object != null && hitObject.CompareTag("Pedestal"))
             {
                 looking_at_interactable = true;
                 UpdateUIText("Press [E] to Place on Pedestal", highlight_color);
             }
-            // END ADDED BLOCK
+            
             else if (hitObject.CompareTag("Door") || hitObject.CompareTag("Interact"))
             {
                 looking_at_interactable = true;
@@ -250,8 +240,7 @@ public class PickupController : MonoBehaviour
         {
             if (looking_at_interactable)
             {
-                if (currentCalendar != null) reticle.color = calendar_color;
-                else reticle.color = highlight_color;
+                 reticle.color = highlight_color;
             }
             else
             {
@@ -321,7 +310,7 @@ public class PickupController : MonoBehaviour
                     }
                 }
                 
-                // Use proximity-based pedestal (more forgiving)
+                
                 if (last_nearby_pedestal != null)
                 {
                     float distance = Vector3.Distance(transform.position, last_nearby_pedestal.transform.position);
@@ -398,7 +387,7 @@ public class PickupController : MonoBehaviour
             BookController bookController = held_object.GetComponent<BookController>();
             if (bookController != null)
             {
-                // Use reflection to access private field or add public method
+                
                 bool isReading = (bool)bookController.GetType().GetField("isBeingRead", 
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.GetValue(bookController);
                 

@@ -82,25 +82,19 @@ public class DynamicKeypad : MonoBehaviour
     
     void CreateKeypadUI()
     {
-        // 1. Create Canvas
-        CreateCanvas();
         
-        // 2. Create Main Panel
+        CreateCanvas();
+       
         CreateMainPanel();
         
-        // 3. Create Title
         CreateTitle();
-        
-        // 4. Create Display
+       
         CreateDisplay();
         
-        // 5. Create Status Text
         CreateStatusText();
         
-        // 6. Create Keypad Grid
         CreateKeypadGrid();
         
-        // 7. Create Close Button
         CreateCloseButton();
     }
     
@@ -111,7 +105,7 @@ public class DynamicKeypad : MonoBehaviour
         keypadCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
         keypadCanvas.sortingOrder = 1000; // High priority
         
-        // FIXED: CanvasScaler property name
+        
         CanvasScaler scaler = canvasObj.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize; // Fixed this line
         scaler.referenceResolution = new Vector2(1920, 1080);
@@ -134,7 +128,6 @@ public class DynamicKeypad : MonoBehaviour
         panelBackground = keypadPanel.AddComponent<Image>();
         panelBackground.color = panelColor;
         
-        // FIX: Set proper RectTransform for centering
         RectTransform rect = keypadPanel.GetComponent<RectTransform>();
         
         // Center the panel

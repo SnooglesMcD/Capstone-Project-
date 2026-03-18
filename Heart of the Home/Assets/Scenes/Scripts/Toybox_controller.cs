@@ -68,9 +68,7 @@ public class Toybox_controller : MonoBehaviour
             // Try different method names if StartDialogue doesn't work
             DialogueManager.Instance.StartDialogue(dialogueId);
             
-            // Alternative: Check if there's a different method name
-            // DialogueManager.Instance.PlayDialogue(dialogueId);
-            // DialogueManager.Instance.ShowDialogue(dialogueId);
+    
         }
         else
         {
@@ -87,7 +85,6 @@ public class Toybox_controller : MonoBehaviour
         Debug.Log($"Toy box interaction completed for: {gameObject.name}");
     }
     
-    // Add this to test interaction via mouse click in editor
     void OnMouseDown()
     {
         Debug.Log($"Mouse clicked on {gameObject.name}");

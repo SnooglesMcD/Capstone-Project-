@@ -89,7 +89,6 @@ public class floor_board_controller : MonoBehaviour
         Debug.Log("Floorboard opened and key spawned");
     }
     
-    // Optional: Visual feedback methods
     void PlayLockedFeedback()
     {
         // Add particle effect, sound, etc.

@@ -37,7 +37,7 @@ public class BookReader : MonoBehaviour
             }
         }
 
-        // If you drop or stop inspecting, ensure UI closes
+        // nsure UI closes
         if (is_reading && (!pickup_controller_is_inspecting() || !IsHoldingBook()))
         {
             CloseBook();
@@ -47,8 +47,6 @@ public class BookReader : MonoBehaviour
     bool pickup_controller_is_inspecting()
     {
         // Access the is_inspecting flag from your PickupController
-        // (it’s private, so we can check public state indirectly)
-        // We’ll use reflection safely once on start or just wrap it:
         return (bool)pickup_controller.GetType().GetField("is_inspecting", 
             System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
             ?.GetValue(pickup_controller);
