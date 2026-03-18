@@ -62,7 +62,7 @@ public class puzzle_manager : MonoBehaviour
                     Debug.Log("Floorboard enabled for interaction");
                 }
                 
-                // Optional: Trigger floorboard reveal animation/effect
+                // Trigger floorboard reveal animation/effect
                 floor_board_controller fbc = floor_board.GetComponent<floor_board_controller>();
                 if (fbc != null)
                 {
@@ -70,7 +70,7 @@ public class puzzle_manager : MonoBehaviour
                 }
             }
             
-            // Optional: Activate heart statue
+            // Activate heart statue
             if (heart_statue != null)
             {
                 heart_statue.SetActive(true);
@@ -94,7 +94,6 @@ public class puzzle_manager : MonoBehaviour
         ParticleSystem ps = GetComponent<ParticleSystem>();
         if (ps != null) ps.Play();
         
-        // Optional: Screen flash or camera shake
         Debug.Log("Puzzle victory effects played!");
     }
     

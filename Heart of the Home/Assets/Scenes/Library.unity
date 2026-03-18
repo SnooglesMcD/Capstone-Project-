@@ -8307,7 +8307,7 @@ MonoBehaviour:
   vignette_speed: 3
   bob_amplitude: 0.05
   bob_speed: 2
-  player_movement_script: {fileID: 0}
+  player_movement_script: {fileID: 1518635931}
   player_camera_script: {fileID: 1348528281}
   currentCalendar: {fileID: 0}
   showInspectionDialogue: 1

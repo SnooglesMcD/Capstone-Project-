@@ -614,7 +614,7 @@ public class DialogueManager : MonoBehaviour
         
         HandleInput();
         
-        // Optional: Update layout dynamically if screen size changes
+        
         if (dialogueContainer != null && dialogueContainer.activeInHierarchy)
         {
             UpdateUILayout();
