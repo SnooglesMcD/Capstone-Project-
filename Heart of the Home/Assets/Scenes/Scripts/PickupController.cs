@@ -201,8 +201,8 @@ public class PickupController : MonoBehaviour
             {
                 looking_at_interactable = true;
                 UpdateUIText("Press [E] to Enter Code", safe_color);
+                currentSafe = hitObject.GetComponent<SafeController>(); 
             }
-
             else if (hitObject.CompareTag("Note"))
             {
                 looking_at_interactable = true;
@@ -213,13 +213,11 @@ public class PickupController : MonoBehaviour
                 looking_at_interactable = true;
                 UpdateUIText("Press [E] to Pick Up", highlight_color);
             }
-            
             else if (held_object != null && hitObject.CompareTag("Pedestal"))
             {
                 looking_at_interactable = true;
                 UpdateUIText("Press [E] to Place on Pedestal", highlight_color);
             }
-            
             else if (hitObject.CompareTag("Door") || hitObject.CompareTag("Interact"))
             {
                 looking_at_interactable = true;
@@ -330,7 +328,17 @@ public class PickupController : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, pickup_range, collision_mask))
                 {
-                    if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
+                    // SAFE INTERACTION 
+                    if (hit.collider.CompareTag("Safe"))
+                    {
+                        SafeController safe = hit.collider.GetComponent<SafeController>();
+                        if (safe != null)
+                        {
+                            safe.ShowKeypad();
+                        }
+                        return;
+                    }
+                    else if (hit.collider.CompareTag("Pickup") || hit.collider.CompareTag("Book"))
                     {
                         TryPickup();
                         return;
@@ -647,166 +655,166 @@ public class PickupController : MonoBehaviour
 
     void EnterInspectMode()
     {
-    if (held_object == null) return;
+        if (held_object == null) return;
 
-    is_inspecting = true;
-    wasInspectingBeforePause = true;
-    Cursor.lockState = CursorLockMode.None;
-    Cursor.visible = true;
+        is_inspecting = true;
+        wasInspectingBeforePause = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
-    if (player_movement_script != null)
-        player_movement_script.enabled = false;
+        if (player_movement_script != null)
+            player_movement_script.enabled = false;
 
-    if (player_camera_script != null)
-        player_camera_script.enabled = false;
+        if (player_camera_script != null)
+            player_camera_script.enabled = false;
 
-    if (object_radius <= 0f)
-    {
-        Collider obj_collider = held_object.GetComponent<Collider>();
-        object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
+        if (object_radius <= 0f)
+        {
+            Collider obj_collider = held_object.GetComponent<Collider>();
+            object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
+        }
+
+        Vector3 desired_position = CalculateDesiredInspectPosition();
+        Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
+        held_object.transform.position = collision_adjusted_position;
+        
+        UpdateUIText("Inspecting | [R] to Exit", highlight_color);
+        
+        // Show inspection dialogue after delay
+        if (showInspectionDialogue && DialogueManager.Instance != null)
+        {
+            if (inspectionCoroutine != null)
+            {
+                StopCoroutine(inspectionCoroutine);
+                inspectionCoroutine = null;
+            }
+            
+            // Reset dialogue flag
+            isInspectionDialogueActive = false;
+            
+            inspectionCoroutine = StartCoroutine(ShowInspectionDialogue());
+        }
     }
 
-    Vector3 desired_position = CalculateDesiredInspectPosition();
-    Vector3 collision_adjusted_position = GetCollisionAdjustedPosition(desired_position);
-    held_object.transform.position = collision_adjusted_position;
-    
-    UpdateUIText("Inspecting | [R] to Exit", highlight_color);
-    
-    // Show inspection dialogue after delay
-    if (showInspectionDialogue && DialogueManager.Instance != null)
+    IEnumerator ShowInspectionDialogue()
     {
+        yield return new WaitForSeconds(inspectionDelay);
+        
+        // Get the item_component to retrieve the item_id
+        item_component itemComp = held_object.GetComponent<item_component>();
+        if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+        {
+            // Try to show inspection dialogue using the item_id
+            string dialogueID = itemComp.item_id;
+            isInspectionDialogueActive = true;
+            DialogueManager.Instance.StartDialogue(dialogueID);
+        }
+        else
+        {
+            // Fallback to name-based dialogue ID
+            string dialogueID = GetInspectionDialogueID(held_object);
+            if (dialogueID != "N/A")
+            {
+                isInspectionDialogueActive = true;
+                DialogueManager.Instance.StartDialogue(dialogueID);
+            }
+        }
+    }
+
+    string GetInspectionDialogueID(GameObject obj)
+    {
+        // First try to get item_component
+        item_component itemComp = obj.GetComponent<item_component>();
+        if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+        {
+            return itemComp.item_id;
+        }
+        
+        // Fallback to name-based detection
+        string itemName = obj.name.ToLower();
+        
+        if (itemName.Contains("vulture")) return "vulture";
+        if (itemName.Contains("bust")) return "bust";
+        if (itemName.Contains("evil_eye")) return "evil_eye";
+        if (itemName.Contains("book")) return "book";
+        if (itemName.Contains("key")) return "key";
+        
+        return "N/A";
+    }
+
+
+    public void ExitInspectMode()
+    {
+        if (held_object == null) return;
+
+        is_inspecting = false;
+        wasInspectingBeforePause = false; // Reset pause tracking
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (main_cam != null)
+            main_cam.fieldOfView = original_fov;
+
+        // Only re-enable controls if we're exiting inspect mode normally
+        // (not just because game was paused/unpaused)
+        if (player_movement_script != null)
+            player_movement_script.enabled = true;
+
+        if (player_camera_script != null)
+            player_camera_script.enabled = true;
+
+        // Clear any active inspection dialogue
+        ClearInspectionDialogue();
+
+        // Stop any ongoing inspection coroutine
         if (inspectionCoroutine != null)
         {
             StopCoroutine(inspectionCoroutine);
             inspectionCoroutine = null;
         }
         
-        // Reset dialogue flag
+        // Reset the flag
         isInspectionDialogueActive = false;
         
-        inspectionCoroutine = StartCoroutine(ShowInspectionDialogue());
-    }
+        // Use a quick coroutine to smoothly return to hold position
+        StartCoroutine(ReturnToHoldPosition());
     }
 
-    IEnumerator ShowInspectionDialogue()
-{
-    yield return new WaitForSeconds(inspectionDelay);
-    
-    // Get the item_component to retrieve the item_id
-    item_component itemComp = held_object.GetComponent<item_component>();
-    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
+    void ClearInspectionDialogue()
     {
-        // Try to show inspection dialogue using the item_id
-        string dialogueID = itemComp.item_id;
-        isInspectionDialogueActive = true;
-        DialogueManager.Instance.StartDialogue(dialogueID);
-    }
-    else
-    {
-        // Fallback to name-based dialogue ID
-        string dialogueID = GetInspectionDialogueID(held_object);
-        if (dialogueID != "N/A")
+        if (isInspectionDialogueActive && DialogueManager.Instance != null)
         {
-            isInspectionDialogueActive = true;
-            DialogueManager.Instance.StartDialogue(dialogueID);
+            // Check if dialogue is actually active
+            if (DialogueManager.Instance.IsDialogueActive())
+            {
+                DialogueManager.Instance.ForceEndDialogue();
+            }
+            isInspectionDialogueActive = false;
         }
     }
-}
 
-string GetInspectionDialogueID(GameObject obj)
-    {
-    // First try to get item_component
-    item_component itemComp = obj.GetComponent<item_component>();
-    if (itemComp != null && !string.IsNullOrEmpty(itemComp.item_id))
-    {
-        return itemComp.item_id;
-    }
-    
-    // Fallback to name-based detection
-    string itemName = obj.name.ToLower();
-    
-    if (itemName.Contains("vulture")) return "vulture";
-    if (itemName.Contains("bust")) return "bust";
-    if (itemName.Contains("evil_eye")) return "evil_eye";
-    if (itemName.Contains("book")) return "book";
-    if (itemName.Contains("key")) return "key";
-    
-    return "N/A";
-    }
-
-
-    public void ExitInspectMode()
-{
-    if (held_object == null) return;
-
-    is_inspecting = false;
-    wasInspectingBeforePause = false; // Reset pause tracking
-    Cursor.lockState = CursorLockMode.Locked;
-    Cursor.visible = false;
-
-    if (main_cam != null)
-        main_cam.fieldOfView = original_fov;
-
-    // Only re-enable controls if we're exiting inspect mode normally
-    // (not just because game was paused/unpaused)
-    if (player_movement_script != null)
-        player_movement_script.enabled = true;
-
-    if (player_camera_script != null)
-        player_camera_script.enabled = true;
-
-    // Clear any active inspection dialogue
-    ClearInspectionDialogue();
-
-    // Stop any ongoing inspection coroutine
-    if (inspectionCoroutine != null)
-    {
-        StopCoroutine(inspectionCoroutine);
-        inspectionCoroutine = null;
-    }
-    
-    // Reset the flag
-    isInspectionDialogueActive = false;
-    
-    // Use a quick coroutine to smoothly return to hold position
-    StartCoroutine(ReturnToHoldPosition());
-}
-
-void ClearInspectionDialogue()
-{
-    if (isInspectionDialogueActive && DialogueManager.Instance != null)
-    {
-        // Check if dialogue is actually active
-        if (DialogueManager.Instance.IsDialogueActive())
-        {
-            DialogueManager.Instance.ForceEndDialogue();
-        }
-        isInspectionDialogueActive = false;
-    }
-}
-
-IEnumerator ReturnToHoldPosition()
-{
-    if (held_object == null) yield break;
-    
-    Vector3 startPosition = held_object.transform.position;
-    Vector3 targetPosition = hold_point.position + Vector3.up * post_inspect_lift;
-    float elapsed = 0f;
-
-    while (elapsed < 0.1f) // Very short duration for quick return
+    IEnumerator ReturnToHoldPosition()
     {
         if (held_object == null) yield break;
         
-        held_object.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsed / 0.1f);
-        elapsed += Time.deltaTime;
-        yield return null;
-    }
+        Vector3 startPosition = held_object.transform.position;
+        Vector3 targetPosition = hold_point.position + Vector3.up * post_inspect_lift;
+        float elapsed = 0f;
 
-    if (held_object != null)
-    {
-        held_object.transform.position = targetPosition;
+        while (elapsed < 0.1f) // Very short duration for quick return
+        {
+            if (held_object == null) yield break;
+            
+            held_object.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsed / 0.1f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (held_object != null)
+        {
+            held_object.transform.position = targetPosition;
+        }
     }
-}
 
 
     void UpdateVignette()

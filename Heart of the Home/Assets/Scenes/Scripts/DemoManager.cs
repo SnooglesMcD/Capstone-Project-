@@ -129,9 +129,8 @@ public class DemoManager : MonoBehaviour
                    new Vector2(0, 200), fontSizeTitle, TextAnchor.MiddleCenter, textColor);
         
         // Add message text
-        string message = "Thank you for playing the Basement Demo!\n\n" +
+        string message = "Thank you for playing The Heart of the Home Demo!\n\n" +
                         "You've completed all available content.\n" +
-                        "The full game will feature more rooms, puzzles, and story.\n\n" +
                         "Thank you for your support!";
         
         CreateText(demoEndPanel, "MessageText", message, 
