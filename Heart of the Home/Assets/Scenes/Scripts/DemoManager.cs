@@ -19,8 +19,8 @@ public class DemoManager : MonoBehaviour
     public Color buttonHoverColor = new Color(0.3f, 0.3f, 0.3f, 1f);
     public Color textColor = Color.white;
     
-    [Header("Spare Room Progress")]
-    public bool spareRoomDoorUnlocked = false;
+    [Header("Office Progress")]
+    public bool officeDoorUnlocked = false; // Tracks if Office exit door is unlocked
     
     [Header("Testing")]
     public bool testMode = false;
@@ -74,7 +74,7 @@ public class DemoManager : MonoBehaviour
         HideDemoEndScreen();
         
         // Test mode auto-unlock
-        if (testMode && SceneManager.GetActiveScene().name == "Spare Room")
+        if (testMode && SceneManager.GetActiveScene().name == "Office")
         {
             Invoke("TestUnlockDoor", 1f);
         }
@@ -82,8 +82,8 @@ public class DemoManager : MonoBehaviour
     
     void TestUnlockDoor()
     {
-        spareRoomDoorUnlocked = true;
-        Debug.Log("🧪 TEST MODE: Spare Room door auto-unlocked");
+        officeDoorUnlocked = true;
+        Debug.Log("🧪 TEST MODE: Office door auto-unlocked");
     }
     
     void CreateDemoEndUI()
@@ -129,8 +129,9 @@ public class DemoManager : MonoBehaviour
                    new Vector2(0, 200), fontSizeTitle, TextAnchor.MiddleCenter, textColor);
         
         // Add message text
-        string message = "Thank you for playing The Heart of the Home Demo!\n\n" +
-                        "You've completed all available content.\n"  +
+        string message = "Thank you for playing the Basement Demo!\n\n" +
+                        "You've completed all available content.\n" +
+                        "The full game will feature more rooms, puzzles, and story.\n\n" +
                         "Thank you for your support!";
         
         CreateText(demoEndPanel, "MessageText", message, 
@@ -243,7 +244,7 @@ public class DemoManager : MonoBehaviour
         button.colors = colors;
     }
     
-    // New method to handle button presses and disable buttons
+    // Handle button presses and disable buttons
     void HandleButtonPress(UnityEngine.Events.UnityAction action)
     {
         // Prevent multiple button presses
@@ -275,20 +276,20 @@ public class DemoManager : MonoBehaviour
         action.Invoke();
     }
     
-    // Called when Spare Room door is unlocked
-    public void SpareRoomDoorUnlocked()
+    // Called when Office door is unlocked
+    public void OfficeDoorUnlocked()
     {
-        spareRoomDoorUnlocked = true;
-        Debug.Log("🚪 Spare Room door unlocked - ready for demo end");
+        officeDoorUnlocked = true;
+        Debug.Log("🚪 Office door unlocked - ready for demo end");
     }
     
-    // Called when player tries to leave Spare Room
-    public bool TryLeaveSpareRoom()
+    // Called when player tries to leave Office
+    public bool TryLeaveOffice()
     {
-        Debug.Log($"🚪 TryLeaveSpareRoom called - Current scene: {SceneManager.GetActiveScene().name}, Door unlocked: {spareRoomDoorUnlocked}");
+        Debug.Log($"🚪 TryLeaveOffice called - Current scene: {SceneManager.GetActiveScene().name}, Door unlocked: {officeDoorUnlocked}");
         
-        // Check if player is in Spare Room and the door has been unlocked
-        if (SceneManager.GetActiveScene().name == "Spare Room" && spareRoomDoorUnlocked)
+        // Check if we're in Office and the door has been unlocked
+        if (SceneManager.GetActiveScene().name == "Office" && officeDoorUnlocked)
         {
             Debug.Log("🎮 Conditions met - Showing demo end screen");
             ShowDemoEndScreen();
@@ -355,7 +356,7 @@ public class DemoManager : MonoBehaviour
         }
     }
     
-    // New method to hide the end screen
+    // Hide the end screen
     public void HideDemoEndScreen()
     {
         Debug.Log("🎮 Hiding demo end screen");
@@ -378,8 +379,6 @@ public class DemoManager : MonoBehaviour
     {
         Debug.Log("Returning to Main Menu - Button pressed");
         
-        // Brief delay to show button disabled state (optional)
-        // Then load the scene
         Time.timeScale = 1f;
         ResetDemoState();
         SceneManager.LoadScene(mainMenuSceneName);
@@ -408,7 +407,7 @@ public class DemoManager : MonoBehaviour
     
     void ResetDemoState()
     {
-        spareRoomDoorUnlocked = false;
+        officeDoorUnlocked = false;
     }
     
     void OnEnable()
@@ -428,7 +427,7 @@ public class DemoManager : MonoBehaviour
         // Always hide the end screen when a new scene loads
         HideDemoEndScreen();
         
-        if (testMode && scene.name == "Spare Room")
+        if (testMode && scene.name == "Office")
         {
             Invoke("TestUnlockDoor", 1f);
         }

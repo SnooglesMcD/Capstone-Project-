@@ -129,13 +129,13 @@ public class door_lock_controller : MonoBehaviour
         isUnlocked = true;
         Debug.Log("Door unlocked!");
         
-        // If this is the Spare Room door, notify DemoManager
-        if (gameObject.scene.name == "Spare Room" || gameObject.name.Contains("SpareRoom"))
+        // If this is the Office Room door, notify DemoManager
+        if (gameObject.scene.name == "Office" || gameObject.name.Contains("Office"))
         {
             if (DemoManager.Instance != null)
             {
-                DemoManager.Instance.SpareRoomDoorUnlocked();
-                Debug.Log("🚪 Notified DemoManager: Spare Room door unlocked");
+                DemoManager.Instance.OfficeDoorUnlocked();
+                Debug.Log("🚪 Notified DemoManager: Office door unlocked");
             }
         }
     }
@@ -143,12 +143,12 @@ public class door_lock_controller : MonoBehaviour
     public void OnInteract()
     {
        
-        // If player is in Spare Room and trying to exit, check if demo should end
-        if (SceneManager.GetActiveScene().name == "Spare Room" && 
-            destination != "Spare Room" && // This is an exit door
+        // If player is in Office and trying to exit, check if demo should end
+        if (SceneManager.GetActiveScene().name == "Office" && 
+            destination != "Office" && // This is an exit door
             DemoManager.Instance != null)
         {
-            if (!DemoManager.Instance.TryLeaveSpareRoom())
+            if (!DemoManager.Instance.TryLeaveOffice())
             {
                 // Demo end screen will show, don't proceed with door logic
                 Debug.Log("🎮 Demo end triggered - showing end screen instead of loading scene");
