@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Basement.unity
     guid: 2e471a3afa0524dd3971a6a8fb6071ce
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/East Hallway.unity
     guid: bbcda80ccfdadc440910e8043a0f7d93
   - enabled: 1
