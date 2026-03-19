@@ -72,6 +72,9 @@ public class PickupController : MonoBehaviour
 
     private SafeController currentSafe;
 
+    // Flag to prevent MoveHeldObject from interfering during drop/throw
+    private bool isDroppingOrThrowing = false;
+
 
     // PUBLIC PROPERTIES FOR OTHER SCRIPTS
     public GameObject HeldObject => held_object;
@@ -440,9 +443,16 @@ public class PickupController : MonoBehaviour
                 {
                     held_object_rb.useGravity = false;
                     held_object_rb.isKinematic = true;
+                    held_object_rb.linearVelocity = Vector3.zero;
+                    held_object_rb.angularVelocity = Vector3.zero;
+                    
+                    // Store original drag values to restore later
+                    held_object_rb.linearDamping = 0f;
+                    held_object_rb.angularDamping = 0.05f;
                 }
 
                 held_object.transform.rotation = Quaternion.LookRotation(main_cam.transform.forward);
+                held_object.transform.parent = hold_point;
 
                 Collider obj_collider = held_object.GetComponent<Collider>();
                 object_radius = obj_collider != null ? obj_collider.bounds.extents.magnitude : 0.25f;
@@ -480,24 +490,56 @@ public class PickupController : MonoBehaviour
     {
         if (isDialogueActive || held_object == null) return;
         
+        // Set flag to prevent MoveHeldObject from interfering
+        isDroppingOrThrowing = true;
+        
         // Notify book controller before dropping
         BookController bookController = held_object.GetComponent<BookController>();
         if (bookController != null)
         {
-            // Use reflection to call private method
             System.Reflection.MethodInfo method = bookController.GetType().GetMethod("OnBookDropped",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             method?.Invoke(bookController, null);
         }
 
-        if (held_object_rb != null)
+        // Store reference
+        GameObject dropped_object = held_object;
+        Rigidbody dropped_rb = held_object_rb;
+
+        // CRITICAL: Detach from parent
+        dropped_object.transform.parent = null;
+
+        if (dropped_rb != null)
         {
-            held_object_rb.isKinematic = false;
-            held_object_rb.useGravity = true;
+            // Reset ALL rigidbody properties to default values
+            dropped_rb.isKinematic = false;
+            dropped_rb.useGravity = true;
+            dropped_rb.linearVelocity = Vector3.zero;
+            dropped_rb.angularVelocity = Vector3.zero;
+            dropped_rb.linearDamping = 0.5f;      // Reset to default
+            dropped_rb.angularDamping = 0.5f; // Reset to default
+            dropped_rb.mass = 1f;         // Reset to default
+            dropped_rb.interpolation = RigidbodyInterpolation.None;
+            dropped_rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            dropped_rb.constraints = RigidbodyConstraints.None;
+            dropped_rb.WakeUp();
+            
+            // Add a significant downward force to ensure it falls
+            dropped_rb.AddForce(Vector3.down * 10f, ForceMode.Impulse);
         }
 
-        GameObject dropped_object = held_object; 
+        // Re-enable collisions
+        Collider[] object_colliders = dropped_object.GetComponentsInChildren<Collider>();
+        if (object_colliders != null)
+        {
+            foreach (var pc in player_colliders)
+            {
+                foreach (var oc in object_colliders)
+                    Physics.IgnoreCollision(pc, oc, false);
+            }
+        }
 
+        // Clear references
         held_object = null;
         held_object_rb = null;
         is_inspecting = false;
@@ -524,38 +566,68 @@ public class PickupController : MonoBehaviour
         {
             interaction_text.gameObject.SetActive(false);
         }
-
-        if (dropped_object != null)
-        {
-            Collider[] object_colliders = dropped_object.GetComponentsInChildren<Collider>();
-
-            if (object_colliders != null)
-            {
-                foreach (var pc in player_colliders)
-                {
-                    foreach (var oc in object_colliders)
-                        Physics.IgnoreCollision(pc, oc, false);
-                }
-            }
-        }
         
-        Debug.Log("Dropped object");
+        // Reset flag after a short delay
+        StartCoroutine(ResetDropThrowFlag());
+        
+        Debug.Log($"Dropped object: {dropped_object.name}");
     }
 
     void ThrowObject()
     {
         if (isDialogueActive || held_object == null || held_object_rb == null) return;
 
-        held_object_rb.isKinematic = false;
-        held_object_rb.useGravity = true;
-        held_object_rb.AddForce(main_cam.transform.forward * throw_force, ForceMode.VelocityChange);
+        // Set flag to prevent MoveHeldObject from interfering
+        isDroppingOrThrowing = true;
 
+        // Store reference
+        GameObject thrown_object = held_object;
+        Rigidbody thrown_rb = held_object_rb;
+
+        // CRITICAL: Detach from parent
+        thrown_object.transform.parent = null;
+
+        // Reset ALL rigidbody properties
+        thrown_rb.isKinematic = false;
+        thrown_rb.useGravity = true;
+        thrown_rb.linearVelocity = Vector3.zero;
+        thrown_rb.angularVelocity = Vector3.zero;
+        thrown_rb.linearDamping = 0.5f;
+        thrown_rb.angularDamping = 0.5f;
+        thrown_rb.mass = 1f;
+        thrown_rb.interpolation = RigidbodyInterpolation.None;
+        thrown_rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+        thrown_rb.constraints = RigidbodyConstraints.None;
+        thrown_rb.WakeUp();
+        
+        // Calculate throw direction (forward + slight up)
+        Vector3 throwDirection = main_cam.transform.forward + (Vector3.up * 0.3f);
+        
+        // Apply throw force
+        thrown_rb.AddForce(throwDirection.normalized * throw_force, ForceMode.Impulse);
+        
+        // Add some spin
+        thrown_rb.AddTorque(Random.insideUnitSphere * 3f, ForceMode.Impulse);
+
+        // Re-enable collisions
+        Collider[] object_colliders = thrown_object.GetComponentsInChildren<Collider>();
+        if (object_colliders != null)
+        {
+            foreach (var pc in player_colliders)
+            {
+                foreach (var oc in object_colliders)
+                    Physics.IgnoreCollision(pc, oc, false);
+            }
+        }
+
+        // Clear references
         held_object = null;
         held_object_rb = null;
         is_inspecting = false;
         wasInspectingBeforePause = false;
         object_radius = 0f;
 
+        // Re-enable controls if we're not in inspect mode
         if (!is_inspecting)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -576,12 +648,22 @@ public class PickupController : MonoBehaviour
             interaction_text.gameObject.SetActive(false);
         }
         
-        Debug.Log("Threw object");
+        // Reset flag after a short delay
+        StartCoroutine(ResetDropThrowFlag());
+        
+        Debug.Log($"Threw object: {thrown_object.name}");
+    }
+
+    System.Collections.IEnumerator ResetDropThrowFlag()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isDroppingOrThrowing = false;
     }
 
     void MoveHeldObject()
     {
-        if (held_object == null) return;
+        // Don't move the object if we're dropping or throwing or if it's null
+        if (held_object == null || isDroppingOrThrowing) return;
 
         if (!is_inspecting)
         {

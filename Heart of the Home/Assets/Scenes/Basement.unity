@@ -12859,7 +12859,7 @@ MonoBehaviour:
   lift_duration: 0.2
   inspect_distance_offset: 0.25
   min_inspect_distance: 2
-  throw_force: 10
+  throw_force: 20
   interaction_text: {fileID: 1937436296}
   reticle: {fileID: 585354822}
   normal_color: {r: 1, g: 1, b: 1, a: 1}

@@ -693,8 +693,8 @@ MonoBehaviour:
   locked_dialogue_id: basement_door_locked
   destination: Spare Room
   keyObject: {fileID: 0}
-  requireKey: 1
-  startLocked: 1
+  requireKey: 0
+  startLocked: 0
   doorOpenSound: {fileID: 0}
   doorCloseSound: {fileID: 0}
   doorLockedSound: {fileID: 0}
@@ -3777,7 +3777,6 @@ MonoBehaviour:
   bob_speed: 2
   player_movement_script: {fileID: 1872086412}
   player_camera_script: {fileID: 553733776}
-  currentCalendar: {fileID: 0}
   showInspectionDialogue: 1
   inspectionDelay: 0.5
   zoomed_fov: 20
@@ -4398,8 +4397,8 @@ MonoBehaviour:
   locked_dialogue_id: basement_door_locked
   destination: Office
   keyObject: {fileID: 0}
-  requireKey: 1
-  startLocked: 1
+  requireKey: 0
+  startLocked: 0
   doorOpenSound: {fileID: 0}
   doorCloseSound: {fileID: 0}
   doorLockedSound: {fileID: 0}
