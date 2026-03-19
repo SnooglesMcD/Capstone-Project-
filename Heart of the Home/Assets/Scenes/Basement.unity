@@ -9404,7 +9404,7 @@ MonoBehaviour:
         m_Calls: []
   - dialogueID: '"bust"'
     lines:
-    - text: It looks like me. Minus a few years or so. Why did they make this?
+    - text: Ew.
       speakerName: 
       speakerPortrait: {fileID: 0}
       voiceClip: {fileID: 0}
@@ -10540,7 +10540,7 @@ MonoBehaviour:
   buttonColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   buttonHoverColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   textColor: {r: 1, g: 1, b: 1, a: 1}
-  spareRoomDoorUnlocked: 0
+  officeDoorUnlocked: 0
   testMode: 1
   simulateDoorUnlocked: 1
 --- !u!4 &1151914058

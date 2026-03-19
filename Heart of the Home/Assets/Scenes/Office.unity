@@ -5326,6 +5326,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &809460126 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f0376ffbc64ed2a4cb7c2ea340bbb0be, type: 3}
+  m_PrefabInstance: {fileID: 203116064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &824914479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15858,6 +15863,8 @@ MonoBehaviour:
   lockSound: {fileID: 0}
   errorSound: {fileID: 0}
   buttonSound: {fileID: 0}
+  closedSafeModel: {fileID: 286824262}
+  openSafeModel: {fileID: 809460126}
   lockedMat: {fileID: 0}
   unlockedMat: {fileID: 0}
   statusLight: {fileID: 0}
