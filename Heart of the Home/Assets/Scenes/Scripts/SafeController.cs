@@ -10,6 +10,10 @@ public class SafeController : MonoBehaviour
     public AudioClip errorSound;
     public AudioClip buttonSound;
     
+    [Header("Models")]
+    public GameObject closedSafeModel;  // Assign your closed safe model
+    public GameObject openSafeModel;    // Assign your open safe model
+    
     [Header("Visuals")]
     public Material lockedMat;
     public Material unlockedMat;
@@ -34,6 +38,9 @@ public class SafeController : MonoBehaviour
         safeRenderer = GetComponent<Renderer>();
         puzzleManager = FindObjectOfType<OfficePuzzleManager>();
         
+        // Make sure only the correct model is active at start
+        SetModelState(false); // false = closed
+        
         SetLockedState();
         
         if (encodedNote != null)
@@ -47,13 +54,10 @@ public class SafeController : MonoBehaviour
 
     void InitializeKeypad()
     {
-        // Try to find existing keypad in scene
         keypadInstance = FindObjectOfType<DynamicKeypad>();
         
-        // If not found, create one
         if (keypadInstance == null)
         {
-            // Check if we have a prefab to instantiate
             if (keypadPrefab != null)
             {
                 keypadInstance = Instantiate(keypadPrefab);
@@ -61,20 +65,33 @@ public class SafeController : MonoBehaviour
             }
             else
             {
-                // Create a new GameObject with the component
                 GameObject keypadObj = new GameObject("DynamicKeypad");
                 keypadInstance = keypadObj.AddComponent<DynamicKeypad>();
-                
-                // Make it persistent or parent it appropriately
                 DontDestroyOnLoad(keypadObj);
-                
                 Debug.Log("Created DynamicKeypad at runtime");
             }
         }
     }
 
+    void SetModelState(bool open)
+    {
+        if (closedSafeModel != null)
+            closedSafeModel.SetActive(!open);
+        
+        if (openSafeModel != null)
+            openSafeModel.SetActive(open);
+        
+        Debug.Log($"Safe model set to: {(open ? "OPEN" : "CLOSED")}");
+    }
+
     public void ShowKeypad()
     {
+        if (isUnlocked)
+        {
+            Debug.Log("Safe is already unlocked");
+            return;
+        }
+        
         if (keypadInstance != null)
         {
             keypadInstance.ShowKeypad(this);
@@ -92,7 +109,6 @@ public class SafeController : MonoBehaviour
             else
             {
                 Debug.LogError("Failed to create keypad!");
-                // Fallback to console input
                 Debug.Log("Enter safe code using number keys (1407)");
             }
         }
@@ -148,6 +164,9 @@ public class SafeController : MonoBehaviour
     {
         isUnlocked = true;
         Debug.Log($"SAFE UNLOCKED! Code: {currentCode}");
+        
+        // SWAP MODELS - Show open safe
+        SetModelState(true); // true = open
         
         // Visual feedback
         if (safeRenderer != null && unlockedMat != null)
@@ -227,5 +246,43 @@ public class SafeController : MonoBehaviour
     {
         Debug.Log("Keypad closed for safe");
         currentCode = ""; // Clear any partial code
+    }
+
+    // Optional: Add animation effect when opening
+    public void PlayOpenAnimation()
+    {
+        // If your models have animators, you could trigger animations here
+        // Or add a simple scale effect:
+        if (openSafeModel != null)
+        {
+            StartCoroutine(AnimateOpen());
+        }
+    }
+
+    System.Collections.IEnumerator AnimateOpen()
+    {
+        Vector3 originalScale = openSafeModel.transform.localScale;
+        Vector3 targetScale = originalScale * 1.1f;
+        
+        // Quick pop effect
+        float elapsed = 0f;
+        float duration = 0.2f;
+        
+        while (elapsed < duration)
+        {
+            openSafeModel.transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            openSafeModel.transform.localScale = Vector3.Lerp(targetScale, originalScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        openSafeModel.transform.localScale = originalScale;
     }
 }
