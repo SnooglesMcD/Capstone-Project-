@@ -223,150 +223,226 @@ public class DialogueManager : MonoBehaviour
     }
     
     void CreateDialogueUI()
+{
+    // Check if TextMeshPro is available
+    try
     {
-        // Calculate responsive dimensions first
-        CalculateResponsiveDimensions();
-        
-        // Create Canvas if it doesn't exist
-        Canvas canvas = FindObjectOfType<Canvas>();
-        if (canvas == null)
-        {
-            GameObject canvasObj = new GameObject("DialogueCanvas");
-            canvas = canvasObj.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 100;
-            canvasObj.AddComponent<GraphicRaycaster>();
-        }
-        
-        // Add CanvasScaler for responsive UI
-        if (canvas.GetComponent<CanvasScaler>() == null)
-        {
-            canvasScaler = canvas.gameObject.AddComponent<CanvasScaler>();
-            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            canvasScaler.referenceResolution = new Vector2(1920, 1080);
-            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            canvasScaler.matchWidthOrHeight = 0.5f;
-        }
-        else
-        {
-            canvasScaler = canvas.GetComponent<CanvasScaler>();
-        }
-        
-        // Create dialogue container
-        dialogueContainer = new GameObject("DialogueContainer");
-        dialogueContainer.transform.SetParent(canvas.transform);
-        RectTransform containerRT = dialogueContainer.AddComponent<RectTransform>();
-        SetContainerPosition(containerRT);
-        
-        // Create dialogue box
-        dialogueBox = new GameObject("DialogueBox");
-        dialogueBox.transform.SetParent(dialogueContainer.transform);
-        dialogueBackground = dialogueBox.AddComponent<Image>();
-        dialogueBackground.color = backgroundColor;
-        dialogueBackground.type = Image.Type.Sliced;
-        
-        // Set box size and position
-        RectTransform boxRT = dialogueBox.GetComponent<RectTransform>();
-        boxRT.anchorMin = new Vector2(0.5f, 0.5f);
-        boxRT.anchorMax = new Vector2(0.5f, 0.5f);
-        boxRT.pivot = new Vector2(0.5f, 0.5f);
-        boxRT.sizeDelta = new Vector2(currentBoxWidth, currentBoxHeight);
-        boxRT.anchoredPosition = Vector2.zero;
-        
-        // Create portrait
-        GameObject portraitObj = new GameObject("Portrait");
-        portraitObj.transform.SetParent(dialogueBox.transform);
-        portraitImage = portraitObj.AddComponent<Image>();
-        portraitImage.preserveAspect = true;
-        
-        RectTransform portraitRT = portraitImage.GetComponent<RectTransform>();
-        portraitRT.anchorMin = new Vector2(0, 0.5f);
-        portraitRT.anchorMax = new Vector2(0, 0.5f);
-        portraitRT.pivot = new Vector2(0, 0.5f);
-        portraitRT.sizeDelta = new Vector2(currentPortraitSize, currentPortraitSize);
-        portraitRT.anchoredPosition = new Vector2(boxPadding.x + portraitOffset.x, portraitOffset.y);
-        
-        // Create speaker name background
-        GameObject speakerBgObj = new GameObject("SpeakerBackground");
-        speakerBgObj.transform.SetParent(dialogueBox.transform);
-        Image speakerBg = speakerBgObj.AddComponent<Image>();
-        speakerBg.color = speakerBackgroundColor;
-        
-        RectTransform speakerBgRT = speakerBg.GetComponent<RectTransform>();
-        speakerBgRT.anchorMin = new Vector2(0, 1);
-        speakerBgRT.anchorMax = new Vector2(0.4f, 1);
-        speakerBgRT.pivot = new Vector2(0, 1);
-        float speakerBgWidth = Mathf.Min(currentBoxWidth * 0.4f, 250f * (Screen.width / 1920f));
-        speakerBgRT.sizeDelta = new Vector2(speakerBgWidth, 40f * (Screen.height / 1080f));
-        speakerBgRT.anchoredPosition = new Vector2(boxPadding.x, -boxPadding.y);
-        speakerBgObj.SetActive(showSpeakerBackground);
-        
-        // Create speaker name text
-        GameObject speakerObj = new GameObject("SpeakerName");
-        speakerObj.transform.SetParent(speakerBgObj.transform);
-        speakerNameText = speakerObj.AddComponent<TextMeshProUGUI>();
-        speakerNameText.color = speakerTextColor;
-        speakerNameText.fontSize = currentSpeakerFontSize;
-        speakerNameText.alignment = TextAlignmentOptions.Left;
-        speakerNameText.fontStyle = FontStyles.Bold;
-        
-        RectTransform speakerRT = speakerNameText.GetComponent<RectTransform>();
-        speakerRT.anchorMin = Vector2.zero;
-        speakerRT.anchorMax = Vector2.one;
-        speakerRT.offsetMin = new Vector2(10f * (Screen.width / 1920f), 0);
-        speakerRT.offsetMax = new Vector2(-10f * (Screen.width / 1920f), 0);
-        
-        // Create dialogue text area
-        GameObject textObj = new GameObject("DialogueText");
-        textObj.transform.SetParent(dialogueBox.transform);
-        dialogueText = textObj.AddComponent<TextMeshProUGUI>();
-        dialogueText.color = dialogueTextColor;
-        dialogueText.fontSize = currentDialogueFontSize;
-        dialogueText.alignment = TextAlignmentOptions.TopLeft;
-        dialogueText.enableWordWrapping = true;
-        
-        RectTransform textRT = dialogueText.GetComponent<RectTransform>();
-        textRT.anchorMin = new Vector2(0, 0);
-        textRT.anchorMax = new Vector2(1, 1);
-        float textLeftPadding = boxPadding.x + currentPortraitSize + 10f * (Screen.width / 1920f);
-        textRT.offsetMin = new Vector2(textLeftPadding, boxPadding.y + 10f * (Screen.height / 1080f));
-        textRT.offsetMax = new Vector2(-boxPadding.x, -boxPadding.y);
-        
-        // Create Victor name tag
-        if (showVictorNameTag)
-        {
-            CreateVictorNameTag();
-        }
-        
-        // Create close hint
-        if (showCloseHint)
-        {
-            CreateCloseHint();
-        }
-        
-        // Create continue indicator
-        GameObject continueObj = new GameObject("ContinueIndicator");
-        continueObj.transform.SetParent(dialogueBox.transform);
-        continueIndicator = continueObj;
-        
-        TextMeshProUGUI continueTextComp = continueObj.AddComponent<TextMeshProUGUI>();
-        continueTextComp.text = continueText;
-        continueTextComp.color = continueIndicatorColor;
-        continueTextComp.fontSize = Mathf.RoundToInt(currentDialogueFontSize * 1.1f);
-        continueTextComp.alignment = TextAlignmentOptions.BottomRight;
-        
-        RectTransform continueRT = continueTextComp.GetComponent<RectTransform>();
-        continueRT.anchorMin = new Vector2(1, 0);
-        continueRT.anchorMax = new Vector2(1, 0);
-        continueRT.pivot = new Vector2(1, 0);
-        float indicatorSize = 30f * (Screen.height / 1080f);
-        continueRT.sizeDelta = new Vector2(indicatorSize, indicatorSize);
-        continueRT.anchoredPosition = new Vector2(-10f * (Screen.width / 1920f), 10f * (Screen.height / 1080f));
-        
-        continueIndicator.SetActive(false);
-        
-        Debug.Log("Adaptive RPG-style dialogue UI created with Victor name tag");
+        var tmpTest = new GameObject().AddComponent<TextMeshProUGUI>();
+        DestroyImmediate(tmpTest.gameObject);
     }
+    catch (Exception e)
+    {
+        Debug.LogError("TextMeshPro is not properly installed or imported: " + e.Message);
+        return;
+    }
+    
+    // Calculate responsive dimensions first
+    CalculateResponsiveDimensions();
+    
+    // Look specifically for a canvas named "DialogueCanvas"
+    Canvas canvas = null;
+    
+    // First try to find by exact name
+    GameObject dialogueCanvasObj = GameObject.Find("DialogueCanvas");
+    if (dialogueCanvasObj != null)
+    {
+        canvas = dialogueCanvasObj.GetComponent<Canvas>();
+        Debug.Log($"Found existing DialogueCanvas: {dialogueCanvasObj.name}");
+    }
+    
+    // If not found by name, try to find any canvas with a DialogueManager on it?
+    if (canvas == null)
+    {
+        // Look for canvas that might be parented to something with Dialogue in the name
+        Canvas[] allCanvases = FindObjectsOfType<Canvas>();
+        foreach (Canvas c in allCanvases)
+        {
+            if (c.name.Contains("Dialogue") || c.name.Contains("dialogue"))
+            {
+                canvas = c;
+                Debug.Log($"Found canvas with dialogue in name: {c.name}");
+                break;
+            }
+        }
+    }
+    
+    // If still no canvas found, create a new one
+    if (canvas == null)
+    {
+        GameObject canvasObj = new GameObject("DialogueCanvas");
+        canvas = canvasObj.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 100;
+        canvasObj.AddComponent<GraphicRaycaster>();
+        Debug.Log("Created new DialogueCanvas");
+    }
+    else
+    {
+        // If we found an existing canvas, make sure it has the right settings
+        Debug.Log($"Using existing canvas: {canvas.name}");
+        
+        // Ensure it has the right sorting order
+        canvas.sortingOrder = 100;
+        
+        // Make sure it has a GraphicRaycaster
+        if (canvas.GetComponent<GraphicRaycaster>() == null)
+        {
+            canvas.gameObject.AddComponent<GraphicRaycaster>();
+        }
+    }
+    
+    // Check if we're using the correct canvas
+    Debug.Log($"Using canvas: {canvas.name} at sorting order: {canvas.sortingOrder}");
+    
+    // Make sure canvas is active and visible
+    canvas.gameObject.SetActive(true);
+    
+    // Add CanvasScaler for responsive UI
+    if (canvas.GetComponent<CanvasScaler>() == null)
+    {
+        canvasScaler = canvas.gameObject.AddComponent<CanvasScaler>();
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        canvasScaler.referenceResolution = new Vector2(1920, 1080);
+        canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        canvasScaler.matchWidthOrHeight = 0.5f;
+    }
+    else
+    {
+        canvasScaler = canvas.GetComponent<CanvasScaler>();
+    }
+    
+    // Ensure the canvas render mode is correct
+    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+    
+    // Check if we already have a dialogue container on this canvas
+    Transform existingContainer = canvas.transform.Find("DialogueContainer");
+    if (existingContainer != null)
+    {
+        // Clean up old container if it exists
+        DestroyImmediate(existingContainer.gameObject);
+        Debug.Log("Removed existing DialogueContainer");
+    }
+    
+    // Create dialogue container
+    dialogueContainer = new GameObject("DialogueContainer");
+    dialogueContainer.transform.SetParent(canvas.transform);
+    RectTransform containerRT = dialogueContainer.AddComponent<RectTransform>();
+    SetContainerPosition(containerRT);
+    
+    // Log the parent hierarchy for debugging
+    Debug.Log($"DialogueContainer parent: {dialogueContainer.transform.parent.name} (Canvas: {canvas.name})");
+    
+    // Create dialogue box
+    dialogueBox = new GameObject("DialogueBox");
+    dialogueBox.transform.SetParent(dialogueContainer.transform);
+    dialogueBackground = dialogueBox.AddComponent<Image>();
+    dialogueBackground.color = backgroundColor;
+    dialogueBackground.type = Image.Type.Sliced;
+    
+    // Set box size and position - Stretch to container
+    RectTransform boxRT = dialogueBox.GetComponent<RectTransform>();
+    boxRT.anchorMin = new Vector2(0, 0);
+    boxRT.anchorMax = new Vector2(1, 1);
+    boxRT.pivot = new Vector2(0.5f, 0.5f);
+    boxRT.offsetMin = Vector2.zero;
+    boxRT.offsetMax = Vector2.zero;
+    
+    // Create portrait
+    GameObject portraitObj = new GameObject("Portrait");
+    portraitObj.transform.SetParent(dialogueBox.transform);
+    portraitImage = portraitObj.AddComponent<Image>();
+    portraitImage.preserveAspect = true;
+    
+    RectTransform portraitRT = portraitImage.GetComponent<RectTransform>();
+    portraitRT.anchorMin = new Vector2(0, 0.5f);
+    portraitRT.anchorMax = new Vector2(0, 0.5f);
+    portraitRT.pivot = new Vector2(0, 0.5f);
+    portraitRT.sizeDelta = new Vector2(currentPortraitSize, currentPortraitSize);
+    portraitRT.anchoredPosition = new Vector2(boxPadding.x + portraitOffset.x, portraitOffset.y);
+    
+    // Create speaker name background
+    GameObject speakerBgObj = new GameObject("SpeakerBackground");
+    speakerBgObj.transform.SetParent(dialogueBox.transform);
+    Image speakerBg = speakerBgObj.AddComponent<Image>();
+    speakerBg.color = speakerBackgroundColor;
+    
+    RectTransform speakerBgRT = speakerBg.GetComponent<RectTransform>();
+    speakerBgRT.anchorMin = new Vector2(0, 1);
+    speakerBgRT.anchorMax = new Vector2(0, 1);
+    speakerBgRT.pivot = new Vector2(0, 1);
+    float speakerBgWidth = Mathf.Min(currentBoxWidth * 0.4f, 250f);
+    speakerBgRT.sizeDelta = new Vector2(speakerBgWidth, 40f);
+    speakerBgRT.anchoredPosition = new Vector2(boxPadding.x, -boxPadding.y - 5f);
+    speakerBgObj.SetActive(showSpeakerBackground);
+    
+    // Create speaker name text
+    GameObject speakerObj = new GameObject("SpeakerName");
+    speakerObj.transform.SetParent(speakerBgObj.transform);
+    speakerNameText = speakerObj.AddComponent<TextMeshProUGUI>();
+    speakerNameText.color = speakerTextColor;
+    speakerNameText.fontSize = Mathf.RoundToInt(currentSpeakerFontSize);
+    speakerNameText.alignment = TextAlignmentOptions.Left;
+    speakerNameText.fontStyle = FontStyles.Bold;
+    
+    RectTransform speakerRT = speakerNameText.GetComponent<RectTransform>();
+    speakerRT.anchorMin = Vector2.zero;
+    speakerRT.anchorMax = Vector2.one;
+    speakerRT.offsetMin = new Vector2(10f, 0);
+    speakerRT.offsetMax = new Vector2(-10f, 0);
+    
+    // Create dialogue text area
+    GameObject textObj = new GameObject("DialogueText");
+    textObj.transform.SetParent(dialogueBox.transform);
+    dialogueText = textObj.AddComponent<TextMeshProUGUI>();
+    dialogueText.color = dialogueTextColor;
+    dialogueText.fontSize = Mathf.RoundToInt(currentDialogueFontSize);
+    dialogueText.alignment = TextAlignmentOptions.TopLeft;
+    dialogueText.enableWordWrapping = true;
+    
+    RectTransform textRT = dialogueText.GetComponent<RectTransform>();
+    textRT.anchorMin = new Vector2(0, 0);
+    textRT.anchorMax = new Vector2(1, 1);
+    float textLeftPadding = boxPadding.x + currentPortraitSize + 20f;
+    float textBottomPadding = boxPadding.y;
+    float textTopPadding = boxPadding.y + 30f;
+    textRT.offsetMin = new Vector2(textLeftPadding, textBottomPadding);
+    textRT.offsetMax = new Vector2(-boxPadding.x, -textTopPadding);
+    
+    // Create Victor name tag
+    if (showVictorNameTag)
+    {
+        CreateVictorNameTag();
+    }
+    
+    // Create close hint
+    if (showCloseHint)
+    {
+        CreateCloseHint();
+    }
+    
+    // Create continue indicator
+    GameObject continueObj = new GameObject("ContinueIndicator");
+    continueObj.transform.SetParent(dialogueBox.transform);
+    continueIndicator = continueObj;
+    
+    TextMeshProUGUI continueTextComp = continueObj.AddComponent<TextMeshProUGUI>();
+    continueTextComp.text = continueText;
+    continueTextComp.color = continueIndicatorColor;
+    continueTextComp.fontSize = Mathf.RoundToInt(currentDialogueFontSize * 1.1f);
+    continueTextComp.alignment = TextAlignmentOptions.BottomRight;
+    
+    RectTransform continueRT = continueTextComp.GetComponent<RectTransform>();
+    continueRT.anchorMin = new Vector2(1, 0);
+    continueRT.anchorMax = new Vector2(1, 0);
+    continueRT.pivot = new Vector2(1, 0);
+    float indicatorSize = 30f;
+    continueRT.sizeDelta = new Vector2(indicatorSize, indicatorSize);
+    continueRT.anchoredPosition = new Vector2(-boxPadding.x, boxPadding.y);
+    
+    continueIndicator.SetActive(false);
+    
+    Debug.Log($"Adaptive RPG-style dialogue UI created on canvas: {canvas.name} with Victor name tag");
+}
     
     void CreateVictorNameTag()
     {
